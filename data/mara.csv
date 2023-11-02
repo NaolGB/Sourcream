@@ -1,101 +1,80 @@
 MANDT,MATNR,MAKTX
-SC1,eadab786-15fa-49c3-bd48-d2c37752982f,AeroSynth
-SC1,6bc227f5-0f74-4a20-9ce9-2b9fbf90fa51,Aeroclay
-SC1,dcac35c6-86fc-4d21-b5d6-e77320d97642,Aerogelium
-SC1,f53eca0a-b015-4396-abbe-752ec0e589ca,Aeroglass
-SC1,cc65dc94-8f15-4686-8132-73656c50a470,Aeroplastic
-SC1,4e3b4db2-f63d-40a6-8d2e-03025cb1fc6d,Alumiflex
-SC1,61570b75-d63c-4d2f-bd31-5e5872ce8811,Alumitex
-SC1,4c8f8098-f334-4b91-aeaf-cdef0238853f,Alumithread
-SC1,c86eb85d-fcee-4b6c-acc7-34545fd38aa5,Alumiwood
-SC1,75173c50-2ad9-4ee1-94fe-d7cdf0d2784b,BioFoam
-SC1,5fdcf68e-f88b-4815-809c-9696811dabb5,BioNylon
-SC1,48814c95-bff1-445c-99c6-c066a03dd4ec,BioSteel
-SC1,96e365f3-df22-47c4-bec0-bf3f1f333594,BioStone
-SC1,5f3e2105-92ad-4f85-aab4-03a598eee250,BioSynth
-SC1,78fa3cde-215f-43e6-9c69-ce528e8c1301,Biocore
-SC1,651e0329-a783-4ac9-a53f-306c0ad4da95,Biofoam
-SC1,ccb31773-175f-425f-907c-6734e7383713,Biogel
-SC1,f58167a6-1c31-4d5e-b57a-1ed8b73a37b3,Biothread
-SC1,e2842538-46a5-4f66-a487-c25b5326179a,Biowood
-SC1,ede8207d-2dc9-4e35-8c1a-0befd22bed7d,CarboSilk
-SC1,8ef18084-56e1-4e35-a5d3-9ca143a275bf,Carbonova
-SC1,d5140430-f595-40f4-8c88-df4c9c08a45b,Carboprene
-SC1,7802ebf4-b883-42d2-a043-548302383281,Durafiber
-SC1,37918103-b2fe-45ef-9a83-347570b67525,Duraflex
-SC1,621fbfe1-94f5-4bc7-a14d-4e6bb4233b1f,Duraglass
-SC1,095546da-1929-49bd-9b26-1cd46303d6fb,DynaMica
-SC1,499483c5-1175-4883-b442-2ceb7ad7e6d7,DynaPlast
-SC1,6c2379a9-00b4-41d3-87ec-a4cb5338ce8e,DynaTex
-SC1,52526a03-f895-4aa3-9184-2374fa6e80d5,Dynawood
-SC1,599609bd-d12e-430c-8a91-39f476f75bb4,Ecolith
-SC1,0648a36c-25fb-437f-9771-e8e3d24796ca,Fibrilith
-SC1,fe27b371-59af-49de-b5c0-92beeb810bc5,Fibrinex
-SC1,276997c7-b133-4a75-ae72-ee06bb9616da,Fibrinova
-SC1,8dfed0d1-bb4a-4c44-930b-b30a3565998d,FlexiCarbon
-SC1,a6e3532d-9126-456d-a8e8-b0071bcc6a3b,FlexiFoam
-SC1,493c59a9-827f-467c-9449-7f567b96f01e,FlexiSilk
-SC1,af29f06d-4525-4391-b0be-e328d40d0cad,Flexiprene
-SC1,9291b145-632f-4553-9371-706f2d7c4b4e,GraphiFoam
-SC1,badf31eb-47a4-49ac-a791-07db1e2327a4,GraphiSteel
-SC1,ae131c1b-4ce9-4e81-bfb2-6d2f39f92586,GraphiTex
-SC1,92fe1170-f0b5-4953-95c0-191380149547,GraphiWood
-SC1,d62efb1f-fb8a-44dc-b592-a50456ef0007,Graphiflex
-SC1,c9d0e5ff-b203-4de5-93e8-afd37c938a4e,Lumiglass
-SC1,98f92c00-9988-4cab-b873-60a3061f84e8,Magniflex
-SC1,82c10c13-fa65-4ae7-830c-788a688e671e,Metalfiber
-SC1,55891f74-d87c-45e7-8dc2-21525cf6aca5,Metalline
-SC1,8e5391e5-7651-4f54-a641-54893926f88d,Metallite
-SC1,8ac1fe01-58d7-4a59-9494-2656af933317,Metalloplast
-SC1,5dec9107-4587-4aa6-9ba2-6874c21ad496,Metallura
-SC1,220029d5-f9d1-4674-a8f1-5aa454b79123,NanoFlex
-SC1,2840134f-831c-484e-99d3-0be3bd61dcae,NanoWood
-SC1,484c519a-8e40-4911-9e6a-25bb016c38c4,Nanoclay
-SC1,a3573842-0b25-4d95-aef2-3217dbf8dedb,Nanocore
-SC1,27604427-e4b6-4d3d-ad15-b0efa9aa18b3,Nanogel
-SC1,7edb7dfc-c540-47ae-adc3-070bf23517f1,NeoFlex
-SC1,f507fa86-8ef3-4c35-9880-0e33e26bd911,NeoFoam
-SC1,c27eccd0-8fef-415f-9db9-faa24731db9b,NeoGlass
-SC1,1b2bf064-86b0-4d0c-a4c2-5aec58009b31,Neofiber
-SC1,742a5297-077d-4110-af69-bf35e6a8b3de,Plastiflex
-SC1,b0f57178-86d3-4f07-86cf-10fc2d5d3fe2,Plastistone
-SC1,71bfaaa1-913b-4fc4-8642-c3a73ca2d613,Plastiweave
-SC1,149e3db4-f52e-421e-a471-de0d5cd50abc,Polycore
-SC1,724b5e25-572b-42ed-aed9-bfce2e15986e,Polymetal
-SC1,bb7325f7-a8d0-426e-a748-d6982108356a,Polyplast
-SC1,b1554dde-1b61-49f3-b30a-84d930245392,Polysilk
-SC1,88b10f23-0dde-42ba-b55c-b6e470fd06a8,Polytex
-SC1,1ac25252-26bb-444a-b155-da916905013e,Polywood
-SC1,8a09cdaa-a5dc-4519-a0c1-02f4283e126b,Quantumetal
-SC1,604759af-7494-435f-aae2-470bc01fec25,Quantumflex
-SC1,186f4c7b-0218-4f40-8bff-5ead78ca7e0a,Quantumtex
-SC1,b87760ea-9205-4972-9867-1655c50a0a50,Quicksilicate
-SC1,25799fbe-467a-4f66-91e8-64d60dc48bfc,Quicksilva
-SC1,6cd9d11c-5778-493e-ab8a-45657321a952,Quicksilvate
-SC1,2cf78acc-5521-4011-b368-f9071c205a25,SilicoSteel
-SC1,b02a4115-5302-417e-a37b-266925d4ff86,Silicofoam
-SC1,5a15b19c-592b-42a7-85d2-5909b8aff13d,Silicogel
-SC1,5493331c-26ef-4d00-afce-5e73d8969342,Siliconova
-SC1,bdd0c9b3-150c-4cfd-805c-bd75772a1a93,Silicowood
-SC1,d176cd27-3c99-4fc6-b7c7-b3c0d2b2e49f,Silvertex
-SC1,00d05274-7f64-42f6-9705-ef9769621c2b,SynthiCore
-SC1,82838764-0c02-4d0c-9773-923917e61ff1,SynthiTex
-SC1,c6fc3ffe-1a5d-4070-b540-4059f5b26fbb,SynthiWood
-SC1,b82ee06f-cb19-4aeb-9c25-551db725e27a,Synthifiber
-SC1,56e47681-9b26-461e-9f21-e1a0deb505a8,Synthiglass
-SC1,abbc2b6e-c43a-4736-a5fb-edac6afc9efa,TechnoWood
-SC1,03c8668c-6a9e-4c0c-8210-6d4cec21befa,Technofiber
-SC1,51ca91c1-d072-4218-9b7c-bbe91af5c329,Technothread
-SC1,3401412f-6241-40c6-aed0-83bf055c723b,Thermoflex
-SC1,09a440d0-c04b-49b4-be01-cd3e7e8e4a3f,Thermogel
-SC1,b484e856-68de-4c19-ac2a-7c48a270009b,Thermoglass
-SC1,2e15108d-f414-4e8c-a27b-747018763d25,Thermoplast
-SC1,c1752943-152c-44e1-97f0-99a5dd1c018b,VibraSteel
-SC1,6e43403f-8434-466b-a131-ad9ff971618d,Vibrafoam
-SC1,f2f0dfd1-2143-4b3f-82d8-80fc232cddd9,VibroSteel
-SC1,b407fdcb-19cd-4004-be0c-5b0c3bd5c5c8,Vibrocrete
-SC1,4bc54135-7df5-4636-8d71-c60268b12074,XenoPlastic
-SC1,f7539f01-86c2-4645-aac4-631d164438b6,XenoSilk
-SC1,04b1984a-bc50-4811-b4e2-0a411fbe7aa8,XenoTex
-SC1,91eff805-bea3-4506-8161-cf265be830a0,Xylogel
-SC1,2450edb3-49bd-4075-9b69-53d707af1dbb,Batmobile
+SC1,cd5f7f91-e63c-473d-b55a-6772dfb3b740,BFG 9000
+SC1,41cf4b2a-41e9-4ae2-adda-6be472eb0810,Batarang
+SC1,e62ba463-74a7-4718-b528-55d56d198603,Batman's Utility Belt
+SC1,d70b6034-064b-4503-b787-d68f72e696f5,Black Widow's Bite
+SC1,591b4ef2-6471-43a5-9c03-fa931c00d6f5,Blade Runner Gun
+SC1,2b75f1a3-4fbf-4078-b464-a4316fbf2ad7,Bumblebee's Blaster
+SC1,9eb2ec38-ecec-4891-a4cb-d28dced5de55,Buzz Lightyear's Helmet
+SC1,34962c81-1b20-4873-8f64-5d71bf9a411b,Captain America's Shield
+SC1,cc7881f8-ff35-415d-a73d-934aec0ab7d7,Captain Nemo's Nautilus
+SC1,39c4e201-1f3e-431f-acae-fe106115b655,Captain's Log
+SC1,8bc0dd60-5c2c-4604-9b21-6714f7705f31,Chewbacca's Bowcaster
+SC1,232fb4ef-e223-4aa9-8e1d-93792b4530c2,Dobby's Sock
+SC1,1020fc2f-855d-4016-813d-eb8efb93b5ac,Doctor Strange's Cloak
+SC1,a5dbb750-d12b-44fd-9e2c-18177a0961f6,Dragon Egg
+SC1,842c721b-5b39-4a03-8672-b3da4c000b77,Dune Sandworm
+SC1,aced8d5b-c6f4-469f-b5b8-e2cb2d53d1f1,Ecto Goggles
+SC1,4406966f-884e-4539-a378-66dc1dbe5c0f,Elder Wand
+SC1,7239d3c2-a791-4eeb-abc4-99ec05f76957,Ewok Spear
+SC1,6b7b8c64-2898-4622-a1c1-7ab2cf5645f5,Excalibur
+SC1,53eece98-233f-4a7f-a2cd-0b9f2ab62b72,Frodo's Backpack
+SC1,9ac35fd4-2092-4d26-ada5-8d3a7faf1f99,Gandalf's Staff
+SC1,6d77586c-55ef-4a03-9576-a6b026516b65,Ghost Trap
+SC1,8a2f2409-8e29-4afb-bf4c-9510d4486377,Glaive
+SC1,9dc0cfbd-cebb-4f13-a66d-ff1acdc44df8,Golden Snitch
+SC1,808d8eee-aa87-4d01-b5ad-1e0d326e445b,Gom Jabbar
+SC1,b6fbde7d-3506-4a2c-953e-0369d621bccf,Green Lantern Ring
+SC1,e33601ab-668f-47df-ade7-60e28f66176f,Han Solo's Blaster
+SC1,844907cc-e4f4-4487-8a2a-004f8ce2d11a,Harry Potter's Wand
+SC1,0e4d1c5f-b175-4d3f-b160-2206eaff8576,Hawkeye's Bow
+SC1,06ddf9a9-d462-4116-a0e7-4d5ea536afa2,Hitchhiker's Guide
+SC1,27873b24-6fed-467b-a27e-47711d0e184b,Hitchhiker's Towel
+SC1,89a6528c-7822-4290-948e-08ab879c012f,Hobbit Pipe
+SC1,1501d287-0557-42ef-8e7d-d3cdbb54af1a,Hogwarts Acceptance Letter
+SC1,05fb1785-a25c-4e08-9fce-ea8e2f1a06a4,Holocron
+SC1,7a41e278-c1c2-4fa9-bef0-2779da56975a,Hoverboard
+SC1,2b9c860b-da68-4497-bea5-378df14a3f2e,Infinity Gauntlet
+SC1,29a5b547-1edc-4319-8b94-db84454b96c8,Iron Man Helmet
+SC1,a0f7edc1-68ab-485a-b00d-4fca24167fb9,Iron Man Suit
+SC1,3fd05472-2bf2-4389-9347-a0f708f8bbac,Kryptonite
+SC1,dae349e1-ab5c-4b2d-960d-d523bead678f,Lightsaber
+SC1,92651471-6b62-4e55-9070-fba9e44b8c0c,Marauder's Map
+SC1,57b06d9c-a639-43ea-a38f-dcd64c8b6550,Marvin's Paranoia
+SC1,5a794500-0e18-48f1-8aa5-39804e765be0,Mjolnir
+SC1,9801d033-e346-4788-ae54-52ad290b4648,One Ring
+SC1,712ed65e-916d-4394-9482-2d2a0f54a40d,Pokeball
+SC1,f1d328f7-4942-409d-a07d-018ad60b647d,Potion of Invisibility
+SC1,f026cde3-b8e7-4924-b475-fb1b79df07e3,Power Glove
+SC1,e5123bc8-d3c2-4762-8a34-2e39b6446d9a,Predator Mask
+SC1,ca43e4fb-89c5-4330-b203-ddf58af2e3c1,Predator Wristblade
+SC1,36f446c7-8b42-4177-ab6f-a0af1de13513,Proton Pack
+SC1,80e69000-5db7-4a72-bbaf-9fc4625a2230,R2-D2's Holographic Projector
+SC1,156ae6a5-b0ea-456a-bcc2-f9bfa5a8fa9b,Replica DeLorean
+SC1,8b4c5d9c-cb71-4aee-84d3-dbf5b81b0dd3,Rosebud Sled
+SC1,86406e7b-b203-4e5b-a596-46f11663354e,Ring
+SC1,2bce914c-f7ce-49ea-9f9c-1ae24e986ca9,Scepter of Ra
+SC1,799f10a7-6f1a-4dc2-9aab-e5cc61103742,Singing Sword
+SC1,b565b2ad-df50-4851-b608-b1c192fdbc5b,Sonic Screwdriver
+SC1,7cec2011-cf08-4b94-9551-e955c8f7e816,Spider-Man Suit
+SC1,c2cf20a8-ea67-44a8-89aa-ee37da50332b,Stormbreaker
+SC1,2a95a0b2-c0c7-40e2-b7dd-01a8caa59138,T-800 Endoskeleton
+SC1,56c176c8-76c4-41d9-a0eb-3939168f0297,Tardis Key
+SC1,0fabd476-09fd-4872-abda-23d1862ac67c,Tesseract
+SC1,21818405-e50f-4f5e-99eb-e369438c1c6e,The One True Ring
+SC1,b2958eae-dca3-46d0-80c1-9d284be72c0e,Thor's Hammer
+SC1,0e4a6c97-5e84-4e8a-a6f2-ad2da0e5dc5f,Time Stone
+SC1,ebc31ff6-22fe-493b-8065-e889a91e86cc,Time-Turner
+SC1,056e2663-4033-4650-adf6-a5dbf85f40fa,Tractor Beam
+SC1,be209f1d-22e5-4809-9fd4-46362ab9a5c6,Tricorder
+SC1,ccac537e-dfa8-4aa6-aca8-a15a60145286,Vibranium Shield
+SC1,3d82380b-4d95-4159-8558-f5daef4c0325,Vorpal Sword
+SC1,aef61f0a-ee32-4a12-9a8d-16798d785ddb,Wand of Merlin
+SC1,179dc85e-7272-4136-8fe1-27037c298f08,Web-Shooters
+SC1,37d5d847-8f48-434f-be53-d893bad6d512,Wolverine's Claws
+SC1,b4aab8f1-9da8-421c-8e12-7f807f321ba0,Wonder Woman's Lasso
+SC1,fda492ce-50e8-40d8-8fe5-aae9f2a2bc23,Xenomorph Egg
+SC1,bb8aef35-9d3b-4b5a-be5f-ec5d2349f84e,Xenomorph Tail
+SC1,938a3e98-6555-495e-9cc3-43e9e630e7c7,Dragon Stone
+SC1,9f497090-eb02-445a-abd7-3dc0201b9ce9,Red Wedding Goblet
+SC1,9d4a3205-5f0f-4d6c-a8ae-f64a3d3ccc7b,Valyrian Steel

@@ -1,90 +1,44 @@
-MANDT,KUNNR,NAME1,ERDAT,ERNAM
-SC1,e476abe7-84a9-4086-94dc-50e323f39c92,ARCAM Corporation,2009-10-05 00:04:22,Kristen Eckhoff
-SC1,4a1535ad-5dfe-4755-a88b-1ce4b9507696,Ace Chemicals,2009-08-20 09:15:08,Gloria Ashburn
-SC1,d4e4dea2-09f8-4c2e-848d-ea01482bd803,Ace o' Clubs,2009-01-30 21:59:32,Rona Hennis
-SC1,0d58a270-0317-4770-9662-f227050c7b9c,Acme Corporation,2009-12-19 01:27:58,Kenia Romine
-SC1,4acdd3f4-c325-4ebd-ae15-2ed36135472c,Adipose Industries,2009-05-06 20:55:11,Leontine Sifford
-SC1,33a3ba57-1926-4689-a696-413e7af4cd6e,Advanced Idea Mechanics,2009-06-23 22:22:40,BATCH_JOB
-SC1,090b82dd-d821-421e-b8b4-31d8027ad3d7,Alchemax,2009-11-21 10:17:59,Lang Winkler
-SC1,d21bee32-2a84-4836-a382-6adb99268ca6,AmerTek,2009-11-25 18:51:09,Lavonna Haymon
-SC1,baaf851f-6ba3-4d2f-aea0-2909cc92085e,Big Belly Burger,2009-11-14 19:52:34,Jamie Mcclellan
-SC1,409da0e8-c341-4dbb-9fa6-7ccf971d0ee0,Blaze Comics,2009-04-11 09:22:40,Emmie Schuldt
-SC1,f65e41c8-031c-48db-b61c-abe210f31888,Bonk Business,2009-05-13 07:13:51,Lang Winkler
-SC1,d0d41afa-1f80-43d7-b8e3-829031fe0781,Bonsai Kitten,2009-09-25 06:04:20,Alfonso Wernick
-SC1,8335be13-762b-41ae-8b2d-e6533f666035,Brand Corporation,2009-11-04 01:12:59,Kenia Romine
-SC1,002be32c-01f0-4751-ac5b-634cb9a61516,Breakages,2009-06-15 13:43:58,Tasia Snelgrove
-SC1,79d48aa2-869a-4246-aec3-5689e1356ede,Buy More,2009-01-26 19:07:56,Kenia Romine
-SC1,c3dfa87e-2f53-492d-8ddd-5300d2c68ee4,Buy n Large,2009-03-05 12:40:27,Lora Rieder
-SC1,d6063242-cc84-4472-b817-6cca97ee328b,BuyTigers.com,2009-08-30 10:54:21,Marcela Ye
-SC1,9d5842cc-54ed-4850-a17c-80ecd8b7f189,CHOAM,2009-09-11 08:17:49,Alejandro Atwood
-SC1,61c52062-f270-45a7-bf56-4b4db0552975,Clothes Over Bro's,2009-03-18 14:46:55,Lillian Wheaton
-SC1,58014c54-2ec5-4e77-900b-b89ef16db1b2,ConHugeCo,2009-12-14 23:15:41,Ward Weckerly
-SC1,d3e83dfe-4285-4189-aaaf-a5383d4d8fbe,Consumer Recreation Services,2009-08-20 19:18:09,Lang Winkler
-SC1,e74641e2-e664-400a-8d13-4e12b7959f65,Contoso,2009-02-09 11:03:02,Lillian Wheaton
-SC1,82372230-d9ed-4b1d-82a0-86ce228a42e6,Cross Technological Enterprises,2009-12-12 00:31:06,Lora Rieder
-SC1,e6e820cc-99c1-46de-a576-9e688a975269,Crosstime Traffic,2009-09-04 19:16:52,Irene Llanas
-SC1,67d7b5f0-37fd-4d27-be85-860fb9bd396f,Crudgington Brewery,2009-03-03 12:00:28,Emilio Sones
-SC1,e26688f1-e688-488d-9d25-0225e6a1d071,Daedalus Research,2009-11-28 03:24:34,Emmie Schuldt
-SC1,84cc0cfa-4986-4f17-9e5d-8b62fd593578,Daggett Industries,2009-06-25 02:46:38,Dalila Proehl
-SC1,8b34aea0-1fbc-401e-b651-86150b0b4a70,Dr. Zeus Inc.,2009-07-18 10:20:30,Felice Cover
-SC1,34263ed2-c7fb-4aef-9267-8386e91993c8,Dream Park,2009-01-13 09:26:58,Luisa Solar
-SC1,97ef743e-89b1-4992-9621-2ae3e16e99eb,Dunder Mifflin,2009-06-16 21:42:16,Emmie Schuldt
-SC1,bf328270-f1ec-48dd-89e5-adb774f14e4f,Fantastic Four Incorporated,2009-06-20 12:55:28,Rona Hennis
-SC1,26cb8a8b-97cc-4b97-9ca6-abde39b6a743,GameCenter CX,2009-07-22 16:54:02,Lawerence Pintor
-SC1,57da73bb-eefc-428e-a584-1ac09d8ef5c4,General Products,2009-08-08 10:01:37,Lessie Scheck
-SC1,7501afa4-4690-4ccf-9f2b-b7c232dc34bd,Global Digital News,2009-06-21 10:45:06,Ceola Harry
-SC1,648fb957-600c-4f06-947f-09e6aa5cab7b,Golden Goblin Press,2009-01-22 22:09:25,Suellen Noecker
-SC1,979e20d4-998b-4716-888b-41c93f7a9e98,GothCorp,2009-10-12 19:58:54,Felice Cover
-SC1,8dbe342e-0ea0-4349-83c7-035af57546cc,Halo Corporation,2009-07-19 20:39:01,Lawerence Pintor
-SC1,7d27b450-671d-4f35-a170-da7c3dcb5591,Haly's Circus,2009-07-31 16:06:56,Gloria Ashburn
-SC1,e60ea797-1d35-4280-93d0-ca229448dbfc,Haspel Corporation,2009-07-30 23:45:29,Kristen Eckhoff
-SC1,c2eb5272-1df5-45ab-b38d-fc3f0a2fe46e,Hooper's Store,2009-05-19 01:37:18,Jena Jeans
-SC1,13fc5f4e-117b-4037-98a1-40692824ed78,Iceberg Lounge,2009-02-16 13:33:57,Jamie Mcclellan
-SC1,9674f7aa-5dba-444b-9612-286acf76f434,Jabot Cosmetics,2009-09-10 06:55:43,Jena Jeans
-SC1,9df3f567-0f14-4a29-aa98-0cabfbde7629,Kitchen Table International,2009-12-05 04:01:58,Alfonso Wernick
-SC1,dd3446f8-dac1-4b4e-b6f8-7f8efaa8ed2f,Kord Enterprises,2009-03-10 16:15:28,Gloria Ashburn
-SC1,ce5d5b8a-d2c6-4dfb-aea8-842ab7415a7e,L'Desh Fresh,2009-06-01 19:05:50,Toby Narvaez
-SC1,5e11e8ed-ec4b-4f4d-ba41-16049960bddb,Landau,2009-11-13 19:22:21,Luisa Solar
-SC1,29d7b315-2cd9-4e31-a135-a15b48c140ea,LexCorp,2009-01-07 02:32:38,Kenia Romine
-SC1,21a390ec-fdf7-44e9-8a37-cb0b9fd20dba,Life Foundation,2009-05-12 00:48:14,Lavonna Haymon
-SC1,af2a097c-0f6f-4f32-89d7-3410a83cd26f,List of fictional brewers,2009-09-25 06:33:56,Felice Cover
-SC1,6236c72f-199f-4f3e-b0ef-b29d49fac4ea,Mammoth Studios,2009-08-07 03:02:37,Rachel Onorato
-SC1,7135d9b1-b8ae-4317-8d74-1f7753134f66,ManBeef.com,2009-05-27 23:13:33,Lora Rieder
-SC1,686ddce7-5a26-4f16-afcd-985596dfbb33,Management Corporation,2009-01-29 22:59:01,Yanira Gottfried
-SC1,f955fd98-650b-4f94-a56f-1271057cde24,Massive Dynamic,2009-07-15 21:13:05,Alfonso Wernick
-SC1,e29afd6d-9e65-420c-84f5-ca9a4b055163,McMahon and Tate,2009-12-05 14:00:52,BATCH_JOB
-SC1,d4ad3956-ea34-431a-b199-38753180d696,Media in The Simpsons,2009-11-30 22:04:03,Francina Bevington
-SC1,6949bf9b-840f-41e1-8a47-df88342f14f5,Megacorporation,2009-01-26 17:20:00,Dalila Proehl
-SC1,331abbaa-271a-4cf1-8c0a-af0d5d353bb1,Michael Scott Paper Company,2009-11-28 09:00:19,Leontine Sifford
-SC1,74b58bea-86d6-4823-89d8-0f2e361d5979,Monsters,2009-07-16 13:38:20,Anna Hulings
-SC1,72b50dd1-c7d6-4479-83c9-c58b1b14c8a6,National Motors Corporation,2009-09-08 20:33:53,Bradford Amarante
-SC1,12818303-4852-423b-911d-3ce666f82fca,Nologo Corporation,2009-06-11 10:43:56,BATCH_JOB
-SC1,379b02cf-2cab-483b-9c8b-ce7e7e5649fe,Octan,2009-04-01 16:18:41,Kenia Romine
-SC1,6d815223-2fce-4f30-a606-ba88315323bc,Oscorp,2009-10-29 23:08:00,Lavonna Haymon
-SC1,9df39176-dde0-474e-aad9-44b93f67757a,Paper Street Soap Co.,2009-11-08 07:22:16,Yanira Gottfried
-SC1,7e21cb94-aeb9-43b8-b19f-74b7d2f6e913,Parker Industries,2009-03-24 22:56:17,Ward Weckerly
-SC1,a84ac42c-24f3-480c-9949-257144ba0708,Phua Chu Kang Pte Ltd,2009-12-10 13:42:20,Alvin Malin
-SC1,31d4b690-80a0-4a76-b86e-346700f077f6,Power Broker,2009-01-17 15:21:07,Felice Cover
-SC1,ae8ac5be-5752-4516-a7f0-858410a1489e,Queen Industries,2009-07-22 21:28:02,Felice Cover
-SC1,5c53da0f-6d40-47c2-a225-80f24e24262e,RAMJAC,2009-08-02 18:00:07,Leontine Sifford
-SC1,6abfb4c3-d787-4de3-bd55-8511ca45c924,Red Bedroom Records,2009-08-05 07:30:04,Toby Narvaez
-SC1,798bca3f-4922-4152-9d3c-473999a54431,Roxxon Energy Corporation,2009-05-27 07:17:12,Lucina Boyers
-SC1,839b151a-99ec-44fb-85b7-abce1e1802e8,Santini Air,2009-11-19 10:04:50,Lucina Boyers
-SC1,96c387ed-7e56-4eb1-b925-4202575b74d0,Seburo,2010-01-01 23:55:52,Kristen Eckhoff
-SC1,b67a8af6-2983-44d5-907f-26d522a178b3,Shadrack & Duxbury,2009-06-08 23:26:25,Rachel Onorato
-SC1,cb286aa8-cc86-47ed-acbc-274d0c67e90e,Sloane Curtis Advertising,2009-01-13 19:02:24,Jamie Mcclellan
-SC1,d7c680a9-542f-40e7-b7f3-9cdaf1c4634c,Soder Cola,2009-05-06 03:17:34,Emilio Sones
-SC1,c609f037-5e32-40c2-89d7-099244c49dcd,Stagg Enterprises,2009-04-15 14:14:47,Emmie Schuldt
-SC1,8309cb8a-83f4-494a-9091-8e09d1a0480e,Stark Industries,2009-08-24 15:23:09,Leontine Sifford
-SC1,77c58d94-7e9a-4d7b-905b-7fc7efe00dd6,Struan's,2009-11-07 17:10:24,Lillian Wheaton
-SC1,a2bc8922-4e48-4afd-bb38-aa8a235c0150,The Lightman Group,2009-02-09 17:16:48,Gloria Ashburn
-SC1,caff74cd-aff0-4c5b-b8fb-f82ade7d10b6,The Monster Maker,2009-08-20 23:13:31,Alvin Malin
-SC1,ef1fcefe-8404-4b1a-ae95-8339373f4dad,The World Gone Mad,2009-07-26 05:45:39,Leontine Sifford
-SC1,f17906e3-d618-4390-b115-578fef50f317,Tyrell Corporation,2009-03-28 10:05:57,Tasia Snelgrove
-SC1,d97490d6-ce4e-42d0-8c3a-e625e71be320,U.S. Robots and Mechanical,2009-05-26 16:41:20,Leontine Sifford
-SC1,0437746d-b98d-4f48-b81b-3db49166f5aa,Vaillante,2009-03-16 22:56:26,Roy Ortego
-SC1,8d3d9152-0d12-40bd-9593-51c1a4a82911,Wallenquist Organization,2009-10-20 07:35:03,Yanira Gottfried
-SC1,bbdccb9f-0b95-4729-8e60-6a4509e9d27b,Wayne Enterprises,2009-11-22 14:04:12,Lavonna Haymon
-SC1,3041608a-fe66-4a6f-bb57-71cc008d563f,Weyland-Yutani Corporation,2009-12-19 21:18:05,Luisa Solar
-SC1,1e035d0d-b182-49ef-9a20-b87ec0f36f66,World Company,2009-01-26 06:16:23,Orville Sheilds
-SC1,d14d4028-01fc-4391-8cbd-3d3a2d53d092,Yoyodyne,2009-11-12 08:01:21,Bradford Amarante
+MANDT,KUNNR,NAME1,LAND1,ERDAT,ERNAM
+SC1,9bfd072e-2c91-40dc-8bbc-4ca3aed0b4d9,Stark Industries,United States,2009-04-21 12:36:17,Harry Potter
+SC1,68107c15-4e4e-444c-b1dc-180ddae23c2e,Wayne Enterprises,Gotham City,2009-07-03 21:39:41,Harry Potter
+SC1,20aaaa72-1e9f-4094-859a-092c490c523a,Weyland-Yutani Corporation,United Kingdom,2009-02-10 22:14:00,Jason Bourne
+SC1,adc13fe4-50f3-4750-ba17-f60a77d8cbea,Acme Corporation,Canada,2009-08-03 01:38:34,Michael Corleone
+SC1,f02528f1-f38d-4057-8ddb-aa031965697f,Umbrella Corporation,France,2009-06-23 08:52:53,Ethan Hunt
+SC1,ed126b66-7ab0-4b5d-a7cb-6e46634aebb2,InGen,Costa Rica,2009-06-19 15:10:54,Ellen Ripley
+SC1,62d5e436-a90f-4eab-bb3e-4dc285a9fdc7,Bluth Company,United States,2009-02-18 21:20:41,Katniss Everdeen
+SC1,39fcf711-6ee3-494a-b523-d86cc08985a1,Ghostbusters Inc.,United States,2009-05-31 16:39:42,Ethan Hunt
+SC1,8bcba09d-4108-4a2a-bad9-236f40125b2a,Dunder Mifflin Paper Company,United States,2009-09-25 01:31:33,Luke Skywalker
+SC1,3cb285d1-5839-4fd4-8084-1860bcfb2ad8,Monarch Sciences,Japan,2009-12-24 00:44:32,Marty McFly
+SC1,30712f11-ffa2-4972-a3d7-882716eefa53,Cyberdyne Systems,United States,2009-05-18 12:21:24,Tony Stark
+SC1,78eba529-6902-4096-a9ee-087bb98f3980,Dharma Initiative,Australia,2009-05-11 17:30:33,Jack Dawson
+SC1,4f8b41f0-8304-4087-98fa-57d25650198f,Strickland Propane,China,2009-02-25 18:44:48,Ferris Bueller
+SC1,7fb0263a-c384-4b66-bba1-8bb85d9815ee,Nakatomi Corporation,China,2009-05-07 01:51:55,Tony Montana
+SC1,1152532b-1d9c-40c2-a2fd-f1f121ddada0,Willy Wonka's Chocolate Factory,Germany,2009-01-19 20:37:29,Luke Skywalker
+SC1,cd5154d9-f502-4766-a8d7-7faae4ceac0d,Gringotts Wizarding Bank,United Kingdom,2009-02-20 11:44:43,Forrest Gump
+SC1,822df8a2-8d12-44aa-9dc3-4d33f2608475,Blue Sun Corporation,China,2009-10-22 16:47:02,Vito Corleone
+SC1,1f809b18-ce77-4251-afef-9382e0451bb9,Soylent Corporation,New Zealand,2009-07-12 22:32:55,Marty McFly
+SC1,eba31e2b-42f1-404f-9625-7c4194e725b3,Tyrell Corporation,China,2009-01-13 15:31:04,Travis Bickle
+SC1,7fb7a44a-187d-40e9-a2b4-397bb2fdd5ad,Stoors Electronics,Germany,2009-10-31 02:22:13,Marty McFly
+SC1,76069c04-b7f2-4a45-b293-c9b73934b9d4,Cyberlife,China,2009-05-10 06:24:26,Darth Vader
+SC1,9deab10e-0a8f-4d16-b864-fb699c390976,Paper Street Soap Company,United States,2009-11-11 01:58:32,Michael Corleone
+SC1,ad3f8c6e-ea87-405a-a488-6959ef54ea2b,Virtucon,United States,2009-09-10 07:40:22,James Bond
+SC1,5a413c4f-3745-443f-86cf-48c957ced208,Los Pollos Hermanos,Mexico,2009-04-29 09:04:56,John Wick
+SC1,e4ef363e-4ee9-4a82-9501-6f749948277f,HankMed,United States,2009-05-08 07:11:10,Jack Dawson
+SC1,c0deb79c-0a42-4902-9245-f57d8dba0d85,Pied Piper,United States,2009-12-27 00:59:12,Holly Golightly
+SC1,5d7eb495-f290-4c57-bedc-e44154ebadb6,The Bluth Company,United States,2009-12-23 08:51:04,Tony Stark
+SC1,e71bac51-72cf-4ee5-91db-66653c4dbc49,Gekko & Co.,United States,2009-07-07 18:35:01,Rick Blaine
+SC1,dc78cb98-d080-4b0e-972a-97bb66daf8e9,X-Corp,United States,2009-01-18 19:41:38,Walter White
+SC1,a31d01e8-3980-4f28-b181-f6e1ff56b811,LuthorCorp,United States,2009-07-17 13:01:07,John Wick
+SC1,3d0a28c4-a7dc-4146-afe3-79bd897ed392,"Monsters, Inc.",Germany,2009-04-01 06:55:26,Harry Potter
+SC1,9e43ec25-5db7-427a-b977-02c3701d5f4e,The Daily Planet,United Kingdom,2009-08-29 06:05:36,Sheldon Cooper
+SC1,560da7ec-253e-4c3d-b182-aca16375bd91,Waffle House,United Kingdom,2009-04-30 01:07:34,Frodo Baggins
+SC1,f8305bde-4efd-4473-8084-10dd9fa19f09,Waystar Royco,United Kingdom,2009-09-11 10:08:10,Michael Corleone
+SC1,44952f91-bc22-478b-a352-2321d0239a0b,Wernham Hogg,United Kingdom,2009-02-04 23:21:28,Indiana Jones
+SC1,a18e0e79-87da-4a24-808e-0d50ddeba2bc,Krusty Krab,Japan,2009-10-09 10:06:09,Dorothy Gale
+SC1,89e6d547-993c-4015-8da0-d4f9da68573e,Skynet,Germany,2009-01-26 01:30:11,Jon Snow
+SC1,f564183b-70fa-4a25-a31c-c25f1c488689,BiffCo,United Kingdom,2009-04-07 13:45:46,Lara Croft
+SC1,705b0b76-8d25-485c-990b-3768d8b6c516,Bluth's Frozen Banana Stand,United Kingdom,2009-10-31 02:05:20,Jack Sparrow
+SC1,745705e1-af5f-4a66-8eea-b1fd593b3dc9,Central Perk,United Kingdom,2009-10-25 14:37:38,Tony Stark
+SC1,490fbb51-43bc-40a2-b33f-6871b770acdb,Hatchling Studios,United Kingdom,2009-08-30 17:04:41,Dorothy Gale
+SC1,7a8a811a-f272-4aa0-a458-f9f533b27c65,Monarch,United Kingdom,2009-05-01 00:39:16,Forrest Gump
+SC1,222ca7e5-caaf-4181-8e7d-d3c44adf4d57,White Walker Inc.,Germany,2009-10-10 18:06:44,Clarice Starling
