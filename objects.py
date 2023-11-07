@@ -91,10 +91,10 @@ class SalesOrder:
             [0.00, 0.05, 0.00, 0.00, 0.80, 0.00, 0.00, 0.00, 0.01, 0.01, 0.00], # set billing block
             [0.00, 0.00, 0.01, 0.00, 0.00, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00], # ship goods
             [0.00, 0.80, 0.05, 0.01, 0.00, 0.00, 0.05, 0.00, 0.00, 0.00, 0.00], # remove billing block
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.80, 0.00, 0.00, 0.00], # send invoice
+            [0.01, 0.01, 0.00, 0.01, 0.00, 0.00, 0.01, 0.80, 0.00, 0.00, 0.00], # send invoice
             [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00], # cancel order
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.80, 0.00], # receive delivery confirmation
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.20, 0.00, 0.80], # return goods
+            [0.00, 0.01, 0.00, 0.01, 0.00, 0.00, 0.01, 0.00, 0.00, 0.80, 0.00], # receive delivery confirmation
+            [0.00, 0.01, 0.00, 0.00, 0.00, 0.01, 0.00, 0.00, 0.20, 0.00, 0.80], # return goods
             [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00], # clear invoice
             [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00]  # end
         ])
@@ -138,8 +138,8 @@ class SalesOrder:
         actual_delivery_dt = planned_delivery_dt if random.uniform(0, 1) < 0.5 else planned_delivery_dt + helpers.UPTO_WEEK()
 
         # update cycle time by material avialability
-        avg_mat_availability = sum([SOi.material.availability for SOi in self.vbaps]) / len([SOi.material.availability for SOi in self.vbaps])
-        if avg_mat_availability < 0.6:
+        min_mat_availability = min([SOi.material.availability for SOi in self.vbaps])# / len([SOi.material.availability for SOi in self.vbaps])
+        if min_mat_availability < 0.5:
             delivery_doc_created_at = self.latest_activity_at + helpers.UPTO_MONTH()
         else:
             delivery_doc_created_at = self.latest_activity_at + helpers.UPTO_WEEK()
