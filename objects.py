@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import uuid
 import values, helpers
 import random
@@ -69,6 +70,35 @@ class SalesOrder:
         # Create Sales order 
         self.create_vbap_rows(num_items=(random.randint(5, 15)), materials=materials)
 
+        # transition matrix
+        self.tmi = {
+            'generate_delivery_doc': 0, 
+            'release_delivery': 1, 
+            'set_billing_block': 2, 
+            'ship_goods': 3, 
+            'remove_billing_block': 4, 
+            'send_invoice': 5, 
+            'cancel_order': 6, 
+            'receive_delivery_confirmation': 7, 
+            'return_goods': 8, 
+            'clear_invoice': 9,
+            'end': 10,
+        }
+        self.transition_matrix = np.array([
+        #   [gdd., rdel, sbb., shig, rbb., sniv, cano, rdcn, retg, cinv, end.],
+            [0.00, 0.90, 0.05, 0.02, 0.01, 0.00, 0.00, 0.00, 0.00, 0.02, 0.00], # generate delivery doc
+            [0.00, 0.03, 0.03, 0.90, 0.00, 0.06, 0.00, 0.00, 0.00, 0.00, 0.00], # release delivery
+            [0.50, 0.05, 0.00, 0.05, 0.40, 0.00, 0.10, 0.00, 0.00, 0.00, 0.00], # set billing block
+            [0.05, 0.00, 0.00, 0.05, 0.05, 0.90, 0.03, 0.03, 0.01, 0.05, 0.00], # ship goods
+            [0.00, 0.00, 0.00, 0.00, 0.05, 0.85, 0.05, 0.01, 0.03, 0.01, 0.00], # remove billing block
+            [0.00, 0.00, 0.00, 0.00, 0.05, 0.05, 0.05, 0.90, 0.05, 0.05, 0.00], # send invoice
+            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00], # cancel order
+            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.10, 0.90, 0.05], # receive delivery confirmation
+            [0.00, 0.00, 0.08, 0.07, 0.00, 0.02, 0.90, 0.00, 0.00, 0.00, 0.08], # return goods
+            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.05, 0.05, 0.90], # clear invoice
+            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00]  # end
+        ])
+
 
     def update_latest_activity_time(self, new_latest_time):
         if self.latest_activity_at < new_latest_time:
@@ -105,12 +135,12 @@ class SalesOrder:
         """
         # set random delivery times
         planned_delivery_dt = self.latest_activity_at + helpers.UPTO_WEEK()
-        actual_delivery_dt = planned_delivery_dt if random.uniform(0, 1) < 0.75 else planned_delivery_dt + helpers.UPTO_WEEK()
+        actual_delivery_dt = planned_delivery_dt if random.uniform(0, 1) < 0.5 else planned_delivery_dt + helpers.UPTO_WEEK()
 
         # apply the effect of material availability and user tyoe
         avg_mat_availability = sum([SOi.material.availability for SOi in self.vbaps]) / len([SOi.material.availability for SOi in self.vbaps])
-        if avg_mat_availability < 0.4:
-            delivery_doc_created_at = self.latest_activity_at + (helpers.UPTO_WEEK() + helpers.UPTO_WEEK())
+        if avg_mat_availability < 0.6:
+            delivery_doc_created_at = self.latest_activity_at + helpers.UPTO_MONTH()
         else:
             delivery_doc_created_at = self.latest_activity_at + helpers.UPTO_WEEK()
 
@@ -127,7 +157,25 @@ class SalesOrder:
             delivery_doc_created_at =  self.latest_activity_at + helpers.UPTO_DAY()
         
         self.update_latest_activity_time(new_latest_time=delivery_doc_created_at)
+
+        # update return goods probability by throughput time
+        if (actual_delivery_dt - planned_delivery_dt).days > 3:
+            self.transition_matrix[self.tmi['receive_delivery_confirmation'], self.tmi['return_goods']] = 0.8
+            self.transition_matrix[self.tmi['receive_delivery_confirmation'], self.tmi['clear_invoice']] = 0.2
+            self.transition_matrix[self.tmi['set_billing_block'], self.tmi['cancel_order']] = 0.9
         
+        # update billing block probability
+        if self.company.credit_worthyness <= 0.4:
+            self.transition_matrix[self.tmi['generate_delivery_doc'], self.tmi['set_billing_block']] = 0.7
+            self.transition_matrix[self.tmi['generate_delivery_doc'], self.tmi['release_delivery']] = 0.2
+            self.transition_matrix[self.tmi['set_billing_block'], self.tmi['remove_billing_block']] = 0.8
+            self.transition_matrix[self.tmi['set_billing_block'], self.tmi['generate_delivery_doc']] = 0.2
+
+        # cycle time
+        cycle_time = (self.latest_activity_at - self.erdat).days
+        if cycle_time >= 15:
+            self.transition_matrix[self.tmi['generate_delivery_doc'], self.tmi['cancel_order']] = 0.05
+
         rand_likp_id = uuid.uuid4()
         self.likp_temp_list.append([values.mandt, rand_likp_id, planned_delivery_dt, actual_delivery_dt, delivery_doc_created_at, user])
         
@@ -151,6 +199,11 @@ class SalesOrder:
             delivery_released_at = self.latest_activity_at + helpers.UPTO_WEEK()
 
         self.update_latest_activity_time(new_latest_time=delivery_released_at)
+
+        # cycle time
+        cycle_time = (self.latest_activity_at - self.erdat).days
+        if cycle_time >= 15:
+            self.transition_matrix[self.tmi['release_delivery'], self.tmi['cancel_order']] = 0.05
         
         # record change
         self.cdhdr_changes_temp_list.append([values.mandt, 'DELIVERY', self.vbeln, rand_changenr, rand_usr, delivery_released_at])
@@ -172,6 +225,12 @@ class SalesOrder:
 
         self.mkpf_temp_list.append([values.mandt, rand_mblnr, 'GOODSISSUE', goods_shipped_at, user])
 
+        # throughput time
+        throughput_time = (self.latest_activity_at - self.erdat).days
+        if throughput_time > 15:
+            self.transition_matrix[self.tmi['ship_goods'], self.tmi['cancel_order']] = 0.07
+        
+
         for vbap_elem in self.vbaps:
             self.mseg_temp_list.append([values.mandt, rand_mblnr, self.vbeln, vbap_elem.posnr])
 
@@ -188,6 +247,11 @@ class SalesOrder:
         else:
             invoice_sent_at =  self.latest_activity_at + helpers.UPTO_DAY()
         self.update_latest_activity_time(new_latest_time=invoice_sent_at)
+
+        # throughput time
+        throughput_time = (self.latest_activity_at - self.erdat).days
+        if throughput_time > 15:
+            self.transition_matrix[self.tmi['send_invoice'], self.tmi['cancel_order']] = 0.07
         
         rand_vbrk_id = uuid.uuid4()
         self.vbrk_temp_list.append([values.mandt, rand_vbrk_id, 'INVOICE', user, invoice_sent_at])
@@ -211,13 +275,19 @@ class SalesOrder:
         # record change
         self.cdhdr_changes_temp_list.append([values.mandt, 'DELIVERY', self.vbeln, rand_changenr, rand_usr, delivery_confirmed_at])
         self.cdpos_changes_temp_list.append([values.mandt, rand_changenr, 'VBUK', 'LFSTK', 'DELIVERYRELEASED', 'DELIVERYCONFIRMED'])
+         
+         # throughput time
+        throughput_time = (self.latest_activity_at - self.erdat).days
+        if throughput_time > 15:
+            self.transition_matrix[self.tmi['receive_delivery_confirmation'], self.tmi['cancel_order']] = 0.07
 
     def clear_invoice(self):
         # Activity: Clear invoice
         rand_changenr = uuid.uuid4()
         rand_usr = random.choice(list(values.users))
 
-        invoice_cleared_at = self.latest_activity_at + helpers.UPTO_MONTH()
+        # DSO based on credit worthyness of the company
+        invoice_cleared_at = self.latest_activity_at + timedelta(days=int(np.random.normal(0, 100/self.company.credit_worthyness)))
         self.update_latest_activity_time(new_latest_time=invoice_cleared_at)
 
         self.vbuk = [values.mandt, self.vbeln, 'DELIVERYCONFIRMED', 'INVOICECLEARED', invoice_cleared_at, 'C']
@@ -248,7 +318,13 @@ class BillingDeviation:
         else:
             billing_block_set_at =  self.vbak.latest_activity_at + helpers.UPTO_DAY()
 
-        self.vbak.update_latest_activity_time(new_latest_time=billing_block_set_at)
+        # increase cycle time
+        self.vbak.update_latest_activity_time(new_latest_time=billing_block_set_at + helpers.UPTO_MONTH())
+
+        # increase cancel probability
+        self.vbak.transition_matrix[self.vbak.tmi['generate_delivery_doc'], self.vbak.tmi['cancel_order']] = 0.2
+        self.vbak.transition_matrix[self.vbak.tmi['set_billing_block'], self.vbak.tmi['cancel_order']] = 0.2
+        self.vbak.transition_matrix[self.vbak.tmi['send_invoice'], self.vbak.tmi['cancel_order']] = 0.1
 
         self.vbak.cdhdr_changes_temp_list.append([values.mandt, 'BILLING', self.vbak.vbeln, rand_changenr, user, billing_block_set_at])
         self.vbak.cdpos_changes_temp_list.append([values.mandt, rand_changenr, 'VBAK', 'FAKSK', pd.NA, 'BILLINGBLOCK'])
