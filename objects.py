@@ -86,12 +86,12 @@ class SalesOrder:
         }
         self.transition_matrix = np.array([
         #   [gdd., rdel, sbb., shig, rbb., sniv, cano, rdcn, retg, cinv, end.],
-            [0.01, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], # generate delivery doc
-            [0.00, 0.01, 0.01, 0.80, 0.00, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00], # release delivery
+            [0.05, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], # generate delivery doc
+            [0.00, 0.05, 0.01, 0.80, 0.00, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00], # release delivery
             [0.00, 0.05, 0.00, 0.00, 0.80, 0.00, 0.00, 0.00, 0.01, 0.01, 0.00], # set billing block
-            [0.00, 0.00, 0.01, 0.00, 0.00, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00], # ship goods
+            [0.00, 0.00, 0.01, 0.05, 0.00, 0.80, 0.00, 0.00, 0.00, 0.00, 0.00], # ship goods
             [0.00, 0.80, 0.05, 0.01, 0.00, 0.00, 0.05, 0.00, 0.00, 0.00, 0.00], # remove billing block
-            [0.01, 0.01, 0.00, 0.01, 0.00, 0.00, 0.01, 0.80, 0.00, 0.00, 0.00], # send invoice
+            [0.01, 0.01, 0.00, 0.01, 0.00, 0.05, 0.01, 0.80, 0.00, 0.00, 0.00], # send invoice
             [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00], # cancel order
             [0.00, 0.01, 0.00, 0.01, 0.00, 0.00, 0.01, 0.00, 0.00, 0.80, 0.00], # receive delivery confirmation
             [0.00, 0.01, 0.00, 0.00, 0.00, 0.01, 0.00, 0.00, 0.20, 0.00, 0.80], # return goods
@@ -116,7 +116,7 @@ class SalesOrder:
             quantity = random.randint(25, 150)
 
             # add the material to vbap table
-            self.vbap_temp_list.append([values.mandt, self.vbeln, j, quantity, rand_material.id, quantity*rand_material.price])
+            self.vbap_temp_list.append([values.mandt, self.vbeln, j, quantity, rand_material.id, 12*12*quantity*rand_material.price]) # a box contains 12 dozens of an item
             total_price += (quantity*rand_material.price)
 
             # add vbap to vbak object
