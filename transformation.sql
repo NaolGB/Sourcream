@@ -4,20 +4,34 @@ Edit Notes
 1. ERDAT is now used as time stamp, which means ERZET is discarded
 2. Follows VBAP, not VBAK
 3. Removed German version of activities to simplify script
-4. CDHDR.UDAT is now the combination of UDAT and UTIME
+4. UDAT is now the combination of UDAT and UTIME
 */
+
+DROP TABLE IF EXISTS "_CEL_O2C_VBAP_ACTIVITIES";
+CREATE TABLE "_CEL_O2C_VBAP_ACTIVITIES" (
+	"_CASE_KEY" VARCHAR(30)
+    , "ACTIVITY" VARCHAR(200)
+    , "EVENTTIME" DATETIME
+    , "_SORTING" INTEGER
+    , "USER_NAME" VARCHAR(100)
+    , "USER_TYPE" VARCHAR(10)
+    , "MANDT" VARCHAR(3)
+    , "VBELN" VARCHAR(64)
+    , "POSNR" VARCHAR(10)
+);
 
 -- Activity: Create Sales Order
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
-    "_CASE_KEY",
-    "ACTIVITY",
-    "EVENTTIME",
-    "_SORTING",
-    "USER_NAME",
-    "USER_TYPE",
-    "MANDT",
-    "VBELN",
-    "POSNR", )
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
 SELECT 
     ,"VBAP"."MANDT" || "VBAP"."VBELN" || "VBAP"."POSNR" AS "_CASE_KEY"
     ,'Create Sales Order' AS "ACTIVITY"
@@ -38,21 +52,19 @@ FROM "VBAP"
 
 -- Activity: Generate Delivery Document
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
-    "_CASE_KEY",
-    "ACTIVITY",
-    "EVENTTIME",
-    "_SORTING",
-    "USER_NAME",
-    "USER_TYPE",
-    "MANDT",
-    "VBELN",
-    "POSNR", )
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
 SELECT
 	"VBFA"."MANDT" || "VBFA"."VBELV" || "VBFA"."POSNV" AS "_CASE_KEY"
-	,CASE
-		WHEN "DD07T"."DDTEXT" IS NOT NULL THEN 'Create ' || "DD07T"."DDTEXT"
-		ELSE 'Create Other Delivery Document'
-	END AS "ACTIVITY"
+	,'Generate Delivery Document' AS "ACTIVITY"
 	, "LIPS"."ERDAT" AS "EVENTTIME"
 	, 71 AS "_SORTING"
 	, "LIKP"."ERNAM" AS "USER_NAME"
@@ -69,13 +81,56 @@ FROM "VBFA"
 		AND "LIPS"."MANDT" = "LIKP"."MANDT"
 		AND "LIPS"."VBELN" = "LIKP"."VBELN" 
         AND "LIPS"."ERDAT" IS NOT NULL   
-	LEFT JOIN "DD07T" AS "DD07T" ON 1=1
-		AND "DD07T"."DOMNAME" = 'VBTYP'
-		AND "DD07T"."DDLANGUAGE" = 'E'
-		AND "DD07T"."DOMVALUE_L" = "LIKP"."VBTYP"
 	LEFT JOIN "USR02" AS "USR02" ON 1=1
 		AND "LIKP"."MANDT" = "USR02"."MANDT"
 		AND "LIKP"."ERNAM" = "USR02"."BNAME";
+
+-- Activity: Release Delivery, 
+INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
+SELECT
+	"VBFA"."MANDT" || "VBFA"."VBELV" || "VBFA"."POSNV" AS "_CASE_KEY"
+	,'Release Delivery' AS "ACTIVITY"
+	, "CDHDR"."UDATE" AS "EVENTTIME"
+	, 75 AS "_SORTING"
+	, "CDHDR"."USERNAME" AS "USER_NAME"
+	, "USR02"."USTYP" AS "USER_TYPE"
+	, "VBFA"."MANDT" AS "MANDT"
+	, "VBFA"."VBELV" AS "VBELN"
+	, "VBFA"."POSNV" AS "POSNR"
+FROM "VBFA"
+	JOIN "LIPS" AS "LIPS" ON 
+		"VBFA"."MANDT" = "LIPS"."MANDT" AND
+		"VBFA"."VBELN" = "LIPS"."VBELN" AND
+		"VBFA"."POSNN" = "LIPS"."POSNR" 
+	LEFT JOIN "CDPOS" AS "CDPOS" ON 1=1
+		AND "CDPOS"."OBJECTID" = "LIPS"."MANDT" || "LIPS"."VBELN" || "LIPS"."POSNR"
+	LEFT JOIN "CDHDR" AS "CDHDR" ON 1=1
+		AND "CDHDR"."CHANGENR" = "CDPOS"."CHANGENR"
+	LEFT JOIN "USR02" AS "USR02" ON 1=1
+		AND "CDHDR"."MANDT" = "USR02"."MANDT"
+		AND "CDHDR"."USNAM" = "USR02"."BNAME"
+WHERE "VBFA"."VBTYP_V" = 'C' 
+	AND "VBFA"."VBTYP_N" = 'J'
+	AND "CDPOS"."TABNAME" = 'LIPS' AND "CDPOS"."FNAME" = "ABART" AND "CDPOS"."VALUE_OLD" IS NULL AND "CDPOS"."VALUE_NEW" = 6
+
+
+
+
+
+
+
+
+
 
 -- Activity: Record/Cancel Goods Issue (shipment)
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
