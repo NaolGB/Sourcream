@@ -85,7 +85,7 @@ FROM "VBFA"
 		AND "LIKP"."MANDT" = "USR02"."MANDT"
 		AND "LIKP"."ERNAM" = "USR02"."BNAME";
 
--- Activity: Release Delivery, 
+-- Activity: Release Delivery
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
     "_CASE_KEY"
     , "ACTIVITY"
@@ -123,38 +123,25 @@ WHERE "VBFA"."VBTYP_V" = 'C'
 	AND "VBFA"."VBTYP_N" = 'J'
 	AND "CDPOS"."TABNAME" = 'LIPS' AND "CDPOS"."FNAME" = "ABART" AND "CDPOS"."VALUE_OLD" IS NULL AND "CDPOS"."VALUE_NEW" = 6
 
-
-
-
-
-
-
-
-
-
--- Activity: Record/Cancel Goods Issue (shipment)
+-- Activity: Record Goods Issue (shipment)
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
-    "_CASE_KEY",
-    "ACTIVITY",
-    "EVENTTIME",
-    "_SORTING",
-    "USER_NAME",
-    "USER_TYPE",
-    "MANDT",
-    "VBELN",
-    "POSNR", )
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
 SELECT DISTINCT
  	 "VBFA"."MANDT" || "VBFA"."VBELV" || "VBFA"."POSNV" AS "_CASE_KEY"
- 	,CASE
- 	    WHEN "VBFA"."VBTYP_N" = 'R' AND "LIKP"."VBTYP" = 'T' THEN 'Record Return Goods Receipt'
-        WHEN "VBFA"."VBTYP_N" = 'R' THEN 'Record Goods Issue'
- 	    WHEN "VBFA"."VBTYP_N" = 'h' THEN 'Cancel Goods Issue'
- 	END AS "ACTIVITY"
-	, CAST("VBFA"."ERDAT" AS DATE) + CAST("VBFA"."ERZET" AS TIME) AS "EVENTTIME"
+ 	,'Record Goods Issue' AS "ACTIVITY"
+	,"VBFA"."ERDAT" AS "EVENTTIME"
 	,80 +
 	CASE
  	    WHEN "VBFA"."VBTYP_N" = 'R' THEN 1
- 	    WHEN "VBFA"."VBTYP_N" = 'h' THEN 2
  	END AS "_SORTING"
 	,"MKPF"."USNAM" AS "USER_NAME"
 	,"USR02"."USTYP" AS "USER_TYPE"
@@ -162,78 +149,93 @@ SELECT DISTINCT
 	,"VBFA"."VBELV" AS "VBELN"
 	,"VBFA"."POSNV" AS "POSNR"
 FROM "VBFA"
-	JOIN "LIPS" AS "LIPS" ON 
-		"VBFA"."MANDT" = "LIPS"."MANDT" AND
-		"VBFA"."VBELN" = "LIPS"."VBELN" AND
-		"VBFA"."POSNN" = "LIPS"."POSNR" 
-	JOIN "LIKP" AS "LIKP" ON
-		"LIPS"."MANDT" = "LIKP"."MANDT" AND
-		"LIPS"."VBELN" = "LIKP"."VBELN" 
-    JOIN "VBFA" AS "VBFA" ON
-		"LIPS"."MANDT" = "VBFA"."MANDT" AND
-		"LIPS"."VBELN" = "VBFA"."VBELV" AND
-		"LIPS"."POSNR" = "VBFA"."POSNV" AND
-        "VBFA"."VBTYP_N" IN ('R', 'h') AND 
-        "VBFA"."RFMNG" > 0 
-	LEFT JOIN "MKPF" AS "MKPF" ON
-		"VBFA"."MANDT" = "MKPF"."MANDT" AND
-		"VBFA"."VBELN" = "MKPF"."MBLNR" AND
-        "VBFA"."MJAHR"= "MKPF"."MJAHR"
+	LEFT JOIN "MKPF" AS "MKPF" ON 1=1
+		AND "MKPF"."MANDT" = "VBFA"."MANDT"
+		AND "MKPF"."MBLNR" = "VBFA"."VBELN"
 	LEFT JOIN "USR02" AS "USR02" ON 1=1
 		AND "MKPF"."MANDT" = "USR02"."MANDT"
 		AND "MKPF"."USNAM" = "USR02"."BNAME"
+WHERE "VBFA"."VBTYP_V" = 'J' 
+	AND "VBFA"."VBTYP_N" = 'R'
 
-
--- Activity: Create Billing Document
+-- Activity: Create Billing Document/Send Invoice
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
-    "_CASE_KEY",
-    "ACTIVITY",
-    "EVENTTIME",
-    "_SORTING",
-    "USER_NAME",
-    "USER_TYPE",
-    "MANDT",
-    "VBELN",
-    "POSNR", )
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
 SELECT DISTINCT
  	 "VBFA"."MANDT" || "VBFA"."VBELV" || "VBFA"."POSNV" AS "_CASE_KEY"
-	,CASE
-		WHEN "DD07T"."DDTEXT" IS NOT NULL THEN 'Create ' || "DD07T"."DDTEXT"
-		ELSE 'Create Other Billing Document'
-	END AS "ACTIVITY"
-	,CAST("VBRP"."ERDAT" AS DATE) + CAST("VBRP"."ERZET" AS TIME) AS "EVENTTIME"
+ 	,'Send Invoice' AS "ACTIVITY"
+	,"VBFA"."ERDAT" AS "EVENTTIME"
 	,90 AS "_SORTING"
-	,"VBRP"."ERNAM" AS "USER_NAME"
+	,"VBRK"."USNAM" AS "USER_NAME"
 	,"USR02"."USTYP" AS "USER_TYPE"
 	,"VBFA"."MANDT" AS "MANDT"
 	,"VBFA"."VBELV" AS "VBELN"
 	,"VBFA"."POSNV" AS "POSNR"
 FROM "VBFA"
-	JOIN "VBRP" AS "VBRP" ON 1=1
-		AND "VBFA"."MANDT" = "VBRP"."MANDT"
-		AND "VBFA"."VBELN" = "VBRP"."VBELN"
-		AND "VBFA"."POSNN" = "VBRP"."POSNR"		
-	JOIN "VBRK" AS "VBRK" ON 1=1
-		AND "VBRP"."MANDT" = "VBRK"."MANDT"
-		AND "VBRP"."VBELN" = "VBRK"."VBELN" 	
-	LEFT JOIN "DD07T" ON 1=1
-		AND "DD07T"."DOMNAME" = 'VBTYP'
-		AND "DD07T"."DDLANGUAGE" = 'E'
-		AND "DD07T"."DOMVALUE_L" = "VBRK"."VBTYP"
+	LEFT JOIN "VBRK" AS "VBRK" ON 1=1
+		AND "VBRK"."MANDT" = "VBFA"."MANDT"
+		AND "VBRK"."VBELN" = "VBFA"."VBELN"
 	LEFT JOIN "USR02" AS "USR02" ON 1=1
-		AND "VBRP"."MANDT" = "USR02"."MANDT"
-		AND "VBRP"."ERNAM" = "USR02"."BNAME" 
-	LEFT JOIN (SELECT
-             "BKPF"."MANDT"
-            ,"BKPF"."AWKEY"
-            ,"BKPF"."AWTYP"
-            ,MAX("BKPF"."TCODE") AS TCODE
-        FROM  "BKPF" 
-        GROUP BY "BKPF"."MANDT","BKPF"."AWKEY","BKPF"."AWTYP") AS "BKPF" ON 1=1
-		AND "VBRK"."MANDT" = "BKPF"."MANDT"
-		AND "VBRK"."VBELN" = "BKPF"."AWKEY"
-        AND "BKPF"."AWTYP" = 'VBRK'
-;
+		AND "VBRK"."MANDT" = "USR02"."MANDT"
+		AND "VBRK"."USNAM" = "USR02"."BNAME"
+WHERE "VBFA"."VBTYP_V" = 'R' 
+	AND "VBFA"."VBTYP_N" = 'M'
+
+
+-- Activity: Receive Delivery Confirmation
+INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
+    "_CASE_KEY"
+    , "ACTIVITY"
+    , "EVENTTIME"
+    , "_SORTING"
+    , "USER_NAME"
+    , "USER_TYPE"
+    , "MANDT"
+    , "VBELN"
+    , "POSNR" 
+)
+SELECT
+	"VBFA"."MANDT" || "VBFA"."VBELV" || "VBFA"."POSNV" AS "_CASE_KEY"
+	,'Receive Delivery Confirmation' AS "ACTIVITY"
+	, "CDHDR"."UDATE" AS "EVENTTIME"
+	, 75 AS "_SORTING"
+	, "CDHDR"."USERNAME" AS "USER_NAME"
+	, "USR02"."USTYP" AS "USER_TYPE"
+	, "VBFA"."MANDT" AS "MANDT"
+	, "VBFA"."VBELV" AS "VBELN"
+	, "VBFA"."POSNV" AS "POSNR"
+FROM "VBFA"
+	JOIN "LIPS" AS "LIPS" ON 
+		"VBFA"."MANDT" = "LIPS"."MANDT" AND
+		"VBFA"."VBELN" = "LIPS"."VBELN" AND
+		"VBFA"."POSNN" = "LIPS"."POSNR" 
+	LEFT JOIN "CDPOS" AS "CDPOS" ON 1=1
+		AND "CDPOS"."OBJECTID" = "LIPS"."MANDT" || "LIPS"."VBELN" || "LIPS"."POSNR"
+	LEFT JOIN "CDHDR" AS "CDHDR" ON 1=1
+		AND "CDHDR"."CHANGENR" = "CDPOS"."CHANGENR"
+	LEFT JOIN "USR02" AS "USR02" ON 1=1
+		AND "CDHDR"."MANDT" = "USR02"."MANDT"
+		AND "CDHDR"."USNAM" = "USR02"."BNAME"
+WHERE "VBFA"."VBTYP_V" = 'C' 
+	AND "VBFA"."VBTYP_N" = 'J'
+	AND "CDPOS"."TABNAME" = 'LIPS' AND "CDPOS"."FNAME" = "ABART" AND "CDPOS"."VALUE_OLD" IS NULL AND "CDPOS"."VALUE_NEW" = 6
+
+
+
+
+
+
+
+
 
 -- ACtivity: Clear Invoice
 INSERT INTO "_CEL_O2C_VBAP_ACTIVITIES" (
