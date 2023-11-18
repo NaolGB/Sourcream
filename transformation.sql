@@ -1,4 +1,7 @@
 /*
+Data Integration Notes
+----------------------
+1. Convert BSEG.AUGDT to DATETIME with format yyyy-MM-dd HH:mm:ss
 Edit Notes
 ----------
 1. ERDAT is now used as time stamp, which means ERZET is discarded
