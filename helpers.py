@@ -21,7 +21,7 @@ def divide_num_in_normal(num: float, num_parts: int):
     result[-1] += num - sum(result)
 
     return result
-
+    
 UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
 UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
 UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
