@@ -162,3 +162,8 @@ cython_debug/
 
 # files
 /data
+*.sql
+
+# notes
+notes.txt
+notes.md

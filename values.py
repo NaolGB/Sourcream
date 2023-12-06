@@ -1,5 +1,12 @@
 mandt = 'SC1'
 
+sales_order_doc_types = [
+    'A',
+    'B',
+    'C',
+    'D'
+]
+
 customers = {
     "Tasty Bites Co.": {"credit_risk": 0.61},
     "Brewmaster's Blend": {"credit_risk": 0.28},

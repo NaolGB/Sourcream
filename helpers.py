@@ -1,6 +1,16 @@
 import random
-from datetime import timedelta
+from datetime import timedelta, time
 import numpy as np
+
+def generate_random_date(start_date, end_date):
+    time_delta = end_date - start_date
+    random_days = random.randint(0, time_delta.days)
+
+    random_date = start_date + timedelta(days=random_days)
+    return random_date.date()
+
+def generate_random_time():
+    return time(hour=random.randint(0, 11), minute=(random.randint(0, 59)), second=random.randint(0, 59))
 
 def generate_random_datetime(start_date, end_date):
     time_delta = end_date - start_date
