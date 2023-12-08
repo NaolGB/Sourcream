@@ -4,7 +4,49 @@ sales_order_doc_types = [
     'A',
     'B',
     'C',
-    'D'
+    'D',
+]
+
+shipping_conditions = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+]
+
+distribution_channels = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+]
+
+sales_orgs = {
+    'A': {
+        'sales_offices': ['01', '02', '03'],
+    },
+    'B': {
+        'sales_offices': ['01', '02', '03'],
+    },
+    'C': {
+        'sales_offices': ['01', '02', '03'],
+    },
+    'D': {
+        'sales_offices': ['01', '02', '03'],
+    },
+    'E': {
+        'sales_offices': ['01', '02', '03'],
+    },
+}
+
+credit_control_areas = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
 ]
 
 customers = {
