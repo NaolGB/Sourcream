@@ -1,11 +1,6 @@
 mandt = 'SC1'
 
-sales_order_doc_types = [
-    'A',
-    'B',
-    'C',
-    'D',
-]
+sales_order_doc_types = ['C', 'I'] # Order, Order w/o charge
 
 shipping_conditions = [
     '01',
@@ -16,6 +11,30 @@ shipping_conditions = [
 ]
 
 distribution_channels = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+]
+
+inco1_terms = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+]
+
+inco2_terms = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+]
+
+zterms = [
     '01',
     '02',
     '03',
