@@ -32,8 +32,8 @@ def divide_num_in_normal(num: float, num_parts: int):
 
     return result
     
-UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
-UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
-UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7), hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
+UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
+UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
+UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
 UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
 UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))
