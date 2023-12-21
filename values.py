@@ -1,8 +1,8 @@
 mandt = 'SC1'
 
-sales_order_doc_types = ['C', 'I'] # Order, Order w/o charge
+om_sales_order_doc_types = ['C', 'I'] # Order, Order w/o charge
 
-shipping_conditions = [
+om_shipping_conditions = [
     '01',
     '02',
     '03',
@@ -10,7 +10,7 @@ shipping_conditions = [
     '05',
 ]
 
-distribution_channels = [
+om_distribution_channels = [
     '01',
     '02',
     '03',
@@ -18,7 +18,7 @@ distribution_channels = [
     '05',
 ]
 
-inco1_terms = [
+om_inco1_terms = [
     '01',
     '02',
     '03',
@@ -26,7 +26,7 @@ inco1_terms = [
     '05',
 ]
 
-inco2_terms = [
+om_inco2_terms = [
     'A',
     'B',
     'C',
@@ -34,7 +34,7 @@ inco2_terms = [
     'E',
 ]
 
-zterms = [
+om_zterms = [
     '01',
     '02',
     '03',
@@ -42,7 +42,7 @@ zterms = [
     '05',
 ]
 
-sales_orgs = {
+om_sales_orgs = {
     'A': {
         'sales_offices': ['01', '02', '03'],
     },
@@ -60,7 +60,7 @@ sales_orgs = {
     },
 }
 
-credit_control_areas = [
+om_credit_control_areas = [
     '01',
     '02',
     '03',
@@ -68,7 +68,7 @@ credit_control_areas = [
     '05',
 ]
 
-customers = {
+om_customers = {
     "Tasty Bites Co.": {"credit_risk": 0.61},
     "Brewmaster's Blend": {"credit_risk": 0.28},
     "Crispy Cravings": {"credit_risk": 0.85},
@@ -103,7 +103,7 @@ customers = {
 }
 
 
-users = {
+om_users = {
     "Alex Johnson": 'A',
     "Bailey Smith": 'A',
     "Carmen Davis": 'A',
@@ -128,7 +128,7 @@ users = {
     "BATCH_JOB": 'B',
 }
 
-materials = {
+om_materials = {
     "Rice": {"price": 2.99, "availability": 0.8},
     "Coffee": {"price": 5.49, "availability": 0.6},
     "Tea": {"price": 3.99, "availability": 0.7},
@@ -181,4 +181,161 @@ materials = {
     "Coconut Water": {"price": 2.79, "availability": 0.7},
     "Trail Mix": {"price": 4.9, "availability": 0.1},
     "Lemon Cake": {"price": 3.9, "availability": 0.6},
+}
+
+# procurement
+p2p_users = {
+    "John Doe": "A",
+    "Jane Smith": "A",
+    "Robert Johnson": "A",
+    "Emily Davis": "A",
+    "Michael Brown": "A",
+    "Sarah Wilson": "A",
+    "William Clark": "A",
+    "Jessica Lee": "A",
+    "David Miller": "A",
+    "Jennifer Taylor": "A",
+    "James Anderson": "A",
+    "Laura Martinez": "A",
+    "Joseph White": "A",
+    "Amanda Harris": "A",
+    "Daniel Thompson": "A",
+    "Rachel Robinson": "A",
+    "Christopher Lewis": "A",
+    "Mary Garcia": "A",
+    "Matthew Allen": "A",
+    "Elizabeth Wright": "A",
+    "Samwell Tarly": "A",
+    "BATCH_JOB": 'B',
+}
+
+p2p_users_requesters = {
+    "Alex Johnson": 'A',
+    "Bailey Smith": 'A',
+    "Carmen Davis": 'A',
+    "Darnell Williams": 'A',
+    "Evelyn Brown": 'A',
+    "Francis Taylor": 'A',
+    "Gabriel Moore": 'A',
+    "Harper Clark": 'A',
+    "Ibrahim Lewis": 'A',
+    "Jaden Hall": 'A',
+    "Kai Lee": 'A',
+    "Logan Mitchell": 'A',
+    "Morgan Anderson": 'A',
+    "Nathan Harris": 'A',
+    "Olive White": 'A',
+    "Peyton Turner": 'A',
+    "Quinn Martin": 'A',
+    "Riley Walker": 'A',
+    "Sasha Baker": 'A',
+    "Taylor Turner": 'A',
+    'Catelyn Stark': 'A',
+    "BATCH_JOB": 'B',
+}
+
+p2p_vendors = {
+    "Fresh Farms Inc.": {},
+    "Green Harvest Foods": {},
+    "Nature's Bounty Co.": {},
+    "Golden Grains Ltd.": {},
+    "Prime Produce Partners": {},
+    "Organic Oasis Foods": {},
+    "SunnySide Agro Supplies": {},
+    "Purely Organic Co.": {},
+    "Farm Fresh Distributors": {},
+    "AgriPro Ingredients": {},
+    "Natural Nourish Ltd.": {},
+    "Harvest Moon Foods": {},
+    "EverGreen Suppliers": {},
+    "BioBlend Foods": {},
+    "Sustainable Sourcing Co.": {},
+    "Terra Foods Inc.": {},
+    "Vital Veggies Ltd.": {},
+    "FreshPicks Distributors": {},
+    "Wholesome Harvest Co.": {},
+    "NutriField Suppliers": {},
+    "EcoEssence Foods": {},
+    "GoodEarth Ingredients": {},
+    "CropCare Distributors": {},
+    "FarmFirst Suppliers": {},
+    "GreenLeaf Foods Inc.": {},
+    "PureProduce Partners": {},
+    "Nature's Best Ingredients": {},
+    "Healthful Harvest Co.": {},
+    "AgroAlliance Ltd.": {},
+    "FreshlyPicked Suppliers": {},
+    "GreenGro Distributors": {},
+    "NutriNest Foods": {},
+    "Vitality Vegetables Inc.": {},
+    "Earthy Elements Suppliers": {},
+    "TerraTop Ingredients": {},
+    "Organix Suppliers": {},
+    "NutriGreen Foods": {},
+    "Pure Produce Distributors": {},
+    "EverFresh Ingredients": {},
+    "BioBounty Ltd.": {},
+    "Natural Nutrients Co.": {},
+    "GreenGuard Distributors": {},
+    "FarmFusion Suppliers": {},
+    "FreshFields Foods": {},
+    "Nature's Nectar Inc.": {},
+    "Earth Essence Distributors": {},
+    "Harvest Haven Co.": {},
+    "Organic Options Ltd.": {},
+    "Vital Vines Suppliers": {},
+    "PurePath Foods": {}
+}
+
+p2p_materials = {
+    'Water': {"price": 0.06},  
+    'Sugar': {"price": 0.80},  
+    'Flour': {"price": 0.35},  
+    'Salt': {"price": 0.12},   
+    'Oil': {"price": 4.00},    
+    'Corn': {"price": 0.22},   
+    'Potatoes': {"price": 0.30},  
+    'Milk': {"price": 2.50},   
+    'Cream': {"price": 3.20},  
+    'Eggs': {"price": 2.00},   
+    'Tomatoes': {"price": 1.20},  
+    'Peanuts': {"price": 1.60},  
+    'Grapes': {"price": 2.00},   
+    'Barley': {"price": 0.30},   
+    'Hops': {"price": 16.00},    
+    'Wheat': {"price": 0.50},    
+    'Soybeans': {"price": 0.40},  
+    'Rice': {"price": 0.60},     
+    'Cocoa beans': {"price": 2.10},  
+    'Tea leaves': {"price": 7.50},  
+    'Coffee beans': {"price": 4.50},  
+    'Fish': {"price": 6.00},      
+    'Meat': {"price": 7.00},      
+    'Fruits': {"price": 1.70},    
+    'Vegetables': {"price": 1.20},  
+    'Cucumbers': {"price": 0.80},   
+    'Olives': {"price": 2.50},     
+    'Nuts': {"price": 3.20},       
+    'Cornmeal': {"price": 0.52},   
+    'Yeast': {"price": 4.30},      
+    'Vinegar': {"price": 1.70},    
+    'Honey': {"price": 6.00},      
+    'Pectin': {"price": 8.00},     
+    'Herbs': {"price": 2.50},      
+    'Spices': {"price": 4.20},     
+    'Cheese': {"price": 10.00},    
+    'Butter': {"price": 3.30},     
+    'Corn starch': {"price": 0.75},  
+    'Potato starch': {"price": 1.10}, 
+    'Tamarind': {"price": 2.50},   
+    'Anchovies': {"price": 7.00},  
+    'Tuna': {"price": 5.20},       
+    'Wheat germ': {"price": 1.20}, 
+    'Citric acid': {"price": 16.00}, 
+    'Balsamic vinegar': {"price": 13.00}, 
+    'Alcohol': {"price": 17.00},   
+    'Cocoa powder': {"price": 3.40},  
+    'Lemon juice': {"price": 2.70},   
+    'Lime juice': {"price": 2.70},    
+    'Garlic': {"price": 1.50}, 
 }
