@@ -167,3 +167,7 @@ cython_debug/
 # notes
 notes.txt
 notes.md
+
+# playground
+try.py
+try.ipynb
