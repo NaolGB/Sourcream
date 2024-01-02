@@ -33,11 +33,14 @@ def users(all_users=values.om_users):
     
     return {'ADRP_json': ADRP_json, 'USR02_json': USR02_json, 'USR21_json': USR21_json}
 
-def customers(all_customers=values.om_customers, all_users=values.om_users):
+def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users):
     KNB1_json = {}
     KNA1_json = {}
+    T001_json = {}
+    T001K_json = {}
+
     for k, v in all_customers.items():
-        customer_number = str(uuid.uuid4())
+        customer_number = v['id']
         KNB1_json[str(uuid.uuid4())] = {
             "BUKRS": v['company_code'],
             "ERDAT": helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
@@ -58,8 +61,19 @@ def customers(all_customers=values.om_customers, all_users=values.om_users):
             "STRAS": 'ADD1', # TODO add address liner
             "VBUND": None
         }
+        T001_json[str(uuid.uuid4())] = {
+            "BUKRS": v['company_code'],
+            "BUTXT": f"{k}-{v['company_code']}",
+            "MANDT": values.mandt,
+            "WAERS": 'EUR'
+        }
+        T001K_json[str(uuid.uuid4())] = {
+            "BUKRS": v['company_code'],
+            "BWKEY": 'D', # TODO add custom value - must match T100W.BWKEY
+            "MANDT": values.mandt
+        }
     
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'T001_json': T001_json, 'T001K_json': T001K_json}
 
 def plants(all_plants=values.om_plants):
     T001W_json = {}
@@ -95,7 +109,7 @@ def materials(all_materials=values.om_materials, all_users=values.om_users):
     MBEW_json = {}
 
     for k, v in all_materials.items():
-        matnr = str(uuid.uuid4())
+        matnr = v['id']
         quantity = random.randint(500, 1500)
         creation_time = helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
         MAKT_json[str(uuid.uuid4())] = {
@@ -104,7 +118,7 @@ def materials(all_materials=values.om_materials, all_users=values.om_users):
             "MATNR": matnr,
             "SPRAS": "E"
         }
-        MARA_json[str(uuid.uuid4())] = {
+        MARA_json[str(uuid.uuid4())] = { # MARA is the base Material Master Data - for all plants
             "ERNAM": random.choice(list(all_users.keys())),
             "ERSDA": creation_time,
             "MANDT": values.mandt,
@@ -126,7 +140,7 @@ def materials(all_materials=values.om_materials, all_users=values.om_users):
             "MSEHI": 'UNT'
         }
         T006D_json[str(uuid.uuid4())] = {
-            "DIMID": 'DEF', # TODO add dimension 
+            "DIMID": 'AAAADL',
             "MANDT": values.mandt,
             "MSSIE": 'ST'
         }
@@ -163,7 +177,7 @@ def materials(all_materials=values.om_materials, all_users=values.om_users):
             "PLIFZ": v['delivery_takes_days'],
             "STRGR": 'D', # TODO add custom value
             "WEBAZ": v['goods_receipt_processing_days'],
-            "WERKS": '0001', # TODO make this material dependent than just UK-1 (check values.om_plants)
+            "WERKS": 'PL01', # TODO make this material dependent than just UK-1 (check values.om_plants)
         }
         MBEW_json[str(uuid.uuid4())] = {
             "BWKEY": 'D', # TODO add custom value - must match T100W.BWKEY
@@ -178,20 +192,4 @@ def materials(all_materials=values.om_materials, all_users=values.om_users):
             "VPRSV": 'D', # TODO add custom value
         }
 
-        "T001"."BUKRS"
-        "T001"."BUTXT"
-        "T001"."MANDT"
-        "T001"."WAERS"
-
-        "T001K"."BUKRS"
-        "T001K"."BWKEY"
-        "T001K"."MANDT"
-    
-    return #{'MAKT_json': MAKT_json,
-            'MARA_json': MARA_json,
-            'MARM_json': MARM_json,
-            'T006_json': T006_json,
-            'T006D_json': T006D_json,
-            'T023T_json': T023T_json,
-            'T134T_json': T134T_json,
-            'T137T_json': T137T_json,}
+    return {'MAKT_json': MAKT_json,'MARA_json': MARA_json,'MARM_json': MARM_json,'T006_json': T006_json,'T006D_json': T006D_json,'T023T_json': T023T_json,'T134T_json': T134T_json,'T137T_json': T137T_json,'MARC_json': MARC_json,'MBEW_json': MBEW_json}
