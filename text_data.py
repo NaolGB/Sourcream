@@ -86,3 +86,27 @@ def distribution(shipping_conditions=values.shipping_conditions):
         }
 
     return {'TVSBT_json': TVSBT_json}
+
+def sales_doc_item_categories(all_categories=values.om_sales_doc_item_categories):
+    TVAPT_json = {}
+    for _, v in all_categories.items():
+        TVAPT_json[str(uuid.uuid4())] = {
+            "MANDT": values.mandt,
+            "PSTYV": v['PSTYV'],
+            "SPRAS": 'E',
+            "VTEXT": v['VTEXT'],
+        }
+    
+    return {'TVAPT_json': TVAPT_json}
+
+def sales_doc_rejection_reasons(all_rejection_reasons=values.om_sales_doc_rejection_reasons):
+    TVAGT_json = {}
+    for _, v in all_rejection_reasons.items():
+        TVAGT_json[str(uuid.uuid4())] = {
+            "ABGRU": v['ABGRU'],
+            "BEZEI": v['BEZEI'],
+            "MANDT": values.mandt,
+            "SPRAS": 'E',
+        }
+
+    return {'TVAGT_json': TVAGT_json}
