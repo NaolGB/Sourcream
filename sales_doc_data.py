@@ -64,6 +64,7 @@ class SalesAndDistribution:
         shipping_condition,
         erdat,
         days_till_delivery,
+        reqested_delivery_date,
         ernam,
         customer,
         all_rejection_reasons=values.om_sales_doc_rejection_reasons,
@@ -71,7 +72,7 @@ class SalesAndDistribution:
         all_categories=values.om_sales_doc_item_categories,
         all_routes=values.om_routes,
     ):
-        vdatu = erdat + timedelta(days=days_till_delivery)
+        vdatu = reqested_delivery_date
         if sales_office == None:
             sales_office = random.choice(list(values.sales_orgs[sales_org]['sales_offices'].keys()))
         if distribution_channel == None:
@@ -229,12 +230,8 @@ class SalesAndDistribution:
                 self.tables['VBUK_json'][k]['KOSTK'] = 'C'
         for k, v in self.tables['LIKP_json'].items():
             if v['VBELN'] == self.likp_vbeln:
-                print(self.tables['LIKP_json'][k]['KODAT'])
-                print(self.tables['LIKP_json'][k]['KOUHR'])
                 self.tables['LIKP_json'][k]['KODAT'] = udate
                 self.tables['LIKP_json'][k]['KOUHR'] = helpers.generate_random_time()
-                print(self.tables['LIKP_json'][k]['KODAT'])
-                print(self.tables['LIKP_json'][k]['KOUHR'], '\n')
 
     def post_goods_issue(self, cpudt, usnam, all_units=values.om_units):
         

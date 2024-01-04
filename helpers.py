@@ -7,10 +7,10 @@ def generate_random_date(start_date, end_date):
     random_days = random.randint(0, time_delta.days)
 
     random_date = start_date + timedelta(days=random_days)
-    return random_date.date()
+    return str(random_date.date())
 
 def generate_random_time():
-    return time(hour=random.randint(0, 11), minute=(random.randint(0, 59)), second=random.randint(0, 59))
+    return str(time(hour=random.randint(0, 11), minute=(random.randint(0, 59)), second=random.randint(0, 59)))
 
 def generate_random_datetime(start_date, end_date):
     time_delta = end_date - start_date
@@ -18,7 +18,7 @@ def generate_random_datetime(start_date, end_date):
     random_seconds = random.randint(0, 86400)  # 86400 seconds in a day
 
     random_datetime = start_date + timedelta(days=random_days, seconds=random_seconds)
-    return random_datetime
+    return str(random_datetime)
 
 def divide_num_in_normal(num: float, num_parts: int):
     mean = num/2
@@ -32,8 +32,8 @@ def divide_num_in_normal(num: float, num_parts: int):
 
     return result
     
-UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
-UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
-UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
-UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
-UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))
+# UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
+# UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
+# UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
+# UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
+# UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))
