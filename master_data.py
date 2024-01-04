@@ -33,11 +33,50 @@ def users(all_users=values.om_users):
     
     return {'ADRP_json': ADRP_json, 'USR02_json': USR02_json, 'USR21_json': USR21_json}
 
-def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users):
-    KNB1_json = {}
-    KNA1_json = {}
+def plants(all_plants=values.om_plants):
+    T001W_json = {}
+    T005T_json = {}
+    for k, v in all_plants.items():
+        T001W_json[str(uuid.uuid4())] = {
+            "LAND1": v['country_key'],
+            "MANDT": values.mandt,
+            "NAME1": k,
+            "WERKS": v['plant_number'],
+            "BWKEY": random.choice(values.om_valuation_areas),
+
+        }
+        T005T_json[str(uuid.uuid4())] = {
+            "LAND1": v['country_key'],
+            "LANDX": v['country_name'],
+            "MANDT": values.mandt,
+            "SPRAS": "E"
+        }
+    
+    return {'T001W_json': T001W_json, 'T005T_json': T005T_json}
+
+def company_codes(all_company_codes=values.om_company_codes):
     T001_json = {}
     T001K_json = {}
+
+    for _, v in all_company_codes.items():
+        T001_json[str(uuid.uuid4())] = {
+            "BUKRS": v['BUKRS'],
+            "BUTXT": v['BUTXT'],
+            "MANDT": values.mandt,
+            "WAERS": 'EUR'
+        }
+        for va in values.om_valuation_areas: # HACK each company code has all the valuaiton areas
+            T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
+                "BUKRS": v['BUKRS'],
+                "BWKEY": va, 
+                "MANDT": values.mandt
+            }
+
+    return {'T001_json': T001_json, 'T001K_json': T001K_json}
+
+def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes):
+    KNB1_json = {}
+    KNA1_json = {}
 
     for k, v in all_customers.items():
         customer_number = v['id']
@@ -53,50 +92,17 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             "STRAS": 'ADD1', # TODO add address liner
             "VBUND": None
         }
-        # companu code 
-        for company_code in v['company_codes']:
-            T001_json[str(uuid.uuid4())] = {
-                "BUKRS": company_code,
-                "BUTXT": f"{k}-{company_code}",
-                "MANDT": values.mandt,
-                "WAERS": 'EUR'
-            }
-            T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
-                "BUKRS": company_code,
-                "BWKEY": 'D', # TODO add custom value - must match T100W.BWKEY
-                "MANDT": values.mandt
-            }
-            KNB1_json[str(uuid.uuid4())] = {
-                "BUKRS": company_code,
-                "ERDAT": helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
-                "ERNAM": random.choice(list(all_users.keys())),
-                "KUNNR": customer_number,
-                "MANDT": values.mandt,
-                "ZTERM": v['payment_term']
-            }
-    
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'T001_json': T001_json, 'T001K_json': T001K_json}
-
-def plants(all_plants=values.om_plants):
-    T001W_json = {}
-    T005T_json = {}
-    for k, v in all_plants.items():
-        T001W_json[str(uuid.uuid4())] = {
-            "LAND1": v['country_key'],
+       
+        KNB1_json[str(uuid.uuid4())] = {
+            "BUKRS": all_company_codes[random.choice(list(all_company_codes.keys()))]['BUKRS'],
+            "ERDAT": helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
+            "ERNAM": random.choice(list(all_users.keys())),
+            "KUNNR": customer_number,
             "MANDT": values.mandt,
-            "NAME1": k,
-            "WERKS": v['plant_number'],
-            "BWKEY": 'D' # TODO add valuation area -- - must match MBEW.BWKEY 
-
-        }
-        T005T_json[str(uuid.uuid4())] = {
-            "LAND1": v['country_key'],
-            "LANDX": v['country_name'],
-            "MANDT": values.mandt,
-            "SPRAS": "E"
+            "ZTERM": v['payment_term']
         }
     
-    return {'T001W_json': T001W_json, 'T005T_json': T005T_json}
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
 
 def materials(
         all_materials=values.om_materials, 
@@ -117,7 +123,7 @@ def materials(
     for k, v in all_materials.items():
         matnr = v['id']
         quantity = random.randint(500, 1500)
-        creation_time = helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
+        creation_time = helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1))
         MAKT_json[str(uuid.uuid4())] = {
             "MAKTX": k,
             "MANDT": values.mandt,
@@ -160,13 +166,13 @@ def materials(
             "WERKS": all_plants[random.choice(list(all_plants.keys()))]['plant_number'],
         }
         MBEW_json[str(uuid.uuid4())] = {
-            "BWKEY": 'D', # TODO add custom value - must match T100W.BWKEY
+            "BWKEY": random.choice(values.om_valuation_areas),
             "BWTAR": None,
             "LBKUM": quantity,
             "MANDT": values.mandt,
             "MATNR": matnr,
             "PEINH": 99, # TODO add custom value
-            "SALK3": quantity*v['price'],
+            "SALK3": round(quantity*v['price'], 4),
             "STPRS": v['price'],
             "VERPR": v['price'],
             "VPRSV": 'D', # TODO add custom value

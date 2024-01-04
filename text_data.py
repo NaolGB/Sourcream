@@ -74,8 +74,9 @@ def organization(sales_orgs=values.sales_orgs):
     
     return {'TVKBT_json': TVKBT_json, 'TVKOT_json': TVKOT_json, 'TVKOV_json': TVKOV_json, 'TVTWT_json': TVTWT_json}
 
-def distribution(shipping_conditions=values.shipping_conditions):
+def distribution(shipping_conditions=values.shipping_conditions, all_movt_types=values.goods_movement_types):
     TVSBT_json = {}
+    T156_json = {}
 
     for k, v in shipping_conditions.items():
         TVSBT_json[str(uuid.uuid4())] = {
@@ -85,7 +86,14 @@ def distribution(shipping_conditions=values.shipping_conditions):
             "VTEXT": v
         }
 
-    return {'TVSBT_json': TVSBT_json}
+    for _, v in all_movt_types.items():
+        T156_json[str(uuid.uuid4())] = {
+            "BWART": v['code'],
+            "MANDT": values.mandt,
+            "XSTBW": v['is_reverse'],
+        }
+
+    return {'TVSBT_json': TVSBT_json, 'T156_json': T156_json}
 
 def sales_doc_item_categories(all_categories=values.om_sales_doc_item_categories):
     TVAPT_json = {}
