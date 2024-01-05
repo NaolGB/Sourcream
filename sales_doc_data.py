@@ -4,15 +4,18 @@ from datetime import datetime, timedelta
 import values, helpers
 
 class SalesAndDistribution:
-    def __init__(self, vbeln, materials, quantities) -> None:
+    def __init__(self, vbeln, materials, quantities, customer) -> None:
         self.vbeln = vbeln
         self.materials = materials
         self.quantities = quantities
-        self.likp_vbeln = str(uuid.uuid4())
+        self.likp_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' # HACK avoid reaching VARCHAR(255) when joining multiple table ids
+        self.vbrk_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+        self.bkpf_belnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
 
         all_plants=values.om_plants
-        self.mblnr = str(uuid.uuid4())
+        self.mblnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
         self.mjahr = 2023 # TODO add custom value
+        self.customer = customer
         self.plant = all_plants[random.choice(list(all_plants.keys()))]['plant_number'],
 
         self.tables = {
@@ -25,12 +28,17 @@ class SalesAndDistribution:
             'LIPS_json': {},
             'EKBE_json': {}, 
             'MSEG_json': {},
+            'VBRK_json': {},
+            'VBRP_json': {},
+            'BKPF_json': {},
+            'BSEG_json': {},
             'CDHDR_json': {},
-            'CDPOS_json': {}
+            'CDPOS_json': {},
+            'VBFA_json': {}
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = str(uuid.uuid4())
+        changenr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
             "CHANGENR": changenr,
@@ -56,6 +64,21 @@ class SalesAndDistribution:
             "VALUE_OLD": valold,
         }
 
+    def record_flow(self, erdat, prev_vbeln, next_vbeln, prev_type, next_type):
+        for i, _ in enumerate(self.materials):
+            self.tables['VBFA_json'][str(uuid.uuid4())] = {
+                    "MANDT": values.mandt,
+                    "VBELV": prev_vbeln,
+                    "POSNV": i,
+                    "VBTYP_V": prev_type,
+                    "VBELN": next_vbeln,
+                    "POSNN": i,
+                    "VBTYP_N": next_type,
+                    "ERDAT": erdat,
+                    "ERZET": helpers.generate_random_time(),
+                    "MATNR": values.om_materials[self.materials[i]]['id']
+                }
+
     def create_sales_order(
         self,
         sales_org,
@@ -66,7 +89,7 @@ class SalesAndDistribution:
         days_till_delivery,
         reqested_delivery_date,
         ernam,
-        customer,
+        
         all_rejection_reasons=values.om_sales_doc_rejection_reasons,
         all_units=values.om_units,
         all_categories=values.om_sales_doc_item_categories,
@@ -87,7 +110,7 @@ class SalesAndDistribution:
             "ERNAM": ernam,
             "ERZET": helpers.generate_random_time(),
             "KKBER": 'D', # TODO add custom value
-            "KUNNR": customer['id'],
+            "KUNNR": self.customer['id'],
             "MANDT": values.mandt,
             "NETWR": round(sum([values.om_materials[self.materials[i]]['price']*self.quantities[i] for i, _ in enumerate(self.materials)]), 4),
             "OBJNR": uuid.uuid4(),
@@ -106,7 +129,7 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "POSNR": '000000',
             "VBELN": self.vbeln,
-            "ZTERM": customer['payment_term'],
+            "ZTERM": self.customer['payment_term'],
         }
         self.tables['VBUK_json'][str(uuid.uuid4())] = {
             "BESTK": 'A',
@@ -117,8 +140,8 @@ class SalesAndDistribution:
         }
 
         for i, _ in enumerate(self.materials):
-            x = str(uuid.uuid4())
-            self.tables['VBAP_json'][x] = {
+            temp_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+            self.tables['VBAP_json'][temp_vbeln] = {
                 "ABGRU": all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU'],
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
@@ -146,7 +169,7 @@ class SalesAndDistribution:
                 "WAERK": 'EUR',
                 "WERKS": self.plant
             }
-            self.tables['VBEP_json'][x] = {
+            self.tables['VBEP_json'][temp_vbeln] = {
                 "BMENG": self.quantities[i], # HACK all qauntities are the same as their confirmed queantities
                 "EDATU": erdat,
                 "ETENR": i,
@@ -158,6 +181,14 @@ class SalesAndDistribution:
                 "WADAT": None, # TODO MaterialAvailabilityDate edit later on shipping,
             }
 
+        self.record_flow( # HACK no quotation before
+            erdat=erdat, 
+            prev_vbeln=None, 
+            prev_type=None, 
+            next_vbeln=self.vbeln, 
+            next_type='C'
+        )
+            
     def generate_delivery_document(
             self, 
             ernam, 
@@ -211,6 +242,13 @@ class SalesAndDistribution:
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "WERKS": self.plant
             }
+        self.record_flow( 
+            erdat=erdat, 
+            prev_vbeln=self.vbeln, 
+            prev_type='C', 
+            next_vbeln=self.likp_vbeln, 
+            next_type='J'
+        )
 
     def pick_items(self, usnam, udate):
         self.changes(
@@ -234,7 +272,6 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['KOUHR'] = helpers.generate_random_time()
 
     def post_goods_issue(self, cpudt, usnam, all_units=values.om_units):
-        
         for i, _ in enumerate(self.materials): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
@@ -273,6 +310,93 @@ class SalesAndDistribution:
                 "WRBTR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
             }
         
+        self.record_flow( 
+            erdat=cpudt, 
+            prev_vbeln=self.likp_vbeln, 
+            prev_type='J', 
+            next_vbeln=self.mblnr, 
+            next_type='R'
+        )
+  
+    def create_invoice(self, ernam, erdat):
+        self.tables['VBRK_json'][str(uuid.uuid4())] = {
+            "ERDAT": erdat,
+            "ERNAM": ernam,
+            "ERZET": helpers.generate_random_time(),
+            "KUNAG": self.customer['id'],
+            "MANDT": values.mandt,
+            "VBELN": self.vbrk_vbeln,
+            "VBTYP": 'M', # M: Invoice
+        }
+
+        for i, _ in enumerate(self.materials):
+            self.tables['VBRP_json'][str(uuid.uuid4())] = {
+                "AUBEL": self.vbeln,
+                "AUPOS": i,
+                "ERDAT": erdat,
+                "ERNAM": ernam,
+                "ERZET": helpers.generate_random_time(),
+                "MANDT": values.mandt,
+                "MATNR": values.om_materials[self.materials[i]]['id'],
+                "POSNR": i,
+                "VBELN": self.vbrk_vbeln,
+                "WERKS": self.plant,
+            }
+        
+        self.tables['BKPF_json'][str(uuid.uuid4())] = {
+            "AWKEY": self.vbrk_vbeln,
+            "AWTYP": 'VBRK',
+            "BELNR": self.bkpf_belnr,
+            "BLART": 'D', # TODO add custom value
+            "BLDAT": erdat, # FIXME use document creation date
+            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "CPUDT": erdat,
+            "CPUTM": helpers.generate_random_time(),
+            "GJAHR": self.mjahr,
+            "MANDT": values.mandt,
+            "USNAM": ernam,
+            "WAERS": 'EUR',
+            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+        }
+
+        for i, _ in enumerate(self.materials):
+            self.tables['BSEG_json'][str(uuid.uuid4())] = {
+                "AUGDT": None,
+                "AUGBL": None,
+                "AUGGJ": None,
+                "BELNR": self.bkpf_belnr,
+                "BSCHL": '01',
+                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUZEI": i,
+                "GJAHR": self.mjahr,
+                "KOART": 'D',
+                "KUNNR": self.customer['id'],
+                "MANDT": values.mandt,
+                "MANSP": None,
+                "MANST": None,
+                "SGTXT": 'D', # TODO add custom value
+                "SHKZG": 'S', # Debit Indicator
+                "SKFBT": 0,
+                "WRBTR": round(sum([values.om_materials[self.materials[i]]['price']*self.quantities[i] for i, _ in enumerate(self.materials)]), 4),
+                "WSKTO": 0,
+                "ZBD1P": 0, # TODO add custom value
+                "ZBD1T": 0, # TODO add custom value
+                "ZBD2P": 0, # TODO add custom value
+                "ZBD2T": 0, # TODO add custom value
+                "ZBD3T": 0, # TODO add custom value
+                "ZFBDT": erdat, # TODO add custom value
+                "ZTERM": self.customer['payment_term'],
+            }
+
+
+        self.record_flow( 
+            erdat=erdat, 
+            prev_vbeln=self.mblnr, 
+            prev_type='J', 
+            next_vbeln=self.vbrk_vbeln, 
+            next_type='M'
+        )
+
     def delivery_confirmation(self, usnam, udate):
         self.changes(
             objid=str(uuid.uuid4()), 
@@ -291,5 +415,49 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['PODAT'] = udate
                 self.tables['LIKP_json'][k]['POTIM'] = helpers.generate_random_time()
         
+    def clear_debit_invoice(self, cpudt, usnam, cleared_date):
+        cleared_bkpf_belnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+        self.tables['BKPF_json'][str(uuid.uuid4())] = {
+            "AWKEY": self.vbrk_vbeln,
+            "AWTYP": 'VBRK',
+            "BELNR": cleared_bkpf_belnr,
+            "BLART": 'D', # TODO add custom value
+            "BLDAT": cpudt, # FIXME use document creation date
+            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "CPUDT": cpudt,
+            "CPUTM": helpers.generate_random_time(),
+            "GJAHR": self.mjahr,
+            "MANDT": values.mandt,
+            "USNAM": usnam,
+            "WAERS": 'EUR',
+            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+        }
 
-        
+        for i, _ in enumerate(self.materials):
+            self.tables['BSEG_json'][str(uuid.uuid4())] = {
+                "AUGDT": cleared_date,
+                "BELNR": cleared_bkpf_belnr,
+                "AUGBL": cleared_bkpf_belnr, # TODO add custom value
+                "AUGGJ": self.mjahr,
+                "BSCHL": '01',
+                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUZEI": i,
+                "GJAHR": self.mjahr,
+                "KOART": 'D',
+                "KUNNR": self.customer['id'],
+                "MANDT": values.mandt,
+                "MANSP": None,
+                "MANST": None,
+                "SGTXT": 'D', # TODO add custom value
+                "SHKZG": 'S', # Debit Indicator
+                "SKFBT": 0,
+                "WRBTR": round(sum([values.om_materials[self.materials[i]]['price']*self.quantities[i] for i, _ in enumerate(self.materials)]), 4),
+                "WSKTO": 0,
+                "ZBD1P": 0, # TODO add custom value
+                "ZBD1T": 0, # TODO add custom value
+                "ZBD2P": 0, # TODO add custom value
+                "ZBD2T": 0, # TODO add custom value
+                "ZBD3T": 0, # TODO add custom value
+                "ZFBDT": cpudt, # TODO add custom value
+                "ZTERM": self.customer['payment_term'],
+            }
