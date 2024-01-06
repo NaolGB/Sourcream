@@ -8,6 +8,7 @@ class SalesAndDistribution:
         self.vbeln = vbeln
         self.materials = materials
         self.quantities = quantities
+        self.objnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' 
         self.likp_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' # HACK avoid reaching VARCHAR(255) when joining multiple table ids
         self.vbrk_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
         self.bkpf_belnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
@@ -34,6 +35,7 @@ class SalesAndDistribution:
             'BSEG_json': {},
             'CDHDR_json': {},
             'CDPOS_json': {},
+            'JCDS_json': {},
             'VBFA_json': {}
         }
 
@@ -113,7 +115,7 @@ class SalesAndDistribution:
             "KUNNR": self.customer['id'],
             "MANDT": values.mandt,
             "NETWR": round(sum([values.om_materials[self.materials[i]]['price']*self.quantities[i] for i, _ in enumerate(self.materials)]), 4),
-            "OBJNR": uuid.uuid4(),
+            "OBJNR": self.objnr,
             "VBELN": self.vbeln,
             "VBTYP": 'C',
             "VDATU": vdatu,
@@ -157,7 +159,7 @@ class SalesAndDistribution:
                 "NETPR": values.om_materials[self.materials[i]]['price'],
                 "NETWR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
                 "NTGEW": 99, # TODO add custom value
-                "OBJNR": f'{self.vbeln}{i}',
+                "OBJNR": self.objnr,
                 "POSNR": i,
                 "PSTYV": all_categories[random.choice(list(all_categories.keys()))]['PSTYV'],
                 "ROUTE": all_routes[random.choice(list(all_routes.keys()))]['ROUTE'],
@@ -188,7 +190,67 @@ class SalesAndDistribution:
             next_vbeln=self.vbeln, 
             next_type='C'
         )
-            
+
+    # def set_credit_block(self):
+    #     "TVFST"."FAKSP"
+    #     "TVFST"."MANDT"
+    #     "TVFST"."SPRAS"
+    #     "TVLST"."LIFSP"
+    #     "TVLST"."MANDT"
+    #     "TVLST"."SPRAS"
+
+
+    #     "VBAK"."ERDAT"
+    #     "VBAK"."ERNAM"
+    #     "VBAK"."ERZET"
+    #     "VBAK"."FAKSK"
+    #     "VBAK"."LIFSK"
+    #     "VBAK"."MANDT"
+    #     "VBAK"."VBELN"
+    #     "VBUK"."CMGST"
+    #     "VBUK"."MANDT"
+    #     "VBUK"."VBELN"
+
+    #     for i, _ in enumerate(self.materials):
+    #         self.tables['BSEG_json'][str(uuid.uuid4())] = {
+    #             "BELNR": self.bkpf_belnr,
+    #             "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+    #             "BUZEI": i,
+    #             "GJAHR": self.mjahr,
+    #             "MANDT": values.mandt,
+    #         }
+
+    #     self.changes(
+    #         # objid=str(uuid.uuid4()), 
+    #         # objclas=str(uuid.uuid4()), 
+    #         # udate=udate, 
+    #         # uname=usnam, 
+    #         # chngid='U', 
+    #         # fname='KOSTK', 
+    #         # tabkey=f'{values.mandt}{self.likp_vbeln}', 
+    #         # tabname='VBUK', 
+    #         # valold='A',
+    #         # valnew='C'
+    #     )
+
+    def release_credit_block(self):
+        pass
+
+    def approve_sales_order(self, udate, usnam):
+        changenr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+
+        self.tables['JCDS_json'][str(uuid.uuid4())] = {
+            "CDTCODE": changenr, # TODO add custom value
+            "CHGNR": changenr,
+            "INACT": None,
+            "MANDT": values.mandt,
+            "OBJNR": self.objnr,
+            "STAT": 'I0002',
+            "UDATE": udate,
+            "USNAM": usnam,
+            "UTIME": helpers.generate_random_time(),
+        }
+
     def generate_delivery_document(
             self, 
             ernam, 

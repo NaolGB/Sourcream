@@ -82,7 +82,12 @@ om_industries = {
     }
 }
 
-
+om_status = {
+    'apprive_sales_order': {
+        'ISTAT': 'I0002',
+        'TXT30': 'Approve'
+    }
+}
 
 om_customers = {
     "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},

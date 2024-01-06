@@ -118,3 +118,13 @@ def sales_doc_rejection_reasons(all_rejection_reasons=values.om_sales_doc_reject
         }
 
     return {'TVAGT_json': TVAGT_json}
+
+def system_status(all_status=values.om_status):
+    TJ02T_json = {}
+    for _, v in all_status.items():
+        TJ02T_json[str(uuid.uuid4())] = {
+            "ISTAT": v['ISTAT'],
+            "SPRAS": 'E',
+        }
+
+    return {'TJ02T_json': TJ02T_json}
