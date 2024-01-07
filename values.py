@@ -89,6 +89,20 @@ om_status = {
     }
 }
 
+om_billing_blocks = {
+    '01': {
+        'FAKSP': '01',
+        'VTEXT': 'Standard Billing Block'
+    }
+}
+
+om_delivery_blocks = {
+    '01': {
+        'LIFSP': '01',
+        'VTEXT': 'Standard Delivery Block'
+    }
+}
+
 om_customers = {
     "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
     "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},

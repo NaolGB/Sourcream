@@ -17,7 +17,7 @@ class SalesAndDistribution:
         self.mblnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
         self.mjahr = 2023 # TODO add custom value
         self.customer = customer
-        self.plant = all_plants[random.choice(list(all_plants.keys()))]['plant_number'],
+        self.plant = all_plants[random.choice(list(all_plants.keys()))]['plant_number']
 
         self.tables = {
             'VBAK_json': {},
@@ -123,7 +123,8 @@ class SalesAndDistribution:
             "VKORG": sales_org,
             "VSBED": shipping_condition,
             "VTWEG": distribution_channel,
-            "WAERK": 'EUR'
+            "WAERK": 'EUR',
+            "LIFSK": None,
         }
         self.tables['VBKD_json'][str(uuid.uuid4())] = {
             "INCO1": 'D', # TODO add custom value
@@ -138,7 +139,8 @@ class SalesAndDistribution:
             "GBSTK": 'A',
             "MANDT": values.mandt,
             "VBELN": self.vbeln,
-            "KOSTK": 'A' # Not yet processed
+            "KOSTK": 'A', # Not yet processed
+            "CMGST": None, # Credit Block
         }
 
         for i, _ in enumerate(self.materials):
@@ -191,50 +193,44 @@ class SalesAndDistribution:
             next_type='C'
         )
 
-    # def set_credit_block(self):
-    #     "TVFST"."FAKSP"
-    #     "TVFST"."MANDT"
-    #     "TVFST"."SPRAS"
-    #     "TVLST"."LIFSP"
-    #     "TVLST"."MANDT"
-    #     "TVLST"."SPRAS"
+    def set_credit_block(self, udate, usnam):
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='CMGST', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBUK', 
+            valold='B',
+            valnew='B'
+        )
 
+        for k, v in self.tables['VBUK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBUK_json'][k]['CMGST'] = 'B'
+     
+    def release_credit_block(self, udate, usnam):
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='CMGST', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBUK', 
+            valold='B',
+            valnew='A'
+        )
 
-    #     "VBAK"."ERDAT"
-    #     "VBAK"."ERNAM"
-    #     "VBAK"."ERZET"
-    #     "VBAK"."FAKSK"
-    #     "VBAK"."LIFSK"
-    #     "VBAK"."MANDT"
-    #     "VBAK"."VBELN"
-    #     "VBUK"."CMGST"
-    #     "VBUK"."MANDT"
-    #     "VBUK"."VBELN"
+        for k, v in self.tables['VBUK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBUK_json'][k]['CMGST'] = 'A'
 
-    #     for i, _ in enumerate(self.materials):
-    #         self.tables['BSEG_json'][str(uuid.uuid4())] = {
-    #             "BELNR": self.bkpf_belnr,
-    #             "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
-    #             "BUZEI": i,
-    #             "GJAHR": self.mjahr,
-    #             "MANDT": values.mandt,
-    #         }
-
-    #     self.changes(
-    #         # objid=str(uuid.uuid4()), 
-    #         # objclas=str(uuid.uuid4()), 
-    #         # udate=udate, 
-    #         # uname=usnam, 
-    #         # chngid='U', 
-    #         # fname='KOSTK', 
-    #         # tabkey=f'{values.mandt}{self.likp_vbeln}', 
-    #         # tabname='VBUK', 
-    #         # valold='A',
-    #         # valnew='C'
-    #     )
-
-    def release_credit_block(self):
-        pass
+    def reject_sales_order(self):
+        
 
     def approve_sales_order(self, udate, usnam):
         changenr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
@@ -311,6 +307,44 @@ class SalesAndDistribution:
             next_vbeln=self.likp_vbeln, 
             next_type='J'
         )
+
+    def set_delivery_block(self, udate, usnam, all_delivery_blocs=values.om_delivery_blocks):
+        new_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='LIFSK', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBAK', 
+            valold=None,
+            valnew=new_value,
+        )
+
+        for k, v in self.tables['VBAK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBAK_json'][k]['LIFSK'] = new_value
+
+    def release_delivery_block(self, udate, usnam, all_delivery_blocs=values.om_delivery_blocks):
+        old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='LIFSK', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBAK', 
+            valold=old_value,
+            valnew=None,
+        )
+
+        for k, v in self.tables['VBAK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBAK_json'][k]['LIFSK'] = None
 
     def pick_items(self, usnam, udate):
         self.changes(

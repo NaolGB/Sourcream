@@ -128,3 +128,24 @@ def system_status(all_status=values.om_status):
         }
 
     return {'TJ02T_json': TJ02T_json}
+
+def blocking_reasons(all_billing_blocks=values.om_billing_blocks, all_delivery_blocks=values.om_delivery_blocks):
+    TVFST_json = {}
+    TVLST_json = {}
+
+    for _, v in all_billing_blocks.items():
+        TVFST_json[str(uuid.uuid4())] = {
+            "FAKSP": v['FAKSP'],
+            "MANDT": values.mandt,
+            "SPRAS": 'E',
+            "VTEXT": v['VTEXT']
+        }
+    for _, v in all_delivery_blocks.items():
+        TVLST_json[str(uuid.uuid4())] = {
+            "LIFSP": v['LIFSP'],
+            "MANDT": values.mandt,
+            "SPRAS": 'E',
+            "VTEXT": v['VTEXT']
+        }
+
+    return {'TVFST_json': TVFST_json, 'TVLST_json': TVLST_json}
