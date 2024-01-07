@@ -8,13 +8,13 @@ class SalesAndDistribution:
         self.vbeln = vbeln
         self.materials = materials
         self.quantities = quantities
-        self.objnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' 
-        self.likp_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' # HACK avoid reaching VARCHAR(255) when joining multiple table ids
-        self.vbrk_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
-        self.bkpf_belnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+        self.objnr = f'{values.mandt}{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' 
+        self.likp_vbeln = f'{values.mandt}{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}' # HACK avoid reaching VARCHAR(255) when joining multiple table ids
+        self.vbrk_vbeln = f'{values.mandt}{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+        self.bkpf_belnr = f'{values.mandt}{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
 
         all_plants=values.om_plants
-        self.mblnr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
+        self.mblnr = f'{values.mandt}{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
         self.mjahr = 2023 # TODO add custom value
         self.customer = customer
         self.plant = all_plants[random.choice(list(all_plants.keys()))]['plant_number']
@@ -92,7 +92,6 @@ class SalesAndDistribution:
         reqested_delivery_date,
         ernam,
         
-        all_rejection_reasons=values.om_sales_doc_rejection_reasons,
         all_units=values.om_units,
         all_categories=values.om_sales_doc_item_categories,
         all_routes=values.om_routes,
@@ -146,7 +145,7 @@ class SalesAndDistribution:
         for i, _ in enumerate(self.materials):
             temp_vbeln = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
             self.tables['VBAP_json'][temp_vbeln] = {
-                "ABGRU": all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU'],
+                "ABGRU": None,
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
                 "ERNAM": ernam,
@@ -229,8 +228,20 @@ class SalesAndDistribution:
             if v['VBELN'] == self.vbeln:
                 self.tables['VBUK_json'][k]['CMGST'] = 'A'
 
-    def reject_sales_order(self):
-        
+    def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
+        for i, _ in enumerate(self.materials):
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas=str(uuid.uuid4()), 
+                udate=udate, 
+                uname=usnam, 
+                chngid='U', 
+                fname='ABGRU', 
+                tabkey=f'{values.mandt}{self.vbeln}{i}', 
+                tabname='VBAP', 
+                valold=None,
+                valnew=all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU'],
+            )
 
     def approve_sales_order(self, udate, usnam):
         changenr = f'{str(uuid.uuid4())[:random.randint(1, 5)]}{str(uuid.uuid4())[:random.randint(1, 5)]}'
