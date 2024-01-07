@@ -95,7 +95,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
        
         KNB1_json[str(uuid.uuid4())] = {
             "BUKRS": all_company_codes[random.choice(list(all_company_codes.keys()))]['BUKRS'],
-            "ERDAT": helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1)),
+            "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
             "MANDT": values.mandt,
@@ -123,7 +123,7 @@ def materials(
     for k, v in all_materials.items():
         matnr = v['id']
         quantity = random.randint(500, 1500)
-        creation_time = helpers.generate_random_date(start_date=datetime(2021, 1, 1), end_date=datetime(2022, 1, 1))
+        creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
         MAKT_json[str(uuid.uuid4())] = {
             "MAKTX": k,
             "MANDT": values.mandt,
