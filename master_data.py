@@ -40,8 +40,8 @@ def plants(all_plants=values.om_plants):
         T001W_json[str(uuid.uuid4())] = {
             "LAND1": v['country_key'],
             "MANDT": values.mandt,
-            "NAME1": k,
-            "WERKS": v['plant_number'],
+            "NAME1": v['name'],
+            "WERKS": k,
             "BWKEY": random.choice(values.om_valuation_areas),
 
         }
@@ -58,16 +58,16 @@ def company_codes(all_company_codes=values.om_company_codes):
     T001_json = {}
     T001K_json = {}
 
-    for _, v in all_company_codes.items():
+    for k, v in all_company_codes.items():
         T001_json[str(uuid.uuid4())] = {
-            "BUKRS": v['BUKRS'],
+            "BUKRS": k,
             "BUTXT": v['BUTXT'],
             "MANDT": values.mandt,
             "WAERS": 'EUR'
         }
         for va in values.om_valuation_areas: # HACK each company code has all the valuaiton areas
             T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
-                "BUKRS": v['BUKRS'],
+                "BUKRS": k,
                 "BWKEY": va, 
                 "MANDT": values.mandt
             }
@@ -79,7 +79,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     KNA1_json = {}
 
     for k, v in all_customers.items():
-        customer_number = v['id']
+        customer_number = f'{str(uuid.uuid4())[-17:]}'
         KNA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -94,7 +94,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
         }
        
         KNB1_json[str(uuid.uuid4())] = {
-            "BUKRS": all_company_codes[random.choice(list(all_company_codes.keys()))]['BUKRS'],
+            "BUKRS": random.choice(list(all_company_codes.keys())),
             "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -121,7 +121,7 @@ def materials(
     MBEW_json = {}
 
     for k, v in all_materials.items():
-        matnr = v['id']
+        matnr = f'{str(uuid.uuid4())[-17:]}'
         quantity = random.randint(500, 1500)
         creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
         MAKT_json[str(uuid.uuid4())] = {
@@ -163,7 +163,7 @@ def materials(
             "PLIFZ": v['delivery_takes_days'],
             "STRGR": 'D', # TODO add custom value
             "WEBAZ": v['goods_receipt_processing_days'],
-            "WERKS": all_plants[random.choice(list(all_plants.keys()))]['plant_number'],
+            "WERKS": all_plants[random.choice(list(all_plants.keys()))],
         }
         MBEW_json[str(uuid.uuid4())] = {
             "BWKEY": random.choice(values.om_valuation_areas),

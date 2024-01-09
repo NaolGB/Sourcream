@@ -38,7 +38,7 @@ def doc_types(doc_types=values.sales_doc_types):
 
     return {'TVAK_json': TVAK_json, 'TVAKT_json': TVAKT_json}
 
-def organization(sales_orgs=values.sales_orgs):
+def organization(sales_orgs=values.om_sales_orgs):
     TVKBT_json = {}
     TVKOT_json = {}
     TVKOV_json = {}
