@@ -18,7 +18,7 @@ def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
 
     return {'DD07T_json': DD07T_json}
 
-def doc_types(doc_types=values.sales_doc_types):
+def doc_types(doc_types=values.om_sales_doc_types):
     TVAK_json = {}
     TVAKT_json = {}
 

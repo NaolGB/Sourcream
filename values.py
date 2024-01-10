@@ -170,9 +170,13 @@ om_sales_doc_item_categories = {
     }
 }
 om_sales_doc_rejection_reasons = {
-    'R1': {
-        'ABGRU': 'R1',
+    'Z0': {
+        'ABGRU': 'Z0',
         'BEZEI': 'Incorrect Sales Document Entries'
+    },
+    'Z1': {
+        'ABGRU': 'Z1',
+        'BEZEI': 'Invalid Sales Order'
     }
 }
 om_users = {
@@ -199,215 +203,366 @@ om_users = {
     'Catelyn Stark': {'type': 'A', 'nation': 'Westeros'},
     "BATCH_JOB": {'type': 'B', 'nation': 'UK'},
 }
-
-
-
-
-
-
-
 om_material_groups = {
-    'GRP-1': {
-        'MATKL': 'GROUP-013',
-        'WGBEZ': 'Group 013'
+    'Beverages': {
+        'MATKL001': {
+            'name': 'Carbonated Drinks',
+            'materials': {
+                'Coca Fizz 500ml': {},
+                'Soda Stream 1L': {},
+                'Bubbly Blast 750ml': {},
+                'Fizz Pop 330ml': {},
+                'Aero Sip 250ml': {}
+            }
+        },
+        'MATKL002': {
+            'name': 'Fruit Juices',
+            'materials': {
+                'Apple Blend 1L': {},
+                'Berry Burst 500ml': {},
+                'Citrus Splash 750ml': {},
+                'Mango Mist 330ml': {},
+                'Tropical Twist 250ml': {}
+            }
+        },
+        'MATKL003': {
+            'name': 'Energy Drinks',
+            'materials': {
+                'Power Punch 500ml': {},
+                'Charge Up 1L': {},
+                'Vigor Max 750ml': {},
+                'Ener Gize 330ml': {},
+                'Stamina Shot 250ml': {}
+            }
+        },
+        'MATKL004': {
+            'name': 'Bottled Water',
+            'materials': {
+                'Pure Drop 500ml': {},
+                'Crystal Clear 1L': {},
+                'Aqua Fresh 750ml': {},
+                'Spring Splash 330ml': {},
+                'Hydro Haven 250ml': {}
+            }
+        },
+        'MATKL005': {
+            'name': 'Coffee & Tea',
+            'materials': {
+                'Java Joy 500ml': {},
+                'Tea Taste 1L': {},
+                'Mocha Magic 750ml': {},
+                'Espresso Express 330ml': {},
+                'Chai Charm 250ml': {}
+            }
+        }
+    },
+    'Packaged Foods': {
+        'MATKL010': {
+            'name': 'Snacks & Chips',
+            'materials': {
+                'Chippy Crunch 50g': {},
+                'Snack Bite 100g': {},
+                'Potat oCrisp 75g': {},
+                'Tortilla Twist 60g': {},
+                'Rice Puff 40g': {}
+            }
+        },
+        'MATKL011': {
+            'name': 'Canned Foods',
+            'materials': {
+                'Bean Delight 400g': {},
+                'Tomato Sauce 250ml': {},
+                'Peach Halves 500ml': {},
+                'Tuna Chunks 200g': {},
+                'Chicken Soup 350ml': {}
+            }
+        },
+        'MATKL012': {
+            'name': 'Frozen Foods',
+            'materials': {
+                'Pizza Slice 200g': {},
+                'Frozen Veggies 500g': {},
+                'Chicken Nuggets 400g': {},
+                'Fish Fillet 300g': {},
+                'Ice CreamBar 100ml': {}
+            }
+        },
+        'MATKL013': {
+            'name': 'Baked Goods',
+            'materials': {
+                'Cocoa Muffin 150g': {},
+                'Whole WheatBread 500g': {},
+                'Croissant 100g': {},
+                'Bagel 80g': {},
+                'Doughnut Ring 120g': {}
+            }
+        },
+        'MATKL014': {
+            'name': 'Breakfast Cereals',
+            'materials': {
+                'Oat Flakes 250g': {},
+                'Corn Flakes 300g': {},
+                'Rice Crunch 400g': {},
+                'Wheat Biscuit 350g': {},
+                'Granola Mix 200g': {}
+            }
+        }
+    },
+    'Raw Ingredients': {
+        'MATKL020': {
+            'name': 'Sugar & Sweeteners',
+            'materials': {
+                'White Granular Sugar 1kg': {},
+                'Liquid Glucose 5L': {},
+                'Brown Sugar 500g': {},
+                'Honey Syrup 750ml': {},
+                'Corn Syrup 2L': {}
+            }
+        },
+        'MATKL021': {
+            'name': 'Flour & Grains',
+            'materials': {
+                'Wheat Flour 10kg': {},
+                'Cornmeal 5kg': {},
+                'Barley 1kg': {},
+                'Rice 20kg': {},
+                'Oatmeal 2kg': {}
+            }
+        },
+        'MATKL022': {
+            'name': 'Dairy Products',
+            'materials': {
+                'Whole Milk Powder 2kg': {},
+                'Butter 500g': {},
+                'Cheese Block 1kg': {},
+                'Yogurt 1L': {},
+                'Whey Protein 500g': {}
+            }
+        },
+        'MATKL023': {
+            'name': 'Spices & Seasonings',
+            'materials': {
+                'Black Pepper 100g': {},
+                'Salt 5kg': {},
+                'Garlic Powder 500g': {},
+                'Cinnamon 200g': {},
+                'Paprika 250g': {}
+            }
+        },
+        'MATKL024': {
+            'name': 'Oils & Fats',
+            'materials': {
+                'Vegetable Oil 5L': {},
+                'Olive Oil 1L': {},
+                'Palm Oil 10L': {},
+                'Coconut Oil 2L': {},
+                'Sunflower Oil 5L': {}
+            }
+        }
+    },
+
+
+
+
+
+
+
+
+
+    'Packaging Materials': {
+        'groups': {
+            'MATKL030': 'Glass Bottles',
+            'MATKL031': 'Plastic Bottles',
+            'MATKL032': 'Aluminum Cans',
+            'MATKL033': 'Paper & Cardboard',
+            'MATKL034': 'Sealing Materials'
+        },
+        'materials': {
+
+        }
+    },
+    'Equipment & Machinery': {
+        'groups': {
+            'MATKL040': 'Processing Machines',
+            'MATKL041': 'Packaging Machines',
+            'MATKL042': 'Refrigeration Equipment',
+            'MATKL043': 'Conveyors & Belts',
+            'MATKL044': 'Cleaning Equipment'
+        },
+        'materials': {
+
+        }
+    },
+    'Services & Miscellaneous': {
+        'groups': {
+            'MATKL050': 'Maintenance Services',
+            'MATKL051': 'Logistics & Transportation',
+            'MATKL052': 'Quality Control Services',
+            'MATKL053': 'Consulting & Training',
+            'MATKL054': 'Miscellaneous Supplies'
+        },
+        'materials': {
+
+        }
     }
 }
 
-x = {
-    "Banana Chips": {'price': 0.075, 'availability': 0., 'type': 'E'},
-    "Beef Lasagna Frozen Dinner": {'price': 3.25, 'availability': 0., 'type': 'E'},
-    "Beef Stew": {'price': 2.25, 'availability': 0., 'type': 'E'},
-    "Berry Blast Smoothie": {'price': 2.25, 'availability': 0., 'type': 'E'},
-    "Berry Medley Frozen Fruit": {'price': 0.15, 'availability': 0., 'type': 'E'},
-    "Black Bean Salsa": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Blueberry Greek Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Butter Biscuits": {'price': 0.15, 'availability': 0., 'type': 'E'},
-    "Cajun Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E'},
-    "Cashew Nuts": {'price': 0.15, 'availability': 0., 'type': 'E'},
-    "Chia Seeds": {'price': 0.25, 'availability': 0., 'type': 'E'},
-    "Chicken Alfredo Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Chicken Tikka Masala Frozen Dinner": {'price': 3.00, 'availability': 0., 'type': 'E'},
-    "Chili Powder": {'price': 0.05, 'availability': 0., 'type': 'E'},
-    "Chocolate Chip Granola Bars": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Chocolate Fudge Brownie Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E'},
-    "Chocolate Milk": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Chocolate Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Chunky Tomato Soup": {'price': 1.50, 'availability': 0., 'type': 'E'},
-    "Classic Cola": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Classic Margarine Tub": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Classic Marinara Sauce": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Classic Potato Chips": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Coconut Oil": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Cornflakes Cereal": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Cranberry Juice": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Creamy Butter": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Creamy Peanut Butter": {'price': 1.50, 'availability': 0., 'type': 'E'},
-    "Creamy Ranch Dressing": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Crispy Apple Chips": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Crunchy Pretzels": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Cumin Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E'},
-    "Curry Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Dark Roast Ground Coffee": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Double Chocolate Cookies": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Dried Blueberries": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Dried Cranberries": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Earl Grey Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E'},
-    "Extra Virgin Olive Oil": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "French Vanilla Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E'},
-    "Frozen Pea Packs": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Garlic Bread": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Garlic Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Green Bean Cans": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Green Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E'},
-    "Hearty Beef Chili": {'price': 2.00, 'availability': 0., 'type': 'E'},
-    "Honey Mustard Dressing": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Iced Tea Mix": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Instant Classic Coffee": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Italian Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E'},
-    "Lemonade": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Mango Juice": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Medium Salsa": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Mint Chocolate Chip Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E'},
-    "Mixed Nuts": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Mixed Vegetable Frozen Mix": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Multigrain Crackers": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Oatmeal Cookies": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Pancake Mix": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Peach Halves in Syrup": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Peanut Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Pepper Jack Cheese": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Pepperoni Frozen Pizza": {'price': 3.50, 'availability': 0., 'type': 'E'},
-    "Pitted Black Olives": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Protein Shakes": {'price': 1.50, 'availability': 0., 'type': 'E'},
-    "Pumpkin Seeds": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Pure Orange Juice": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Refresh Bottled Water": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Roasted Almonds": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Rye Bread": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Salted Butter": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Salted Tortilla Chips": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Sesame Oil": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Sharp Cheddar Cheese Block": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Shortbread Cookies": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Smoked Gouda Cheese": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Sourdough Bread": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Spaghetti Carbonara Ready Meal": {'price': 3.00, 'availability': 0., 'type': 'E'},
-    "Spicy Dill Pickles": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Stir-Fry Vegetables": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Strawberry Banana Smoothie": {'price': 2.00, 'availability': 0., 'type': 'E'},
-    "Strawberry Jam": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Strawberry Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Sunflower Seeds": {'price': 0.20, 'availability': 0., 'type': 'E'},
-    "Sweet Gherkin Pickles": {'price': 0.30, 'availability': 0., 'type': 'E'},
-    "Taco Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E'},
-    "Tangy Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Thunder Energy Drink": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Tropical Fruit Snacks": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Vanilla Bean Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Vanilla Ice Cream": {'price': 1.50, 'availability': 0., 'type': 'E'},
-    "Vanilla Sports Nutrition Shake": {'price': 2.00, 'availability': 0., 'type': 'E'},
-    "Waffle Mix": {'price': 0.50, 'availability': 0., 'type': 'E'},
-    "Wheat Crackers": {'price': 0.40, 'availability': 0., 'type': 'E'},
-    "Whipped Cream": {'price': 0.75, 'availability': 0., 'type': 'E'},
-    "Whole Wheat Bread Loaf": {'price': 1.00, 'availability': 0., 'type': 'E'},
-    "Zesty Relish": {'price': 0.50, 'availability': 0., 'type': 'E'},
+prompt = {"""
+I am writing a dummy data for a sales order. 
+The company is a big food and beverages processing and packaging comapny. 
+It buys raw materials, processes them into foods, packages them, and sells them. 
+It's customers are wholesellers, big companies that further process and sell the products, big supermarkets. 
+For each material group I have, give me 5 product/material names. 
+This data is going into SAP MM tables so make it sound corporate/industrial.
+Use fairly generic names, do not have brand names that are in the real world. 
+Include the specific scale when possible, like this: 'Coca Fizz 500ml'.
+Don't forget to use spaces in the material names.
+          
+
+
+for each one use a format like this. 
+ 'MATKL001': {
+     'name': 'Carbonated Drinks',
+     'materials': {
+        material_name_with_spaces: {}
+     }
+ }
+"""
 }
 
 
+om_materials = {
+    "Banana Chips": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Beef Lasagna Frozen Dinner": {'price': 3.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Beef Stew": {'price': 2.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Berry Blast Smoothie": {'price': 2.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Berry Medley Frozen Fruit": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Black Bean Salsa": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Blueberry Greek Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Butter Biscuits": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Cajun Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Cashew Nuts": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chia Seeds": {'price': 0.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chicken Alfredo Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chicken Tikka Masala Frozen Dinner": {'price': 3.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chili Powder": {'price': 0.05, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chocolate Chip Granola Bars": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chocolate Fudge Brownie Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chocolate Milk": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chocolate Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Chunky Tomato Soup": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Classic Cola": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Classic Margarine Tub": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Classic Marinara Sauce": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Classic Potato Chips": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Coconut Oil": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Cornflakes Cereal": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Cranberry Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Creamy Butter": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Creamy Peanut Butter": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Creamy Ranch Dressing": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Crispy Apple Chips": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Crunchy Pretzels": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Cumin Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Curry Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Dark Roast Ground Coffee": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Double Chocolate Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Dried Blueberries": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Dried Cranberries": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Earl Grey Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Extra Virgin Olive Oil": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "French Vanilla Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Frozen Pea Packs": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Garlic Bread": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Garlic Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Green Bean Cans": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Green Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Hearty Beef Chili": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Honey Mustard Dressing": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Iced Tea Mix": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Instant Classic Coffee": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Italian Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Lemonade": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Mango Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Medium Salsa": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Mint Chocolate Chip Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Mixed Nuts": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Mixed Vegetable Frozen Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Multigrain Crackers": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Oatmeal Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pancake Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Peach Halves in Syrup": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Peanut Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pepper Jack Cheese": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pepperoni Frozen Pizza": {'price': 3.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pitted Black Olives": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Protein Shakes": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pumpkin Seeds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Pure Orange Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Refresh Bottled Water": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Roasted Almonds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Rye Bread": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Salted Butter": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Salted Tortilla Chips": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Sesame Oil": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Sharp Cheddar Cheese Block": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Shortbread Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Smoked Gouda Cheese": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Sourdough Bread": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Spaghetti Carbonara Ready Meal": {'price': 3.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Spicy Dill Pickles": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Stir-Fry Vegetables": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Strawberry Banana Smoothie": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Strawberry Jam": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Strawberry Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Sunflower Seeds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Sweet Gherkin Pickles": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Taco Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Tangy Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Thunder Energy Drink": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Tropical Fruit Snacks": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Vanilla Bean Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Vanilla Ice Cream": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Vanilla Sports Nutrition Shake": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Waffle Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Wheat Crackers": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Whipped Cream": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Whole Wheat Bread Loaf": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+    "Zesty Relish": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+}
+om_customers = {
+    "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
+    "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
+    "Crispy Cravings": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
+    "Sips & Savories": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
+    "Gourmet Delights Inc.": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109657'},
+    "Flavor Fusion Foods": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109658'},
+    "Café Elegance": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
+    "SodaStreamers": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109660'},
+    "Sweets & Sips": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109661'},
+    "Gastronomy Galore": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
+    "Nectar Nook": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
+    "Spice & Savor": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
+    "Wholesome Treats": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
+    "Munchies Magic": {"credit_risk": 0.71, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
+    "Siplicity Drinks": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
+    "Foodie Fantasy": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
+    "Yummy Morsels": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
+    "Baker's Bliss Co.": {"credit_risk": 0.67, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109670'},
+    "ThirstQuencher": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109671'},
+    "Epicurean Eats": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109672'},
+    "Gusto Gourmets": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109673'},
+    "Beverage Bliss": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
+    "Taste Troupe": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
+    "ChocoCharm Confections": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
+    "SavorStreet": {"credit_risk": 0.40, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
+    "Culinary Crafters": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
+    "BrewBurst Beverages": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
+    "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
+    "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109681'},
+    "FreshNosh": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109682'},
+    "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
+}
 
-
-
-
-
-# om_customers = {
-#     "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
-#     "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
-#     "Crispy Cravings": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
-#     "Sips & Savories": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
-#     "Gourmet Delights Inc.": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109657'},
-#     "Flavor Fusion Foods": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109658'},
-#     "Café Elegance": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
-#     "SodaStreamers": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109660'},
-#     "Sweets & Sips": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109661'},
-#     "Gastronomy Galore": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
-#     "Nectar Nook": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
-#     "Spice & Savor": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
-#     "Wholesome Treats": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
-#     "Munchies Magic": {"credit_risk": 0.71, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
-#     "Siplicity Drinks": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
-#     "Foodie Fantasy": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
-#     "Yummy Morsels": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
-#     "Baker's Bliss Co.": {"credit_risk": 0.67, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109670'},
-#     "ThirstQuencher": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109671'},
-#     "Epicurean Eats": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109672'},
-#     "Gusto Gourmets": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109673'},
-#     "Beverage Bliss": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
-#     "Taste Troupe": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
-#     "ChocoCharm Confections": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
-#     "SavorStreet": {"credit_risk": 0.40, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
-#     "Culinary Crafters": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
-#     "BrewBurst Beverages": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
-#     "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
-#     "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109681'},
-#     "FreshNosh": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109682'},
-#     "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
-# }
-
-
-
-# om_materials = {
-#     "Rice": {"price": 2.99, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058832'}, # type(E) = 'in house production
-#     "Coffee": {"price": 5.49, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058833'}, 
-#     "Tea": {"price": 3.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058834'}, 
-#     "Soda": {"price": 1.49, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058835'}, 
-#     "Bottled Water": {"price": 0.99, "availability": 1.0, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058836'}, 
-#     "Chips": {"price": 2.79, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058837'}, 
-#     "Cookies": {"price": 3.49, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058838'}, 
-#     "Candy": {"price": 1.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058839'}, 
-#     "Ice Cream": {"price": 4.99, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058840'}, 
-#     "Frozen Pizza": {"price": 5.99, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058841'}, 
-#     "Canned Soup": {"price": 1.79, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058842'}, 
-#     "Honey": {"price": 4.29, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058843'}, 
-#     "Peanut Butter": {"price": 3.29, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058844'}, 
-#     "Jam": {"price": 2.99, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058845'}, 
-#     "Canned Vegetables": {"price": 1.69, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058846'}, 
-#     "Frozen Vegetables": {"price": 2.49, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058847'}, 
-#     "Olive Oil": {"price": 6.99, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058848'}, 
-#     "Vinegar": {"price": 2.19, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058849'}, 
-#     "Balsamic Vinegar": {"price": 4.99, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058850'}, 
-#     "Wine": {"price": 9.99, "availability": 0.4, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058851'}, 
-#     "Beer": {"price": 1.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058852'}, 
-#     "Worcestershire Sauce": {"price": 2.79, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058853'}, 
-#     "Pickles": {"price": 2.49, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058854'}, 
-#     "Olives": {"price": 3.29, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058855'}, 
-#     "Canned Tuna": {"price": 1.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058856'}, 
-#     "Canned Salmon": {"price": 3.99, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058857'}, 
-#     "Dried Fruits": {"price": 4.49, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058858'}, 
-#     "Nuts": {"price": 5.99, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058859'}, 
-#     "Hamburger Buns": {"price": 2.49, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058860'}, 
-#     "Hot Dog Buns": {"price": 2.29, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058861'}, 
-#     "Mustard": {"price": 1.79, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058862'}, 
-#     "Barbecue Sauce": {"price": 2.99, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058863'}, 
-#     "Salsa": {"price": 2.49, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058864'}, 
-#     "Tortilla Chips": {"price": 2.79, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058865'}, 
-#     "Sour Cream": {"price": 1.99, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058866'}, 
-#     "Cottage Cheese": {"price": 3.29, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058867'}, 
-#     "Pudding": {"price": 1.49, "availability": 0.95, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058868'}, 
-#     "Cereal Bars": {"price": 3.49, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058869'}, 
-#     "Oatmeal": {"price": 2.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058870'}, 
-#     "Frozen Burritos": {"price": 4.49, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058871'}, 
-#     "Frozen Dinners": {"price": 3.99, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058872'}, 
-#     "Sausages": {"price": 5.49, "availability": 0.5, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058873'}, 
-#     "Muffins": {"price": 2.79, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058874'}, 
-#     "Bagels": {"price": 2.49, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058875'}, 
-#     "Donuts": {"price": 1.99, "availability": 0.95, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058876'}, 
-#     "Canned Fruit": {"price": 2.29, "availability": 0.9, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058877'}, 
-#     "Fruit Cups": {"price": 2.99, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058878'}, 
-#     "Almond Milk": {"price": 3.49, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058879'}, 
-#     "Coconut Water": {"price": 2.79, "availability": 0.7, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058880'}, 
-#     "Trail Mix": {"price": 4.9, "availability": 0.1, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058881'}, 
-#     "Soy Sauce": {"price": 2.29, "availability": 0.8, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058882'}, 
-#     "Lemon Cake": {"price": 3.9, "availability": 0.6, 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7, 'plants': ['UK-1'], 'id': 'M1058883'}, 
-# }
 
 
