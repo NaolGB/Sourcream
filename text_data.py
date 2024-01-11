@@ -44,6 +44,8 @@ def organization(sales_orgs=values.om_sales_orgs):
     TVKOV_json = {}
     TVTWT_json = {}
 
+    unique_distribution_channels = {}
+
     for org, attributes in sales_orgs.items():
         for key, name in attributes['sales_offices'].items():
             TVKBT_json[str(uuid.uuid4())] = {
@@ -58,19 +60,22 @@ def organization(sales_orgs=values.om_sales_orgs):
             "VKORG": org,
             "VTEXT": org
         }
+        
+        # select unique distribution channels
         for key, name in attributes['distribution_channels'].items():
+            unique_distribution_channels[key] = name
             TVKOV_json[str(uuid.uuid4())] = {
                 "MANDT": values.mandt,
                 "VKORG": org,
                 "VTWEG": key
             }
-            
-            TVTWT_json[str(uuid.uuid4())] = {
-                "MANDT": values.mandt,
-                "SPRAS": 'E',
-                "VTEXT": name,
-                "VTWEG": key
-            }
+    for key, name in unique_distribution_channels.items():
+        TVTWT_json[str(uuid.uuid4())] = {
+            "MANDT": values.mandt,
+            "SPRAS": 'E',
+            "VTEXT": name,
+            "VTWEG": key
+        }
     
     return {'TVKBT_json': TVKBT_json, 'TVKOT_json': TVKOT_json, 'TVKOV_json': TVKOV_json, 'TVTWT_json': TVTWT_json}
 

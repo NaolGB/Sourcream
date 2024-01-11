@@ -36,6 +36,8 @@ def users(all_users=values.om_users):
 def plants(all_plants=values.om_plants):
     T001W_json = {}
     T005T_json = {}
+
+    unique_countries = {}
     for k, v in all_plants.items():
         T001W_json[str(uuid.uuid4())] = {
             "LAND1": v['country_key'],
@@ -45,9 +47,11 @@ def plants(all_plants=values.om_plants):
             "BWKEY": random.choice(values.om_valuation_areas),
 
         }
+        unique_countries[v['country_key']] = v['country_name']
+    for k, v in unique_countries.items():
         T005T_json[str(uuid.uuid4())] = {
-            "LAND1": v['country_key'],
-            "LANDX": v['country_name'],
+            "LAND1": k,
+            "LANDX": v,
             "MANDT": values.mandt,
             "SPRAS": "E"
         }
@@ -65,12 +69,12 @@ def company_codes(all_company_codes=values.om_company_codes):
             "MANDT": values.mandt,
             "WAERS": 'EUR'
         }
-        for va in values.om_valuation_areas: # HACK each company code has all the valuaiton areas
-            T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
-                "BUKRS": k,
-                "BWKEY": va, 
-                "MANDT": values.mandt
-            }
+    for va in values.om_valuation_areas: # HACK only one valuation area
+        T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
+            "BUKRS": k,
+            "BWKEY": va, 
+            "MANDT": values.mandt
+        }
 
     return {'T001_json': T001_json, 'T001K_json': T001K_json}
 
@@ -92,22 +96,21 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             "STRAS": 'ADD1', # TODO add address liner
             "VBUND": None
         }
-       
-        KNB1_json[str(uuid.uuid4())] = {
-            "BUKRS": random.choice(list(all_company_codes.keys())),
-            "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
-            "ERNAM": random.choice(list(all_users.keys())),
-            "KUNNR": customer_number,
-            "MANDT": values.mandt,
-            "ZTERM": v['payment_term']
-        }
+        for bukrs in list(all_company_codes.keys()):
+            KNB1_json[str(uuid.uuid4())] = {
+                "BUKRS": bukrs, # HACK all company codes for all customers
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
+                "ERNAM": random.choice(list(all_users.keys())),
+                "KUNNR": customer_number,
+                "MANDT": values.mandt,
+                "ZTERM": v['payment_term']
+            }
     
     return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
 
 def materials(
-        all_materials=values.om_materials, 
+        all_material_groups=values.om_material_groups, 
         all_users=values.om_users, 
-        all_mat_groups=values.om_material_groups, 
         all_mat_types=values.om_material_types, 
         all_industries=values.om_industries, 
         all_units=values.om_units,
@@ -120,70 +123,76 @@ def materials(
     MARC_json = {}
     MBEW_json = {}
 
-    for k, v in all_materials.items():
-        matnr = f'{str(uuid.uuid4())[-17:]}'
-        quantity = random.randint(500, 1500)
-        creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
-        MAKT_json[str(uuid.uuid4())] = {
-            "MAKTX": k,
-            "MANDT": values.mandt,
-            "MATNR": matnr,
-            "SPRAS": "E"
-        }
-        MARA_json[str(uuid.uuid4())] = { # MARA is the base Material Master Data - for all plants
-            "ERNAM": random.choice(list(all_users.keys())),
-            "ERSDA": creation_time,
-            "MANDT": values.mandt,
-            "MATKL": all_mat_groups[random.choice(list(all_mat_groups.keys()))]['MATKL'],
-            "MATNR": matnr,
-            "MBRSH": all_industries[random.choice(list(all_industries.keys()))]['MBRSH'],
-            "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-            "MTART": all_mat_types[random.choice(list(all_mat_types.keys()))]['MTART'],
-            "PRDHA": 'DEFAULT', # TODO add product heirarchy here
-        }
-        MARM_json[str(uuid.uuid4())] = {
-            "MANDT": values.mandt,
-            "MATNR": matnr,
-            "MEINH": all_dimensions[random.choice(list(all_dimensions.keys()))]['MSSIE'],
-        }
-        MARC_json[str(uuid.uuid4())] = {
-            "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 1, 1), end_date=datetime(2025, 1, 1)), # HACK after all SO and procurement have passed
-            "BESKZ": v['type'],
-            "BSTMI": 99,
-            "DISGR": 'D', # TODO add custom value
-            "DISMM": 'D', # TODO add custom value
-            "DISPO": 'D', # TODO add custom value
-            "DZEIT": 99, # TODO add custom value
-            "EISBE": 99, # TODO add custom value
-            "LGRAD": 99, # TODO add custom value
-            "MANDT": values.mandt,
-            "MATNR": matnr,
-            "MMSTD": creation_time,
-            "NFMAT": matnr,
-            "PLIFZ": v['delivery_takes_days'],
-            "STRGR": 'D', # TODO add custom value
-            "WEBAZ": v['goods_receipt_processing_days'],
-            "WERKS": all_plants[random.choice(list(all_plants.keys()))],
-        }
-        MBEW_json[str(uuid.uuid4())] = {
-            "BWKEY": random.choice(values.om_valuation_areas),
-            "BWTAR": None,
-            "LBKUM": quantity,
-            "MANDT": values.mandt,
-            "MATNR": matnr,
-            "PEINH": 99, # TODO add custom value
-            "SALK3": round(quantity*v['price'], 4),
-            "STPRS": v['price'],
-            "VERPR": v['price'],
-            "VPRSV": 'D', # TODO add custom value
-        }
+    for _, mat_grps in all_material_groups.items():
+        for grp_code, v in mat_grps.items():
+            for name, attributes in v['materials'].items():
+                matnr = f'{str(uuid.uuid4())[-17:]}'
+                material = name
+                price = attributes['price']
+                quantity = random.randint(500, 10_000)
+                creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
+
+                MAKT_json[str(uuid.uuid4())] = {
+                    "MAKTX": material,
+                    "MANDT": values.mandt,
+                    "MATNR": matnr,
+                    "SPRAS": "E"
+                }
+                MARA_json[str(uuid.uuid4())] = { # MARA is the base Material Master Data - for all plants
+                    "ERNAM": random.choice(list(all_users.keys())),
+                    "ERSDA": creation_time,
+                    "MANDT": values.mandt,
+                    "MATKL": grp_code,
+                    "MATNR": matnr,
+                    "MBRSH": all_industries[random.choice(list(all_industries.keys()))]['MBRSH'],
+                    "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                    "MTART": all_mat_types[random.choice(list(all_mat_types.keys()))]['MTART'],
+                    "PRDHA": 'DEFAULT', # TODO add product heirarchy here
+                }
+                MARM_json[str(uuid.uuid4())] = {
+                    "MANDT": values.mandt,
+                    "MATNR": matnr,
+                    "MEINH": all_dimensions[random.choice(list(all_dimensions.keys()))]['MSSIE'],
+                }
+                for plnt in random.sample(list(all_plants.keys()), 5):
+                    MARC_json[str(uuid.uuid4())] = {
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 1, 1), end_date=datetime(2025, 1, 1)), # HACK after all SO and procurement have passed
+                        "BESKZ": 'E',
+                        "BSTMI": 99,
+                        "DISGR": 'D', # TODO add custom value
+                        "DISMM": 'D', # TODO add custom value
+                        "DISPO": 'D', # TODO add custom value
+                        "DZEIT": 99, # TODO add custom value
+                        "EISBE": 99, # TODO add custom value
+                        "LGRAD": 99, # TODO add custom value
+                        "MANDT": values.mandt,
+                        "MATNR": matnr,
+                        "MMSTD": creation_time,
+                        "NFMAT": matnr,
+                        "PLIFZ": random.randint(5, 10),
+                        "STRGR": 'D', # TODO add custom value
+                        "WEBAZ": random.randint(2, 10),
+                        "WERKS": plnt
+                    }
+                MBEW_json[str(uuid.uuid4())] = {
+                    "BWKEY": random.choice(values.om_valuation_areas),
+                    "BWTAR": None,
+                    "LBKUM": quantity,
+                    "MANDT": values.mandt,
+                    "MATNR": matnr,
+                    "PEINH": 99, # TODO add custom value
+                    "SALK3": round(quantity*price, 4),
+                    "STPRS": price,
+                    "VERPR": price,
+                    "VPRSV": 'D', # TODO add custom value
+                }
 
     return {'MAKT_json': MAKT_json,'MARA_json': MARA_json,'MARM_json': MARM_json,'MARC_json': MARC_json,'MBEW_json': MBEW_json}
 
 def material_support(
         all_units=values.om_units, 
         all_dimensions=values.om_dimensions, 
-        all_mat_groups=values.om_material_groups,
+        all_material_groups=values.om_material_groups,
         all_mat_types=values.om_material_types,
         all_industries=values.om_industries
     ):
@@ -206,13 +215,14 @@ def material_support(
             "MSSIE": v['MSSIE']
         }
 
-    for _, v in all_mat_groups.items():
-        T023T_json[str(uuid.uuid4())] = {
-            "MANDT": values.mandt,
-            "MATKL": v['MATKL'],
-            "SPRAS": "E",
-            "WGBEZ": v['WGBEZ'],
-        }
+    for _, mat_grps in all_material_groups.items():
+        for k in list(mat_grps.keys()):
+            T023T_json[str(uuid.uuid4())] = {
+                "MANDT": values.mandt,
+                "MATKL": k,
+                "SPRAS": "E",
+                "WGBEZ": mat_grps[k]['name'],
+            }
     for _, v in all_mat_types.items():
         T134T_json[str(uuid.uuid4())] = {
             "MANDT": values.mandt,

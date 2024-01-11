@@ -207,204 +207,232 @@ om_material_groups = {
     'Beverages': {
         'MATKL001': {
             'name': 'Carbonated Drinks',
+            'availability': 0.65,
             'materials': {
-                'Coca Fizz 500ml': {},
-                'Soda Stream 1L': {},
-                'Bubbly Blast 750ml': {},
-                'Fizz Pop 330ml': {},
-                'Aero Sip 250ml': {}
+                'Coca Fizz 500ml': {'price': 0.50},
+                'Soda Stream 1L': {'price': 0.80},
+                'Bubbly Blast 750ml': {'price': 0.70},
+                'Fizz Pop 330ml': {'price': 0.40},
+                'Aero Sip 250ml': {'price': 0.30}
             }
         },
         'MATKL002': {
             'name': 'Fruit Juices',
+            'availability': 0.75,
             'materials': {
-                'Apple Blend 1L': {},
-                'Berry Burst 500ml': {},
-                'Citrus Splash 750ml': {},
-                'Mango Mist 330ml': {},
-                'Tropical Twist 250ml': {}
+                'Apple Blend 1L': {'price': 0.60},
+                'Berry Burst 500ml': {'price': 0.45},
+                'Citrus Splash 750ml': {'price': 0.55},
+                'Mango Mist 330ml': {'price': 0.35},
+                'Tropical Twist 250ml': {'price': 0.25}
             }
         },
         'MATKL003': {
             'name': 'Energy Drinks',
+            'availability': 0.7,
             'materials': {
-                'Power Punch 500ml': {},
-                'Charge Up 1L': {},
-                'Vigor Max 750ml': {},
-                'Ener Gize 330ml': {},
-                'Stamina Shot 250ml': {}
+                'Power Punch 500ml': {'price': 0.70},
+                'Charge Up 1L': {'price': 1.00},
+                'Vigor Max 750ml': {'price': 0.90},
+                'Ener Gize 330ml': {'price': 0.50},
+                'Stamina Shot 250ml': {'price': 0.40}
             }
         },
         'MATKL004': {
             'name': 'Bottled Water',
+            'availability': 0.85,
             'materials': {
-                'Pure Drop 500ml': {},
-                'Crystal Clear 1L': {},
-                'Aqua Fresh 750ml': {},
-                'Spring Splash 330ml': {},
-                'Hydro Haven 250ml': {}
+                'Pure Drop 500ml': {'price': 0.30},
+                'Crystal Clear 1L': {'price': 0.50},
+                'Aqua Fresh 750ml': {'price': 0.40},
+                'Spring Splash 330ml': {'price': 0.25},
+                'Hydro Haven 250ml': {'price': 0.20}
             }
         },
         'MATKL005': {
             'name': 'Coffee & Tea',
+            'availability': 0.55,
             'materials': {
-                'Java Joy 500ml': {},
-                'Tea Taste 1L': {},
-                'Mocha Magic 750ml': {},
-                'Espresso Express 330ml': {},
-                'Chai Charm 250ml': {}
+                'Java Joy 500ml': {'price': 1.00},
+                'Tea Taste 1L': {'price': 0.80},
+                'Mocha Magic 750ml': {'price': 0.90},
+                'Espresso Express 330ml': {'price': 0.60},
+                'Chai Charm 250ml': {'price': 0.50}
             }
         }
     },
     'Packaged Foods': {
         'MATKL010': {
             'name': 'Snacks & Chips',
+            'availability': 0.6,
             'materials': {
-                'Chippy Crunch 50g': {},
-                'Snack Bite 100g': {},
-                'Potat oCrisp 75g': {},
-                'Tortilla Twist 60g': {},
-                'Rice Puff 40g': {}
+                'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
+                'Snack Bite 100g': {'price': 0.80},  # per unit cost in bulk
+                'Potato Crisp 75g': {'price': 0.70},  # per unit cost in bulk
+                'Tortilla Twist 60g': {'price': 0.60},  # per unit cost in bulk
+                'Rice Puff 40g': {'price': 0.40}  # per unit cost in bulk
             }
         },
         'MATKL011': {
             'name': 'Canned Foods',
+            'availability': 0.7,
             'materials': {
-                'Bean Delight 400g': {},
-                'Tomato Sauce 250ml': {},
-                'Peach Halves 500ml': {},
-                'Tuna Chunks 200g': {},
-                'Chicken Soup 350ml': {}
+                'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
+                'Tomato Sauce 250ml': {'price': 0.70},  # per unit cost in bulk
+                'Peach Halves 500ml': {'price': 1.20},  # per unit cost in bulk
+                'Tuna Chunks 200g': {'price': 2.50},  # per unit cost in bulk
+                'Chicken Soup 350ml': {'price': 0.90}  # per unit cost in bulk
             }
         },
         'MATKL012': {
             'name': 'Frozen Foods',
+            'availability': 0.6,
             'materials': {
-                'Pizza Slice 200g': {},
-                'Frozen Veggies 500g': {},
-                'Chicken Nuggets 400g': {},
-                'Fish Fillet 300g': {},
-                'Ice CreamBar 100ml': {}
+                'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
+                'Frozen Veggies 500g': {'price': 1.50},  # per unit cost in bulk
+                'Chicken Nuggets 400g': {'price': 2.00},  # per unit cost in bulk
+                'Fish Fillet 300g': {'price': 3.50},  # per unit cost in bulk
+                'Ice CreamBar 100ml': {'price': 0.90}  # per unit cost in bulk
             }
         },
         'MATKL013': {
             'name': 'Baked Goods',
+            'availability': 0.55,
             'materials': {
-                'Cocoa Muffin 150g': {},
-                'Whole WheatBread 500g': {},
-                'Croissant 100g': {},
-                'Bagel 80g': {},
-                'Doughnut Ring 120g': {}
+                'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
+                'Whole Wheat Bread 500g': {'price': 1.50},  # per unit cost in bulk
+                'Croissant 100g': {'price': 0.70},  # per unit cost in bulk
+                'Bagel 80g': {'price': 0.60},  # per unit cost in bulk
+                'Doughnut Ring 120g': {'price': 0.85}  # per unit cost in bulk
             }
         },
         'MATKL014': {
             'name': 'Breakfast Cereals',
+            'availability': 0.65,
             'materials': {
-                'Oat Flakes 250g': {},
-                'Corn Flakes 300g': {},
-                'Rice Crunch 400g': {},
-                'Wheat Biscuit 350g': {},
-                'Granola Mix 200g': {}
+                'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
+                'Corn Flakes 300g': {'price': 1.20},  # per unit cost in bulk
+                'Rice Crunch 400g': {'price': 1.80},  # per unit cost in bulk
+                'Wheat Biscuit 350g': {'price': 1.60},  # per unit cost in bulk
+                'Granola Mix 200g': {'price': 2.00}  # per unit cost in bulk
             }
         }
     },
     'Raw Ingredients': {
         'MATKL020': {
             'name': 'Sugar & Sweeteners',
+            'availability': 0.8,
             'materials': {
-                'White Granular Sugar 1kg': {},
-                'Liquid Glucose 5L': {},
-                'Brown Sugar 500g': {},
-                'Honey Syrup 750ml': {},
-                'Corn Syrup 2L': {}
+                'White Granular Sugar 1kg': {'price': 1.00},  # Wholesalers might pay around $1.00 for a 1kg pack of white granular sugar.
+                'Liquid Glucose 5L': {'price': 10.00},  # For 5 liters of liquid glucose, the wholesale price might be approximately $10.00.
+                'Brown Sugar 500g': {'price': 1.25},  # The cost for 500g of brown sugar for wholesalers could be around $1.25.
+                'Honey Syrup 750ml': {'price': 5.00},  # For a 750ml bottle of honey syrup, wholesalers might pay around $5.00.
+                'Corn Syrup 2L': {'price': 8.00}  # Wholesalers might pay about $8.00 for a 2-liter bottle of corn syrup.
             }
         },
         'MATKL021': {
             'name': 'Flour & Grains',
+            'availability': 0.75,
             'materials': {
-                'Wheat Flour 10kg': {},
-                'Cornmeal 5kg': {},
-                'Barley 1kg': {},
-                'Rice 20kg': {},
-                'Oatmeal 2kg': {}
+                'Wheat Flour 10kg': {'price': 8.00},  # Wholesalers might pay around $8.00 for a 10kg bag of wheat flour.
+                'Cornmeal 5kg': {'price': 4.50},  # For 5kg of cornmeal, the wholesale price might be approximately $4.50.
+                'Barley 1kg': {'price': 1.50},  # The cost for 1kg of barley for wholesalers could be around $1.50.
+                'Rice 20kg': {'price': 15.00},  # For a 20kg bag of rice, wholesalers might pay around $15.00.
+                'Oatmeal 2kg': {'price': 3.00}  # Wholesalers might pay about $3.00 for a 2kg bag of oatmeal.
             }
         },
         'MATKL022': {
             'name': 'Dairy Products',
+            'availability': 0.6,
             'materials': {
-                'Whole Milk Powder 2kg': {},
-                'Butter 500g': {},
-                'Cheese Block 1kg': {},
-                'Yogurt 1L': {},
-                'Whey Protein 500g': {}
+                'Whole Milk Powder 2kg': {'price': 12.00},  # The price for 2kg of whole milk powder for wholesalers might be around $12.00.
+                'Butter 500g': {'price': 4.50},  # Butter's price can fluctuate, but for wholesalers, it might be around $4.50 for 500g.
+                'Cheese Block 1kg': {'price': 8.00},  # A 1kg block of cheese might cost wholesalers approximately $8.00.
+                'Yogurt 1L': {'price': 2.50},  # For a liter of yogurt, wholesalers might pay around $2.50.
+                'Whey Protein 500g': {'price': 15.00}  # Whey protein can be pricier; wholesalers might pay around $15.00 for 500g.
             }
         },
         'MATKL023': {
             'name': 'Spices & Seasonings',
+            'availability': 0.5,
             'materials': {
-                'Black Pepper 100g': {},
-                'Salt 5kg': {},
-                'Garlic Powder 500g': {},
-                'Cinnamon 200g': {},
-                'Paprika 250g': {}
+                'Black Pepper 100g': {'price': 2.50},  # Price per 100g for wholesalers might be around $2.50, but this could vary.
+                'Salt 5kg': {'price': 2.00},  # The cost of bulk salt for wholesalers can be quite low, around $2.00 for 5kg.
+                'Garlic Powder 500g': {'price': 4.00},  # Garlic powder's price for wholesalers might be around $4.00 for 500g.
+                'Cinnamon 200g': {'price': 3.50},  # Cinnamon is a bit pricier; wholesalers might pay around $3.50 for 200g.
+                'Paprika 250g': {'price': 2.75}  # Paprika's price for wholesalers might be approximately $2.75 for 250g.
             }
         },
         'MATKL024': {
             'name': 'Oils & Fats',
+            'availability': 0.6,
             'materials': {
-                'Vegetable Oil 5L': {},
-                'Olive Oil 1L': {},
-                'Palm Oil 10L': {},
-                'Coconut Oil 2L': {},
-                'Sunflower Oil 5L': {}
+                'Vegetable Oil 5L': {'price': 10.00},       # per unit (for 5-liter container)
+                'Olive Oil 1L': {'price': 8.00},            # per unit (for 1-liter bottle)
+                'Palm Oil 10L': {'price': 15.00},           # per unit (for 10-liter container)
+                'Coconut Oil 2L': {'price': 6.00},          # per unit (for 2-liter bottle)
+                'Sunflower Oil 5L': {'price': 9.00}         # per unit (for 5-liter container)
             }
         }
     },
-
-
-
-
-
-
-
-
-
     'Packaging Materials': {
-        'groups': {
-            'MATKL030': 'Glass Bottles',
-            'MATKL031': 'Plastic Bottles',
-            'MATKL032': 'Aluminum Cans',
-            'MATKL033': 'Paper & Cardboard',
-            'MATKL034': 'Sealing Materials'
+        'MATKL030': {
+            'name': 'Glass Bottles',
+            'availability': 0.7,
+            'materials': {
+                'Clear Glass 500ml': {'price': 0.15},      # per unit (for 500ml capacity)
+                'Green Glass 750ml': {'price': 0.20},      # per unit (for 750ml capacity)
+                'Blue Glass 330ml': {'price': 0.18},       # per unit (for 330ml capacity)
+                'Amber Glass 250ml': {'price': 0.14},      # per unit (for 250ml capacity)
+                'Flint Glass 1L': {'price': 0.25}          # per unit (for 1-liter capacity)
+            }
         },
-        'materials': {
+        'MATKL031': {
+            'name': 'Plastic Bottles',
+            'availability': 0.8,
+            'materials': {
+                'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
+                'HDPE White 1L': {'price': 0.10},            # per unit (for 1-liter capacity)
+                'LDPE Transparent 750ml': {'price': 0.09},   # per unit (for 750ml capacity)
+                'PP Black 330ml': {'price': 0.07},           # per unit (for 330ml capacity)
+                'PVC Blue 250ml': {'price': 0.06}            # per unit (for 250ml capacity)
+            }
+        },
+        'MATKL032': {
+            'name': 'Aluminum Cans',
+            'availability': 0.75,
+            'materials': {
+                'Aluminum Silver 330ml': {'price': 0.10},        # per unit (for 330ml capacity)
+                'Aluminum Gold 500ml': {'price': 0.12},          # per unit (for 500ml capacity)
+                'Aluminum Matte Black 355ml': {'price': 0.11},    # per unit (for 355ml capacity)
+                'Aluminum Red 250ml': {'price': 0.09},           # per unit (for 250ml capacity)
+                'Aluminum Blue 500ml': {'price': 0.13}           # per unit (for 500ml capacity)
+            }
+        },
+        'MATKL033': {
+            'name': 'Paper & Cardboard',
+            'availability': 0.75,
+            'materials': {
+                'White Cardboard 1L': {'price': 0.15},       # per unit (for 1-liter capacity)
+                'Kraft Paper 500ml': {'price': 0.10},        # per unit (for 500ml capacity)
+                'Recycled Cardboard 750ml': {'price': 0.13}, # per unit (for 750ml capacity)
+                'Paperboard 330ml': {'price': 0.08},         # per unit (for 330ml capacity)
+                'Brown Cardstock 250ml': {'price': 0.06}     # per unit (for 250ml capacity)
+            }
+        },
+        'MATKL034': {
+            'name': 'Sealing Materials',
+            'availability': 0.7,
+            'materials': {
+                'Aluminum Foil Rolls': {'price': 0.20},  
+                'Polyethylene Seals': {'price': 0.05},   
+                'Tamper Evident Bands': {'price': 0.03}, 
+                'PVC Shrink Bands': {'price': 0.04},     
+                'Laminated Sealing Films': {'price': 0.15}
+            }
 
         }
     },
-    'Equipment & Machinery': {
-        'groups': {
-            'MATKL040': 'Processing Machines',
-            'MATKL041': 'Packaging Machines',
-            'MATKL042': 'Refrigeration Equipment',
-            'MATKL043': 'Conveyors & Belts',
-            'MATKL044': 'Cleaning Equipment'
-        },
-        'materials': {
-
-        }
-    },
-    'Services & Miscellaneous': {
-        'groups': {
-            'MATKL050': 'Maintenance Services',
-            'MATKL051': 'Logistics & Transportation',
-            'MATKL052': 'Quality Control Services',
-            'MATKL053': 'Consulting & Training',
-            'MATKL054': 'Miscellaneous Supplies'
-        },
-        'materials': {
-
-        }
-    }
 }
 
 prompt = {"""
@@ -430,106 +458,20 @@ for each one use a format like this.
 """
 }
 
+prompt = {"""
+I am writing a dummy data for a sales order. 
+The company is a big food and beverages processing and packaging comapny. 
+It buys raw materials, processes them into foods, packages them, and sells them. 
+It's customers are wholesellers, big companies that further process and sell the products, big supermarkets. 
+For each material I have, give me a reasonable theoretical average availabilit for these material groups.
 
-om_materials = {
-    "Banana Chips": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Beef Lasagna Frozen Dinner": {'price': 3.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Beef Stew": {'price': 2.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Berry Blast Smoothie": {'price': 2.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Berry Medley Frozen Fruit": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Black Bean Salsa": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Blueberry Greek Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Butter Biscuits": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Cajun Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Cashew Nuts": {'price': 0.15, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chia Seeds": {'price': 0.25, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chicken Alfredo Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chicken Tikka Masala Frozen Dinner": {'price': 3.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chili Powder": {'price': 0.05, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chocolate Chip Granola Bars": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chocolate Fudge Brownie Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chocolate Milk": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chocolate Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Chunky Tomato Soup": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Classic Cola": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Classic Margarine Tub": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Classic Marinara Sauce": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Classic Potato Chips": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Coconut Oil": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Cornflakes Cereal": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Cranberry Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Creamy Butter": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Creamy Peanut Butter": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Creamy Ranch Dressing": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Crispy Apple Chips": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Crunchy Pretzels": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Cumin Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Curry Instant Noodles": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Dark Roast Ground Coffee": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Double Chocolate Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Dried Blueberries": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Dried Cranberries": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Earl Grey Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Extra Virgin Olive Oil": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "French Vanilla Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Frozen Pea Packs": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Garlic Bread": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Garlic Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Green Bean Cans": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Green Tea Bags": {'price': 0.10, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Hearty Beef Chili": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Honey Mustard Dressing": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Iced Tea Mix": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Instant Classic Coffee": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Italian Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Lemonade": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Mango Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Medium Salsa": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Mint Chocolate Chip Ice Cream": {'price': 1.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Mixed Nuts": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Mixed Vegetable Frozen Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Multigrain Crackers": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Oatmeal Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pancake Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Peach Halves in Syrup": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Peanut Protein Bars": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pepper Jack Cheese": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pepperoni Frozen Pizza": {'price': 3.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pitted Black Olives": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Protein Shakes": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pumpkin Seeds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Pure Orange Juice": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Refresh Bottled Water": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Roasted Almonds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Rye Bread": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Salted Butter": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Salted Tortilla Chips": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Sesame Oil": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Sharp Cheddar Cheese Block": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Shortbread Cookies": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Smoked Gouda Cheese": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Sourdough Bread": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Spaghetti Carbonara Ready Meal": {'price': 3.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Spicy Dill Pickles": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Stir-Fry Vegetables": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Strawberry Banana Smoothie": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Strawberry Jam": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Strawberry Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Sunflower Seeds": {'price': 0.20, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Sweet Gherkin Pickles": {'price': 0.30, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Taco Seasoning Blend": {'price': 0.075, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Tangy Mayonnaise": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Thunder Energy Drink": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Tropical Fruit Snacks": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Vanilla Bean Yogurt": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Vanilla Ice Cream": {'price': 1.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Vanilla Sports Nutrition Shake": {'price': 2.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Waffle Mix": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Wheat Crackers": {'price': 0.40, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Whipped Cream": {'price': 0.75, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Whole Wheat Bread Loaf": {'price': 1.00, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
-    "Zesty Relish": {'price': 0.50, 'availability': 0., 'type': 'E', 'delivery_takes_days': 7, 'goods_receipt_processing_days': 7},
+for the following producsts give me a theoretical vailability form 0 to 1. Carbonated, Fruit Juices, 
+Energy Drinks, Bottled Water, Coffee & Tea, Snacks & Chips, Canned Foods, Frozen Foods, Baked Goods, 
+Breakfast Cereals, Sugar & Sweeteners, Flour & Grains, Dairy Products, Spices & Seasonings, Glass Bottles, 
+Plastic Bottles, Aluminum Cans, Paper & Cardboard, Sealing Materials. 
+"""
 }
+
 om_customers = {
     "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
     "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},

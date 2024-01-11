@@ -4,21 +4,16 @@ from datetime import datetime, timedelta
 import values, helpers
 
 class SalesAndDistribution:
-    def __init__(self, vbeln, materials, quantities, customer, start_date: datetime) -> None:
+    def __init__(self, vbeln, params, start_date: datetime) -> None:
         self.vbeln = vbeln
-        self.materials = materials
-        self.quantities = quantities
+        self.params = params
         self.objnr = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
         self.likp_vbeln = f'{str(uuid.uuid4())[-17:]}' 
         self.vbrk_vbeln = f'{str(uuid.uuid4())[-17:]}'
         self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
-
-        all_plants=values.om_plants
         self.mblnr = f'{str(uuid.uuid4())[-17:]}'
         start_date = start_date
         self.mjahr = start_date.year # TODO add custom value
-        self.customer = customer
-        self.plant = all_plants[random.choice(list(all_plants.keys()))]['plant_number']
 
         self.tables = {
             'VBAK_json': {},
@@ -68,7 +63,7 @@ class SalesAndDistribution:
         }
 
     def record_flow(self, erdat, prev_vbeln, next_vbeln, prev_type, next_type):
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             self.tables['VBFA_json'][str(uuid.uuid4())] = {
                     "MANDT": values.mandt,
                     "VBELV": prev_vbeln,
@@ -79,14 +74,11 @@ class SalesAndDistribution:
                     "VBTYP_N": next_type,
                     "ERDAT": erdat,
                     "ERZET": helpers.generate_random_time(),
-                    "MATNR": values.om_materials[self.materials[i]]['id']
+                    "MATNR": self.params['matnrs'][i]
                 }
 
     def create_sales_order(
         self,
-        sales_org,
-        sales_office,
-        distribution_channel,
         shipping_condition,
         erdat,
         reqested_delivery_date,
@@ -101,22 +93,22 @@ class SalesAndDistribution:
             "AUART": 'OR',
             "BSTDK": erdat,
             "BSTNK": self.vbeln,
-            "BUKRS_VF": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "BUKRS_VF": self.params['company_code'],
             "ERDAT": erdat,
             "ERNAM": ernam,
             "ERZET": atime,
             "KKBER": 'D', # TODO add custom value
-            "KUNNR": self.customer['id'],
+            "KUNNR": self.params['kunnr'],
             "MANDT": values.mandt,
-            "NETWR": round(sum([values.om_materials[self.materials[i]]['price']*self.quantities[i] for i, _ in enumerate(self.materials)]), 4),
+            "NETWR": round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4),
             "OBJNR": self.objnr,
             "VBELN": self.vbeln,
             "VBTYP": 'C',
             "VDATU": reqested_delivery_date,
-            "VKBUR": sales_office,
-            "VKORG": sales_org,
+            "VKBUR": self.params['sales_office'],
+            "VKORG": self.params['sales_org'],
             "VSBED": shipping_condition,
-            "VTWEG": distribution_channel,
+            "VTWEG": self.params['distribution_channel'],
             "WAERK": 'EUR',
             "LIFSK": None,
         }
@@ -126,7 +118,7 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "POSNR": '000000',
             "VBELN": self.vbeln,
-            "ZTERM": self.customer['payment_term'],
+            "ZTERM": self.params['payment_term'],
         }
         self.tables['VBUK_json'][str(uuid.uuid4())] = {
             "BESTK": 'A',
@@ -137,7 +129,7 @@ class SalesAndDistribution:
             "CMGST": None, # Credit Block
         }
 
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
                 "ABGRU": None,
@@ -147,13 +139,13 @@ class SalesAndDistribution:
                 "ERZET": str(helpers.add_random_hours(1, atime)),
                 "FKREL": 'A',
                 "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "KDMAT": values.om_materials[self.materials[i]]['id'],
+                "KDMAT": self.params['matnrs'][i],
                 "KPEIN": 1,
-                "KWMENG": self.quantities[i],
+                "KWMENG": self.params['quantities'][i],
                 "MANDT": values.mandt,
-                "MATNR": values.om_materials[self.materials[i]]['id'],
-                "NETPR": values.om_materials[self.materials[i]]['price'],
-                "NETWR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
+                "MATNR": self.params['matnrs'][i],
+                "NETPR": self.params['prices'][i],
+                "NETWR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 "NTGEW": 99, # TODO add custom value
                 "OBJNR": self.objnr,
                 "POSNR": i,
@@ -165,10 +157,10 @@ class SalesAndDistribution:
                 "VGTYP": 'C',
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "WAERK": 'EUR',
-                "WERKS": self.plant
+                "WERKS": self.params['plant']
             }
             self.tables['VBEP_json'][temp_vbeln] = {
-                "BMENG": self.quantities[i], # HACK all qauntities are the same as their confirmed queantities
+                "BMENG": self.params['quantities'][i], # HACK all qauntities are the same as their confirmed queantities
                 "EDATU": erdat,
                 "ETENR": i,
                 "MANDT": values.mandt,
@@ -224,7 +216,7 @@ class SalesAndDistribution:
                 self.tables['VBUK_json'][k]['CMGST'] = 'A'
 
     def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
-        for i, _ in enumerate(self.materials):
+        for i  in range(len(self.params['matnrs'])):
             new_val = all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU']
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -277,11 +269,11 @@ class SalesAndDistribution:
             "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
             "KODAT": picking_date,
             "KOUHR": None if picking_date == None else atime,
-            "KUNNR": self.tables['VBAK_json'][list(self.tables['VBAK_json'].keys())[0]]['KUNNR'], # HACK the 0'th key is the only key in VBAK
+            "KUNNR": self.params['kunnr'],
             "LFART": 'D', # TODO add custom value
             "LFDAT": delivery_date,
             "MANDT": values.mandt,
-            "NTGEW": len(self.materials)*99, # TODO add custom weight and assign accordingly to VBAP
+            "NTGEW": len(self.params['matnrs'])*99, # TODO add custom weight and assign accordingly to VBAP
             "PODAT": confirmation_date,
             "POTIM": None if confirmation_date == None else atime,
             "VBELN": self.likp_vbeln,
@@ -291,16 +283,16 @@ class SalesAndDistribution:
             "WADAT": planned_delivery_date,
         }
 
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             self.tables['LIPS_json'][str(uuid.uuid4())] = {
                 "ERDAT": erdat,
                 "ERNAM": ernam,
                 "ERZET": str(helpers.add_random_hours(1, atime)),
                 "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "LFIMG": self.quantities[i],
+                "LFIMG": self.params['quantities'][i],
                 "LGORT": 'D',#TODO add custom value
                 "MANDT": values.mandt,
-                "MATNR": values.om_materials[self.materials[i]]['id'],
+                "MATNR": self.params['matnrs'][i],
                 "NTGEW": 99, # TODO add custom value
                 "POSNR": i,
                 "VBELN": self.likp_vbeln,
@@ -310,7 +302,7 @@ class SalesAndDistribution:
                 "VOLEH": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "VOLUM": 99, # TODO add custom value
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "WERKS": self.plant
+                "WERKS": self.params['plant']
             }
         self.record_flow( 
             erdat=erdat, 
@@ -380,7 +372,7 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['KOUHR'] = atime
 
     def post_goods_issue(self, cpudt, usnam, atime, all_units=values.om_units):
-        for i, _ in enumerate(self.materials): 
+        for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
                 "CPUDT_MKPF": cpudt,
@@ -388,14 +380,14 @@ class SalesAndDistribution:
                 "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "KDAUF": self.vbeln,
                 "KDPOS": i,
-                "LBKUM": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
+                "LBKUM": round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 "LGORT": 'D', # TODO add custom value
                 "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
-                "MATNR": values.om_materials[self.materials[i]]['id'],
+                "MATNR": self.params['matnrs'][i],
                 "MBLNR": self.mblnr,
                 "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "MENGE": self.quantities[i],
+                "MENGE": self.params['quantities'][i],
                 "MJAHR": self.mjahr,
                 "SHKZG": 'H', # Credit
                 "SJAHR": self.mjahr,
@@ -404,7 +396,7 @@ class SalesAndDistribution:
                 "USNAM_MKPF": usnam,
                 "VBELN_IM": self.likp_vbeln,
                 "VBELP_IM": i,
-                "WERKS": self.plant,
+                "WERKS": self.params['plant'],
                 "ZEILE": i,
             }
             self.tables['EKBE_json'][str(uuid.uuid4())] = { # HACK every SO has 1:1 mapping form PO
@@ -412,10 +404,10 @@ class SalesAndDistribution:
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "MANDT": values.mandt,
-                "MENGE": self.quantities[i],
+                "MENGE": self.params['quantities'][i],
                 "VGABE": 1, # Good Receipt
                 "WAERS": 'EUR',
-                "WRBTR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
+                "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
         
         self.record_flow( 
@@ -431,13 +423,13 @@ class SalesAndDistribution:
             "ERDAT": erdat,
             "ERNAM": ernam,
             "ERZET": atime,
-            "KUNAG": self.customer['id'],
+            "KUNAG": self.params['kunnr'],
             "MANDT": values.mandt,
             "VBELN": self.vbrk_vbeln,
             "VBTYP": 'M', # M: Invoice
         }
 
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             self.tables['VBRP_json'][str(uuid.uuid4())] = {
                 "AUBEL": self.vbeln,
                 "AUPOS": i,
@@ -445,10 +437,10 @@ class SalesAndDistribution:
                 "ERNAM": ernam,
                 "ERZET": helpers.add_random_hours(1, atime),
                 "MANDT": values.mandt,
-                "MATNR": values.om_materials[self.materials[i]]['id'],
+                "MATNR": self.params['matnrs'][i],
                 "POSNR": i,
                 "VBELN": self.vbrk_vbeln,
-                "WERKS": self.plant,
+                "WERKS": self.params['plant'],
             }
         
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
@@ -467,7 +459,7 @@ class SalesAndDistribution:
             "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
         }
 
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
                 "AUGDT": None,
                 "AUGBL": None,
@@ -478,14 +470,14 @@ class SalesAndDistribution:
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
-                "KUNNR": self.customer['id'],
+                "KUNNR": self.params['kunnr'],
                 "MANDT": values.mandt,
                 "MANSP": None,
                 "MANST": None,
                 "SGTXT": 'D', # TODO add custom value
                 "SHKZG": 'S', # Debit Indicator
                 "SKFBT": 0,
-                "WRBTR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
+                "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 "WSKTO": 0,
                 "ZBD1P": 0, # TODO add custom value
                 "ZBD1T": 0, # TODO add custom value
@@ -493,7 +485,7 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": erdat, # TODO add custom value
-                "ZTERM": self.customer['payment_term'],
+                "ZTERM": self.params['payment_term'],
             }
 
 
@@ -541,7 +533,7 @@ class SalesAndDistribution:
             "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
         }
 
-        for i, _ in enumerate(self.materials):
+        for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
                 "AUGDT": cleared_date,
                 "BELNR": cleared_bkpf_belnr,
@@ -552,14 +544,14 @@ class SalesAndDistribution:
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
-                "KUNNR": self.customer['id'],
+                "KUNNR": self.params['kunnr'],
                 "MANDT": values.mandt,
                 "MANSP": None,
                 "MANST": None,
                 "SGTXT": 'D', # TODO add custom value
                 "SHKZG": 'S', # Debit Indicator
                 "SKFBT": 0,
-                "WRBTR": round(values.om_materials[self.materials[i]]['price']*self.quantities[i], 4),
+                "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 "WSKTO": 0,
                 "ZBD1P": 0, # TODO add custom value
                 "ZBD1T": 0, # TODO add custom value
@@ -567,5 +559,5 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": cpudt, # TODO add custom value
-                "ZTERM": self.customer['payment_term'],
+                "ZTERM": self.params['payment_term'],
             }
