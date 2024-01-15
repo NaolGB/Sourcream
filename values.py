@@ -93,7 +93,6 @@ om_sales_doc_types = {
     'ZDIS': 'Distributor Sales',
     'ZEXP': 'Export Sales',
     'ZSCR': 'Scrap Sales',
-    'ZREJ': 'Rejected Order ',
 }
 dd07t_combinations = {
     'VBAK': [
@@ -119,7 +118,11 @@ om_status = {
 om_billing_blocks = {
     '01': {
         'FAKSP': '01',
-        'VTEXT': 'Standard Billing Block'
+        'VTEXT': 'Quality Assurance'
+    },
+    '02': {
+        'FAKSP': '02',
+        'VTEXT': 'Customer'
     }
 }
 om_delivery_blocks = {
@@ -469,6 +472,16 @@ for the following producsts give me a theoretical vailability form 0 to 1. Carbo
 Energy Drinks, Bottled Water, Coffee & Tea, Snacks & Chips, Canned Foods, Frozen Foods, Baked Goods, 
 Breakfast Cereals, Sugar & Sweeteners, Flour & Grains, Dairy Products, Spices & Seasonings, Glass Bottles, 
 Plastic Bottles, Aluminum Cans, Paper & Cardboard, Sealing Materials. 
+"""
+}
+
+prompt = {
+"""
+How are the following attributes realted to ___ in the Order-to-Cash process?
+(sales document type, sales organization, company code, customer, distribution channel, material, plant, material group, ) 
+
+How are the following attributes realted to Touchless Order rate in the Order-to-Cash process?
+(sales document type, sales organization, company code, customer, distribution channel) 
 """
 }
 

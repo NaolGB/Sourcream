@@ -13,7 +13,7 @@ class SalesAndDistribution:
         self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
         self.mblnr = f'{str(uuid.uuid4())[-17:]}'
         start_date = start_date
-        self.mjahr = start_date.year # TODO add custom value
+        self.mjahr = int(start_date.year)
 
         self.tables = {
             'VBAK_json': {},
@@ -37,6 +37,7 @@ class SalesAndDistribution:
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
         changenr = f'{str(uuid.uuid4())[-17:]}'
+        # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
             "CHANGENR": changenr,
@@ -90,7 +91,7 @@ class SalesAndDistribution:
         all_routes=values.om_routes,
     ):
         self.tables['VBAK_json'][str(uuid.uuid4())] = {
-            "AUART": 'OR',
+            "AUART": self.params['sales_doc_type'],
             "BSTDK": erdat,
             "BSTNK": self.vbeln,
             "BUKRS_VF": self.params['company_code'],
@@ -441,6 +442,7 @@ class SalesAndDistribution:
                 "POSNR": i,
                 "VBELN": self.vbrk_vbeln,
                 "WERKS": self.params['plant'],
+                'VGTYP': 'J'
             }
         
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
@@ -463,7 +465,7 @@ class SalesAndDistribution:
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
                 "AUGDT": None,
                 "AUGBL": None,
-                "AUGGJ": None,
+                "AUGGJ": 1970, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
                 "BSCHL": '01',
                 "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
@@ -495,6 +497,121 @@ class SalesAndDistribution:
             prev_type='J', 
             next_vbeln=self.vbrk_vbeln, 
             next_type='M'
+        )
+
+    def set_sales_order_billing_block(self, udate, usnam, blocked_matnrs):
+        # SalesOrder Block
+        new_value='01' # HACK match with values.om_billing_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='FAKSK', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBAK', 
+            valold=None,
+            valnew=new_value,
+        )
+
+        for k, v in self.tables['VBAK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBAK_json'][k]['FAKSK'] = new_value
+
+        # SalesOrderItem Block
+        for matnr in blocked_matnrs:
+            for key, value in self.tables['VBAP_json'].items():
+                if value.get('VBELN') == self.vbeln and value.get('MATNR') == matnr:
+                    posnr = value['POSNR']
+
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas=str(uuid.uuid4()), 
+                udate=udate, 
+                uname=usnam, 
+                chngid='U', 
+                fname='FAKSP', 
+                tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
+                tabname='VBAP', 
+                valold=None,
+                valnew=new_value,
+            )
+
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+                    self.tables['VBAP_json'][k]['FAKSP'] = new_value
+            
+
+    def release_sales_order_billing_block(self, udate, usnam, blocked_matnrs):
+        old_value='01' # HACK match with values.om_billing_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='FAKSK', 
+            tabkey=f'{values.mandt}{self.vbeln}', 
+            tabname='VBAK', 
+            valold=old_value,
+            valnew=None,
+        )
+
+        for k, v in self.tables['VBAK_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBAK_json'][k]['FAKSK'] = None
+
+        for matnr in blocked_matnrs:
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+                    posnr = self.tables['VBAP_json'][k]['POSNR']
+
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas=str(uuid.uuid4()), 
+                udate=udate, 
+                uname=usnam, 
+                chngid='U', 
+                fname='FAKSP', 
+                tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
+                tabname='VBAP', 
+                valold=old_value,
+                valnew=None,
+            )
+
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+                    self.tables['VBAP_json'][k]['FAKSP'] = None
+
+    def set_customer_billing_block(self, udate, usnam):
+        new_value='02' # HACK match with values.om_billing_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='FAKSD', 
+            tabkey=f'{values.mandt}{self.params["kunnr"]}', 
+            tabname='KNA1', 
+            valold=None,
+            valnew=new_value,
+        )
+
+    def release_customer_billing_block(self, udate, usnam):
+        old_value='02' # HACK match with values.om_billing_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='FAKSD', 
+            tabkey=f'{values.mandt}{self.params["kunnr"]}', 
+            tabname='KNA1', 
+            valold=old_value,
+            valnew=None,
         )
 
     def delivery_confirmation(self, usnam, udate):
