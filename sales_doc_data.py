@@ -133,7 +133,7 @@ class SalesAndDistribution:
         for i in range(len(self.params['matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
-                "ABGRU": None,
+                "ABGRU": 'None', # HACK
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
                 "ERNAM": ernam,
@@ -228,7 +228,7 @@ class SalesAndDistribution:
                 fname='ABGRU', 
                 tabkey=f'{values.mandt}{self.vbeln}{i}', 
                 tabname='VBAP', 
-                valold=None,
+                valold='None', # HACK
                 valnew=new_val,
             )
 
@@ -542,7 +542,6 @@ class SalesAndDistribution:
                 if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
                     self.tables['VBAP_json'][k]['FAKSP'] = new_value
             
-
     def release_sales_order_billing_block(self, udate, usnam, blocked_matnrs):
         old_value='01' # HACK match with values.om_billing_blocks
         self.changes(
@@ -678,3 +677,23 @@ class SalesAndDistribution:
                 "ZFBDT": cpudt, # TODO add custom value
                 "ZTERM": self.params['payment_term'],
             }
+
+    def change_payment_term(self, udate, usnam):
+        old_value = self.params['payment_term']
+        new_value = 'Z060'
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            uname=usnam, 
+            chngid='U', 
+            fname='ZTERM', 
+            tabkey='000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
+            tabname='VBKD', 
+            valold=old_value,
+            valnew=new_value, # TODO add custom value
+        )
+
+        for k, v in self.tables['VBKD_json'].items():
+            if v['VBELN'] == self.vbeln:
+                self.tables['VBKD_json'][k]['ZTERM'] = new_value
