@@ -218,7 +218,8 @@ class SalesAndDistribution:
 
     def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
         for i  in range(len(self.params['matnrs'])):
-            new_val = all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU']
+            # new_val = all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU']
+            new_val = 'Z0' if random.random() < 0.7 else 'Z1'
             self.changes(
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 

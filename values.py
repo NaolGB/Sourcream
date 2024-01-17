@@ -210,7 +210,7 @@ om_material_groups = {
     'Beverages': {
         'MATKL001': {
             'name': 'Carbonated Drinks',
-            'availability': 0.65,
+            'availability': 0.35,
             'materials': {
                 'Coca Fizz 500ml': {'price': 0.50},
                 'Soda Stream 1L': {'price': 0.80},
@@ -232,7 +232,7 @@ om_material_groups = {
         },
         'MATKL003': {
             'name': 'Energy Drinks',
-            'availability': 0.7,
+            'availability': 0.8,
             'materials': {
                 'Power Punch 500ml': {'price': 0.70},
                 'Charge Up 1L': {'price': 1.00},
@@ -289,7 +289,7 @@ om_material_groups = {
         },
         'MATKL012': {
             'name': 'Frozen Foods',
-            'availability': 0.6,
+            'availability': 0.1,
             'materials': {
                 'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
                 'Frozen Veggies 500g': {'price': 1.50},  # per unit cost in bulk
@@ -300,7 +300,7 @@ om_material_groups = {
         },
         'MATKL013': {
             'name': 'Baked Goods',
-            'availability': 0.55,
+            'availability': 0.2,
             'materials': {
                 'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
                 'Whole Wheat Bread 500g': {'price': 1.50},  # per unit cost in bulk
@@ -324,7 +324,7 @@ om_material_groups = {
     'Raw Ingredients': {
         'MATKL020': {
             'name': 'Sugar & Sweeteners',
-            'availability': 0.8,
+            'availability': 0.54,
             'materials': {
                 'White Granular Sugar 1kg': {'price': 1.00},  # Wholesalers might pay around $1.00 for a 1kg pack of white granular sugar.
                 'Liquid Glucose 5L': {'price': 10.00},  # For 5 liters of liquid glucose, the wholesale price might be approximately $10.00.
@@ -346,7 +346,7 @@ om_material_groups = {
         },
         'MATKL022': {
             'name': 'Dairy Products',
-            'availability': 0.6,
+            'availability': 0.32,
             'materials': {
                 'Whole Milk Powder 2kg': {'price': 12.00},  # The price for 2kg of whole milk powder for wholesalers might be around $12.00.
                 'Butter 500g': {'price': 4.50},  # Butter's price can fluctuate, but for wholesalers, it might be around $4.50 for 500g.
@@ -357,7 +357,7 @@ om_material_groups = {
         },
         'MATKL023': {
             'name': 'Spices & Seasonings',
-            'availability': 0.5,
+            'availability': 0.12,
             'materials': {
                 'Black Pepper 100g': {'price': 2.50},  # Price per 100g for wholesalers might be around $2.50, but this could vary.
                 'Salt 5kg': {'price': 2.00},  # The cost of bulk salt for wholesalers can be quite low, around $2.00 for 5kg.
@@ -381,7 +381,7 @@ om_material_groups = {
     'Packaging Materials': {
         'MATKL030': {
             'name': 'Glass Bottles',
-            'availability': 0.7,
+            'availability': 0.90,
             'materials': {
                 'Clear Glass 500ml': {'price': 0.15},      # per unit (for 500ml capacity)
                 'Green Glass 750ml': {'price': 0.20},      # per unit (for 750ml capacity)
@@ -425,7 +425,7 @@ om_material_groups = {
         },
         'MATKL034': {
             'name': 'Sealing Materials',
-            'availability': 0.7,
+            'availability': 0.43,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
                 'Polyethylene Seals': {'price': 0.05},   
@@ -486,7 +486,7 @@ How are the following attributes realted to Touchless Order rate in the Order-to
 }
 
 om_customers = {
-    "Tasty Bites Co.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
+    "Tasty Bites Co.": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
     "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
     "Crispy Cravings": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
     "Sips & Savories": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'IN', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
@@ -494,12 +494,12 @@ om_customers = {
     "Flavor Fusion Foods": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'AU', 'region': 'AU', 'city': 'LDN', 'id': 'C109658'},
     "Café Elegance": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
     "SodaStreamers": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'LDN', 'id': 'C109660'},
-    "Sweets & Sips": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'LDN', 'id': 'C109661'},
+    "Sweets & Sips": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'LDN', 'id': 'C109661'},
     "Gastronomy Galore": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
     "Nectar Nook": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
     "Spice & Savor": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
     "Wholesome Treats": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
-    "Munchies Magic": {"credit_risk": 0.71, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
+    "Munchies Magic": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
     "Siplicity Drinks": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
     "Foodie Fantasy": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
     "Yummy Morsels": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
@@ -510,7 +510,7 @@ om_customers = {
     "Beverage Bliss": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
     "Taste Troupe": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
     "ChocoCharm Confections": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
-    "SavorStreet": {"credit_risk": 0.40, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
+    "SavorStreet": {"credit_risk": 0.1, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
     "Culinary Crafters": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
     "BrewBurst Beverages": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
     "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
