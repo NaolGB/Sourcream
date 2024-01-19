@@ -111,7 +111,8 @@ class SalesAndDistribution:
             "VSBED": shipping_condition,
             "VTWEG": self.params['distribution_channel'],
             "WAERK": 'EUR',
-            "LIFSK": None,
+            "LIFSK": 'None',
+            'FAKSK': 'None'
         }
         self.tables['VBKD_json'][str(uuid.uuid4())] = {
             "INCO1": 'D', # TODO add custom value
@@ -133,7 +134,7 @@ class SalesAndDistribution:
         for i in range(len(self.params['matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
-                "ABGRU": 'None', # HACK
+                "ABGRU": 'D', # HACK
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
                 "ERNAM": ernam,
@@ -158,18 +159,19 @@ class SalesAndDistribution:
                 "VGTYP": 'C',
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "WAERK": 'EUR',
-                "WERKS": self.params['plant']
+                "WERKS": self.params['plant'],
+                'FAKSP': 'None'
             }
             self.tables['VBEP_json'][temp_vbeln] = {
                 "BMENG": self.params['quantities'][i], # HACK all qauntities are the same as their confirmed queantities
                 "EDATU": erdat,
                 "ETENR": i,
                 "MANDT": values.mandt,
-                "MBDAT": None, # TODO MaterialAvailabilityDate edit later on shipping
+                "MBDAT": 1970, # TODO MaterialAvailabilityDate edit later on shipping
                 "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "POSNR": i,
                 "VBELN": self.vbeln,
-                "WADAT": None, # TODO MaterialAvailabilityDate edit later on shipping,
+                "WADAT": 1970, # TODO MaterialAvailabilityDate edit later on shipping,
             }
 
         self.record_flow( # HACK no quotation before
@@ -229,7 +231,7 @@ class SalesAndDistribution:
                 fname='ABGRU', 
                 tabkey=f'{values.mandt}{self.vbeln}{i}', 
                 tabname='VBAP', 
-                valold='None', # HACK
+                valold='D', # HACK
                 valnew=new_val,
             )
 
@@ -270,14 +272,14 @@ class SalesAndDistribution:
             "ERZET": atime,
             "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
             "KODAT": picking_date,
-            "KOUHR": None if picking_date == None else atime,
+            "KOUHR": atime,
             "KUNNR": self.params['kunnr'],
             "LFART": 'D', # TODO add custom value
             "LFDAT": delivery_date,
             "MANDT": values.mandt,
             "NTGEW": len(self.params['matnrs'])*99, # TODO add custom weight and assign accordingly to VBAP
             "PODAT": confirmation_date,
-            "POTIM": None if confirmation_date == None else atime,
+            "POTIM": atime,
             "VBELN": self.likp_vbeln,
             "VBTYP": 'J',
             "VOLEH": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
@@ -325,7 +327,7 @@ class SalesAndDistribution:
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold=None,
+            valold='None',
             valnew=new_value,
         )
 
@@ -345,12 +347,12 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew=None,
+            valnew='None',
         )
 
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBAK_json'][k]['LIFSK'] = None
+                self.tables['VBAK_json'][k]['LIFSK'] = 'None'
 
     def pick_items(self, usnam, udate, atime):
         self.changes(
@@ -464,7 +466,7 @@ class SalesAndDistribution:
 
         for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
-                "AUGDT": None,
+                "AUGDT": 1970,
                 "AUGBL": None,
                 "AUGGJ": 1970, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
@@ -512,7 +514,7 @@ class SalesAndDistribution:
             fname='FAKSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold=None,
+            valold='None',
             valnew=new_value,
         )
 
@@ -535,7 +537,7 @@ class SalesAndDistribution:
                 fname='FAKSP', 
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
-                valold=None,
+                valold='None',
                 valnew=new_value,
             )
 
@@ -560,7 +562,7 @@ class SalesAndDistribution:
 
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBAK_json'][k]['FAKSK'] = None
+                self.tables['VBAK_json'][k]['FAKSK'] = 'None'
 
         for matnr in blocked_matnrs:
             for k, v in self.tables['VBAP_json'].items():
@@ -577,12 +579,12 @@ class SalesAndDistribution:
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=old_value,
-                valnew=None,
+                valnew='None',
             )
 
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
-                    self.tables['VBAP_json'][k]['FAKSP'] = None
+                    self.tables['VBAP_json'][k]['FAKSP'] = 'None'
 
     def set_customer_billing_block(self, udate, usnam):
         new_value='02' # HACK match with values.om_billing_blocks
