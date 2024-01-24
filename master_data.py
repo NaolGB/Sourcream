@@ -4,7 +4,6 @@ import random
 
 import values, helpers
 
-
 def users(all_users=values.om_users):
     ADRP_json = {}
     USR02_json = {}
@@ -78,9 +77,11 @@ def company_codes(all_company_codes=values.om_company_codes):
 
     return {'T001_json': T001_json, 'T001K_json': T001K_json}
 
-def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes):
+def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes, all_vendors=values.proc_vendors):
     KNB1_json = {}
     KNA1_json = {}
+    LFA1_json = {}
+    LFB1_json = {}
 
     for k, v in all_customers.items():
         customer_number = f'{str(uuid.uuid4())[-17:]}'
@@ -106,7 +107,28 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
                 "ZTERM": v['payment_term']
             }
     
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
+    for k, v in all_vendors.items():
+        vendor_number = f'{str(uuid.uuid4())[-17:]}'
+        LFA1_json[str(uuid.uuid4())] = {
+            "ERNAM": random.choice(list(all_users.keys())),
+            "LAND1": v['country'],
+            "LIFNR": vendor_number,
+            "MANDT": values.mandt,
+            "NAME1": k,
+            "ORT01": v['city'],
+            "VBUND": None,
+        }
+        for bukrs in list(all_company_codes.keys()):
+            LFB1_json[str(uuid.uuid4())] = {
+                "BUKRS": bukrs, # HACK all company codes for all vendors
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
+                "ERNAM": random.choice(list(all_users.keys())),
+                "LIFNR": vendor_number,
+                "MANDT": values.mandt,
+                "ZTERM": v['payment_term']
+            }
+    
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'LFA1_json': LFA1_json, 'LFB1_json': LFB1_json}
 
 def materials(
         all_material_groups=values.om_material_groups, 
@@ -157,7 +179,7 @@ def materials(
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
                         "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 1, 1), end_date=datetime(2025, 1, 1)), # HACK after all SO and procurement have passed
-                        "BESKZ": 'E',
+                        "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value
                         "DISMM": 'D', # TODO add custom value

@@ -1,4 +1,5 @@
 mandt = 'SC1'
+
 om_sales_orgs = {
     'EMEA': {
         'distribution_channels': {
@@ -94,21 +95,6 @@ om_sales_doc_types = {
     'ZEXP': 'Export Sales',
     'ZSCR': 'Scrap Sales',
 }
-dd07t_combinations = {
-    'VBAK': [
-        {'DOMVALUE_L': 'C', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order'},
-        {'DOMVALUE_L': 'I', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order w/o charge'},
-    ],
-    'TVAK': [
-        {'DOMVALUE_L': 'D', 'DOMNAME': 'KLIMP', 'DDTEXT': 'D' }, # TODO add custom values -- attached to TVAK.KLIMP
-    ]
-}
-goods_movement_types = { # TODO check codes
-    'GoodsIssue': {'code': '601', 'is_reverse': None},
-    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X'},
-    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X'},
-    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X'},
-}
 om_status = {
     'apprive_sales_order': {
         'ISTAT': 'I0002',
@@ -130,11 +116,6 @@ om_delivery_blocks = {
         'LIFSP': '01',
         'VTEXT': 'Standard Delivery Block'
     }
-}
-
-shipping_conditions = {
-    'SS': 'Standard Shipping',
-    'ES': 'Express Shipping'
 }
 om_dimensions = {
     'DIM-1': {
@@ -437,6 +418,124 @@ om_material_groups = {
         }
     },
 }
+om_customers = {
+    "Tasty Bites Co.": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
+    "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
+    "Crispy Cravings": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
+    "Sips & Savories": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'IN', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
+    "Gourmet Delights Inc.": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109657'},
+    "Flavor Fusion Foods": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'AU', 'region': 'AU', 'city': 'LDN', 'id': 'C109658'},
+    "Café Elegance": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
+    "SodaStreamers": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'LDN', 'id': 'C109660'},
+    "Sweets & Sips": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'LDN', 'id': 'C109661'},
+    "Gastronomy Galore": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
+    "Nectar Nook": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
+    "Spice & Savor": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
+    "Wholesome Treats": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
+    "Munchies Magic": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
+    "Siplicity Drinks": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
+    "Foodie Fantasy": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
+    "Yummy Morsels": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
+    "Baker's Bliss Co.": {"credit_risk": 0.67, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109670'},
+    "ThirstQuencher": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109671'},
+    "Epicurean Eats": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109672'},
+    "Gusto Gourmets": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109673'},
+    "Beverage Bliss": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
+    "Taste Troupe": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
+    "ChocoCharm Confections": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
+    "SavorStreet": {"credit_risk": 0.1, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
+    "Culinary Crafters": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
+    "BrewBurst Beverages": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
+    "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
+    "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109681'},
+    "FreshNosh": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109682'},
+    "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
+}
+
+
+proc_vendors = {
+    "Tasty Bites Co.": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
+    "Brewmaster's Blend": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
+    "Crispy Cravings": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
+    "Sips & Savories": {'payment_term': 'Z030', 'country': 'IN', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
+    "Gourmet Delights Inc.": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109657'},
+    "Flavor Fusion Foods": {'payment_term': 'Z030', 'country': 'AU', 'region': 'AU', 'city': 'LDN', 'id': 'C109658'},
+    "Café Elegance": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
+    "SodaStreamers": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'LDN', 'id': 'C109660'},
+    "Sweets & Sips": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'LDN', 'id': 'C109661'},
+    "Gastronomy Galore": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
+    "Nectar Nook": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
+    "Spice & Savor": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
+    "Wholesome Treats": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
+    "Munchies Magic": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
+    "Siplicity Drinks": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
+    "Foodie Fantasy": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
+    "Yummy Morsels": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
+    "Baker's Bliss Co.": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109670'},
+    "ThirstQuencher": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109671'},
+    "Epicurean Eats": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109672'},
+    "Gusto Gourmets": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109673'},
+    "Beverage Bliss": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
+    "Taste Troupe": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
+    "ChocoCharm Confections": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
+    "SavorStreet": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
+    "Culinary Crafters": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
+    "BrewBurst Beverages": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
+    "NoshNation": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
+    "Gastronomic Gather": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109681'},
+    "FreshNosh": {'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109682'},
+    "Greyjoy Foods Inc.": {'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
+}
+
+shipping_conditions = {
+    'SS': 'Standard Shipping',
+    'ES': 'Express Shipping'
+}
+goods_movement_types = { # TODO check codes
+    'GoodsIssue': {'code': '601', 'is_reverse': None},
+    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X'},
+    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X'},
+    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X'},
+}
+dd07t_combinations = {
+    'VBAK': [
+        {'DOMVALUE_L': 'C', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order'},
+        {'DOMVALUE_L': 'I', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order w/o charge'},
+    ],
+    'TVAK': [
+        {'DOMVALUE_L': 'D', 'DOMNAME': 'KLIMP', 'DDTEXT': 'D' }, # TODO add custom values -- attached to TVAK.KLIMP
+    ]
+}
+release_indicators = {
+    '1': {
+        'FRGKZ': '1',
+        'FKZTX': 'Request for quotation'
+    },
+    'B': {
+        'FRGKZ': 'B',
+        'FKZTX': 'Fixed RFQ/purchase order'
+    },
+    '4': {
+        'FRGKZ': '4',
+        'FKZTX': 'RFQ/PO no changes'
+    },
+    '2': {
+        'FRGKZ': '2',
+        'FKZTX': 'RFQ/purchase order'
+    },
+    'A': {
+        'FRGKZ': 'A',
+        'FKZTX': 'Fixed RFQ'
+    },
+    '3': {
+        'FRGKZ': '3',
+        'FKZTX': 'RFQ/PO no change of date'
+    },
+    'X': {
+        'FRGKZ': 'X',
+        'FKZTX': 'Blocked'
+    },
+}
 
 prompt = {"""
 I am writing a dummy data for a sales order. 
@@ -484,40 +583,4 @@ How are the following attributes realted to Touchless Order rate in the Order-to
 (sales document type, sales organization, company code, customer, distribution channel) 
 """
 }
-
-om_customers = {
-    "Tasty Bites Co.": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
-    "Brewmaster's Blend": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
-    "Crispy Cravings": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109655'},
-    "Sips & Savories": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'IN', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109656'},
-    "Gourmet Delights Inc.": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109657'},
-    "Flavor Fusion Foods": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'AU', 'region': 'AU', 'city': 'LDN', 'id': 'C109658'},
-    "Café Elegance": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109659'},
-    "SodaStreamers": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'LDN', 'id': 'C109660'},
-    "Sweets & Sips": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'LDN', 'id': 'C109661'},
-    "Gastronomy Galore": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109662'},
-    "Nectar Nook": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109663'},
-    "Spice & Savor": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109664'},
-    "Wholesome Treats": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109665'},
-    "Munchies Magic": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109666'},
-    "Siplicity Drinks": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109667'},
-    "Foodie Fantasy": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109668'},
-    "Yummy Morsels": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109669'},
-    "Baker's Bliss Co.": {"credit_risk": 0.67, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109670'},
-    "ThirstQuencher": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109671'},
-    "Epicurean Eats": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109672'},
-    "Gusto Gourmets": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109673'},
-    "Beverage Bliss": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109674'},
-    "Taste Troupe": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109675'},
-    "ChocoCharm Confections": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109676'},
-    "SavorStreet": {"credit_risk": 0.1, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109677'},
-    "Culinary Crafters": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109678'},
-    "BrewBurst Beverages": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109679'},
-    "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109680'},
-    "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109681'},
-    "FreshNosh": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109682'},
-    "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
-}
-
-
 

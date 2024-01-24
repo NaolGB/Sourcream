@@ -154,3 +154,15 @@ def blocking_reasons(all_billing_blocks=values.om_billing_blocks, all_delivery_b
         }
 
     return {'TVFST_json': TVFST_json, 'TVLST_json': TVLST_json}
+
+def releases(all_release_indicators=values.release_indicators):
+    T161U_json = {}
+    
+    for _, v in all_release_indicators.items():
+        T161U_json[str(uuid.uuid4())] = {
+            "FKZTX": v['FKZTX'],
+            "FRGKZ": v['FRGKZ'],
+            "MANDT": values.mandt,
+            "SPRAS": 'E',
+        }
+    return {'T161U_json': T161U_json}
