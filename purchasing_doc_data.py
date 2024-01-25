@@ -7,6 +7,7 @@ class Purchasing:
     def __init__(self, params) -> None:
         self.purchase_req_number = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
         self.purchase_order_number = f'{str(uuid.uuid4())[-17:]}'
+        self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.params = params
 
         self.tables = {
@@ -14,6 +15,7 @@ class Purchasing:
             'CDHDR_json': {},
             'CDPOS_json': {},
             'EKKO_json': {},
+            'EKPO_json': {},
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
@@ -46,14 +48,13 @@ class Purchasing:
 
     def create_purchase_requisition_item(
             self, 
-            req_by, 
             badat, 
             ernam,
-            all_units=values.om_units,
         ):
+        
         for i in range(len(self.params['matnrs'])):
             self.tables['EBAN_json'][str(uuid.uuid4())] = {
-                "AFNAM": req_by,
+                "AFNAM": self.params['requested_by'],
                 "BADAT": badat,
                 "BANFN": self.purchase_req_number,
                 "BNFPO": i,
@@ -67,7 +68,7 @@ class Purchasing:
                 "LOEKZ": 'D', # TODO add custom value
                 "MANDT": values.mandt,
                 "MATNR": self.params['matnrs'][i],
-                "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "MEINS": self.unit,
                 "MENGE": self.params['quantities'][i],
                 "PEINH": 1, # NOTE assumnig price is per item (pcs)
                 "PREIS": self.params['prices'][i],
@@ -92,7 +93,8 @@ class Purchasing:
 
     def create_purchase_order(
             self,
-            aedat
+            aedat,
+            ernam
         ):
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
             'AEDAT': aedat,
@@ -100,28 +102,81 @@ class Purchasing:
             'BSTYP': 'F',
             'BUKRS': self.params['company_code'],
             'EBELN': self.purchase_order_number,
-            'EKORG': '',
-            'ERNAM': '',
-            'FRGGR': '',
-            'FRGKE': '',
-            'FRGSX': '',
-            'FRGZU': '',
-            'KDATB': '',
-            'KDATE': '',
-            'KONNR': '',
-            'LIFNR': '',
-            'LOEKZ': '',
-            'MANDT': '',
-            'RESWK': '',
-            'STATU': '',
-            'WAERS': '',
-            'ZBD1P': '',
-            'ZBD1T': '',
-            'ZBD2P': '',
-            'ZBD2T': '',
-            'ZBD3T': '',
-            'ZTERM': '',
-            'AEDAT': '',
-            'AFNAM': '',
+            'EKORG': self.params['purchasing_org'],
+            'ERNAM': ernam,
+            'FRGGR': 'D', # TODO add custom value
+            'FRGKE': '2',
+            'FRGSX': 'D', # TODO add custom value
+            'FRGZU': 'X', # TODO check the effects of this
+            'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+            'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+            'KONNR': self.params['konnr'],
+            'LIFNR': self.params['lifnr'],
+            'LOEKZ': 'D',
+            'MANDT': values.mandt,
+            'RESWK': 'D', # HACK
+            'STATU': 'B',
+            'WAERS': 'EUR',
+            'ZBD1P': 0,
+            'ZBD1T': 0,
+            'ZBD2P': 0,
+            'ZBD2T': 0,
+            'ZBD3T': 0,
+            'ZTERM': self.params['payment_term'],
         }
-        
+        self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=aedat, 
+                uname=ernam, 
+                chngid='I', 
+                fname='KEY', 
+                tabkey=f'{values.mandt}{self.purchase_order_number}', 
+                tabname='EKKO', 
+                valold=None,
+                valnew=None,
+            )
+        for i in range(len(self.params['matnrs'])):
+            self.tables['EKPO_json'][str(uuid.uuid4())] = {
+                'AEDAT': aedat,
+                'AFNAM': self.params['requested_by'],
+                'BPRME': 1,
+                'BSTYP': 'F',
+                'BUKRS': self.params['company_code'],
+                'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'KONNR': self.params['konnr'],
+                'KTMNG': self.params['quantities'][i],
+                'KTPNR': i, # NOTE matches with EBAN
+                'LOEKZ': 'D', # HACK
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MEINS': self.unit,
+                'MENGE': self.params['quantities'][i],
+                'NETPR': self.params['prices'][i],
+                'NETWR': self.params['prices'][i],
+                'PEINH': 1,
+                'REPOS': None, # Invoice not recieved
+                'TXZ01': 'D', # TODO add custom value
+                'UEBTO': 0,
+                'WEBRE': None,
+                'WEPOS': None, # Goods receipt indicator
+                'WERKS': self.params['plant'],
+                'ZWERT': 'D', # TODO add custom value
+            }
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=aedat, 
+                uname=ernam, 
+                chngid='I', 
+                fname='KEY', 
+                tabkey=f'{values.mandt}{self.purchase_order_number}{i}', 
+                tabname='EKPO', 
+                valold=None,
+                valnew=None,
+            )
+
+    def send_purchase_order(self):
+        pass
