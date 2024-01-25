@@ -18,7 +18,7 @@ def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
 
     return {'DD07T_json': DD07T_json}
 
-def doc_types(doc_types=values.om_sales_doc_types):
+def sales_doc_types(doc_types=values.om_sales_doc_types):
     TVAK_json = {}
     TVAKT_json = {}
 
@@ -38,7 +38,7 @@ def doc_types(doc_types=values.om_sales_doc_types):
 
     return {'TVAK_json': TVAK_json, 'TVAKT_json': TVAKT_json}
 
-def organization(sales_orgs=values.om_sales_orgs):
+def sales_organizations(sales_orgs=values.om_sales_orgs):
     TVKBT_json = {}
     TVKOT_json = {}
     TVKOV_json = {}
@@ -166,3 +166,28 @@ def releases(all_release_indicators=values.release_indicators):
             "SPRAS": 'E',
         }
     return {'T161U_json': T161U_json}
+
+
+def purchasing_doc_types(all_doc_types=values.proc_doc_types):
+    T161T_json = {}
+    for k, v in all_doc_types.items():
+        T161T_json[str(uuid.uuid4())] = {
+            "BATXT": v,
+            "BSART": v,
+            "BSTYP": k,
+            "MANDT": values.mandt,
+            "SPRAS": 'E'
+        }
+    
+    return {'T161T_json': T161T_json}
+def purchasing_organizations(proc_orgs=values.proc_purchasing_orgs):
+    T024E_json = {}
+
+    for org, attributes in proc_orgs.items():
+        T024E_json[str(uuid.uuid4())] = {
+            "EKORG": org,
+            "EKOTX": org,
+            "MANDT": values.mandt
+        }
+    
+    return {'T024E_json': T024E_json}

@@ -6,12 +6,14 @@ import values, helpers
 class Purchasing:
     def __init__(self, params) -> None:
         self.purchase_req_number = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
+        self.purchase_order_number = f'{str(uuid.uuid4())[-17:]}'
         self.params = params
 
         self.tables = {
             'EBAN_json': {},
             'CDHDR_json': {},
-            'CDPOS_json': {}
+            'CDPOS_json': {},
+            'EKKO_json': {},
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
@@ -87,3 +89,39 @@ class Purchasing:
                 valold=None,
                 valnew=None,
             )
+
+    def create_purchase_order(
+            self,
+            aedat
+        ):
+        self.tables['EKKO_json'][str(uuid.uuid4())] = {
+            'AEDAT': aedat,
+            'BSART': 'F',
+            'BSTYP': 'F',
+            'BUKRS': self.params['company_code'],
+            'EBELN': self.purchase_order_number,
+            'EKORG': '',
+            'ERNAM': '',
+            'FRGGR': '',
+            'FRGKE': '',
+            'FRGSX': '',
+            'FRGZU': '',
+            'KDATB': '',
+            'KDATE': '',
+            'KONNR': '',
+            'LIFNR': '',
+            'LOEKZ': '',
+            'MANDT': '',
+            'RESWK': '',
+            'STATU': '',
+            'WAERS': '',
+            'ZBD1P': '',
+            'ZBD1T': '',
+            'ZBD2P': '',
+            'ZBD2T': '',
+            'ZBD3T': '',
+            'ZTERM': '',
+            'AEDAT': '',
+            'AFNAM': '',
+        }
+        

@@ -452,7 +452,59 @@ om_customers = {
     "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'id': 'C109683'},
 }
 
-
+proc_purchasing_orgs = {
+    'EMEA': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'UK01': 'London, Holborn',
+            'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
+            'GR01': 'Munich, Theresienstr',
+        }
+    },
+    'NAM': {
+        'distribution_channels': {
+            '10': ' Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'US01': 'New York, One World Trade Center',
+            'US02': 'Raleigh, 223 S. West',
+            'US03': 'San Francisco, 28 2nd',
+        }
+    },
+    'JAPC': {
+        'distribution_channels': {
+            '10': ' Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'JP01': 'Tokyo, Marunouchi Kitaguchi',
+            'IN01': 'Bengaluru, The Pavilion 62/63',
+        }
+    },
+}
+proc_doc_types = {
+    'A': 'Request for quotation',
+    'B': 'Purchase requisition',
+    'F': 'Purchase order',
+    'I': 'Info record',
+    'K': 'Contract',
+    'L': 'Scheduling agreement',
+    'Q': 'Service entry sheet',
+    'W': 'Source list',
+}
 proc_vendors = {
     "Tasty Bites Co.": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109653'},
     "Brewmaster's Blend": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'LDN', 'id': 'C109654'},
