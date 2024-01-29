@@ -434,6 +434,7 @@ class Purchasing:
 
 
     def set_confirmed_poitem_delivery_date(self,
+                                    ernam,
                                    ebelp,
                                    confdate):
         self.etens +=1 
@@ -452,11 +453,11 @@ class Purchasing:
         self.changes(
                 objid = str(uuid.uuid4()), 
                 objclas ='', 
-                udate = eindt, 
+                udate = confdate, 
                 uname = ernam, 
                 chngid = 'U', #'I' then CreationTime, 'D' DeletionTime 
                 fname = 'EINDT', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{self.etens}', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}{self.etens}', 
                 tabname = 'EKES', 
                 valold = '', 
                 valnew = ''
