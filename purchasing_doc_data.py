@@ -4,11 +4,11 @@ from datetime import datetime, timedelta
 import values, helpers
 
 class Purchasing:
-    def __init__(self, params, start_date) -> None:
-        self.purchase_req_number = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
-        self.purchase_order_number = f'{str(uuid.uuid4())[-17:]}'
-        self.mseg_number = f'{str(uuid.uuid4())[-17:]}'
-        self.mat_doc_number = f'{str(uuid.uuid4())[-17:]}'
+    def __init__(self, params, start_date, index) -> None:
+        self.index = index
+        self.purchase_req_number = f'{str(uuid.uuid4())[-15:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
+        self.purchase_order_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
+        self.mat_doc_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.lfbja = int(start_date.year)
         self.params = params
@@ -25,7 +25,7 @@ class Purchasing:
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = f'{str(uuid.uuid4())[-17:]}'
+        changenr = f'{str(uuid.uuid4())[-15:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -51,6 +51,89 @@ class Purchasing:
             "VALUE_NEW": valnew,
             "VALUE_OLD": valold,
         }
+
+    def create_contract(self, aedat, ernam):
+        self.tables['EKKO_json'][str(uuid.uuid4())] = {
+            'AEDAT': aedat,
+            'BSART': 'F',
+            'BSTYP': 'K', # type: Contract
+            'BUKRS': self.params['company_code'],
+            'EBELN': self.params['konnr'], # Contract's EBELN
+            'EKORG': self.params['purchasing_org'],
+            'ERNAM': ernam,
+            'FRGGR': 'D', # TODO add custom value
+            'FRGKE': '2',
+            'FRGSX': 'D', # TODO add custom value
+            'FRGZU': 'X', # TODO check the effects of this
+            'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+            'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+            'KONNR': self.params['konnr'],
+            'LIFNR': self.params['lifnr'],
+            'LOEKZ': 'D',
+            'MANDT': values.mandt,
+            'RESWK': 'D', # HACK
+            'STATU': 'B',
+            'WAERS': 'EUR',
+            'ZBD1P': 0,
+            'ZBD1T': 0,
+            'ZBD2P': 0,
+            'ZBD2T': 0,
+            'ZBD3T': 0,
+            'ZTERM': self.params['payment_term'],
+        }
+        self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=aedat, 
+                uname=ernam, 
+                chngid='I', 
+                fname='KEY', 
+                tabkey=f'{values.mandt}{self.params["konnr"]}', 
+                tabname='EKKO', 
+                valold=None,
+                valnew=None,
+            )
+        for i in range(len(self.params['matnrs'])):
+            self.tables['EKPO_json'][str(uuid.uuid4())] = {
+                'AEDAT': aedat,
+                'AFNAM': self.params['requested_by'],
+                'BPRME': 1,
+                'BSTYP': 'K',
+                'BUKRS': self.params['company_code'],
+                'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+                'EBELN': self.params['konnr'],
+                'EBELP': i,
+                'KONNR': self.params['konnr'],
+                'KTMNG': self.params['quantities'][i],
+                'KTPNR': i, # NOTE matches with EBAN
+                'LOEKZ': 'D', # HACK
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MEINS': self.unit,
+                'MENGE': self.params['quantities'][i],
+                'NETPR': self.params['prices'][i],
+                'NETWR': self.params['prices'][i],
+                'PEINH': 1,
+                'REPOS': None, # Invoice not recieved
+                'TXZ01': 'D', # TODO add custom value
+                'UEBTO': 0,
+                'WEBRE': None,
+                'WEPOS': None, # Goods receipt indicator
+                'WERKS': self.params['plant'],
+                'ZWERT': self.params['prices'][i] # HACK target agreement value the same as total value
+            }
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=aedat, 
+                uname=ernam, 
+                chngid='I', 
+                fname='KEY', 
+                tabkey=f'{values.mandt}{self.params["konnr"]}{i}', 
+                tabname='EKPO', 
+                valold=None,
+                valnew=None,
+            )
 
     def create_purchase_requisition_item(
             self, 
@@ -97,11 +180,7 @@ class Purchasing:
                 valnew=None,
             )
 
-    def create_purchase_order(
-            self,
-            aedat,
-            ernam
-        ):
+    def create_purchase_order(self, aedat, ernam):
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
             'AEDAT': aedat,
             'BSART': 'F',
@@ -169,7 +248,7 @@ class Purchasing:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': 'D', # TODO add custom value
+                'ZWERT': self.params['prices'][i], # TODO add custom value
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -203,13 +282,13 @@ class Purchasing:
         }
 
     def post_goods_receipt(self, cpudt, usnam, atime):
-        temp_uuid = f'{str(uuid.uuid4())[-17:]}'
+        temp_uuid = f'{str(uuid.uuid4())[-15:]}{self.index}'
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 'BWART': '101',
                 'CPUDT_MKPF': cpudt,
                 'CPUTM_MKPF': atime,
-                'EBELN': self.mseg_number,
+                'EBELN': self.purchase_order_number,
                 'EBELP': i,
                 'ERFME': self.unit,
                 'KDAUF': self.purchase_order_number,
@@ -220,7 +299,7 @@ class Purchasing:
                 'LGORT': 'D', # TODO add custom value,
                 'LIFNR': self.params['lifnr'],
                 'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'],
+                'MATNR': self.params['matnrs'][i],
                 'MBLNR': self.mat_doc_number,
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
@@ -228,7 +307,7 @@ class Purchasing:
                 'SHKZG': 'S',
                 'SJAHR': self.lfbja,
                 'SMBLN': self.mat_doc_number,
-                'SMBLP': i,
+                'SMBLP': None, # NOTE is not a reversal
                 'USNAM_MKPF': usnam,
                 'VBELN_IM': None,
                 'VBELP_IM': None,
