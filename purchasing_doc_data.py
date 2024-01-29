@@ -11,6 +11,10 @@ class Purchasing:
         self.mat_doc_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.lfbja = int(start_date.year)
+        self.beleg_number = f'{str(uuid.uuid4())[-17:]}'
+        self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-17:]}'
+        self.purchase_order_schedline_number = f'{str(uuid.uuid4())[-17:]}'
+        self.etens = 0
         self.params = params
 
         self.tables = {
@@ -21,7 +25,11 @@ class Purchasing:
             'EKPO_json': {},
             'NAST_json': {},
             'MSEG_json': {},
-            'EKBE_json': {}
+            'EKBE_json': {},
+            'RBKP_json': {},
+            'RSEG_json': {},
+            'EKET_json': {},
+            'EKES_json': {},
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
@@ -325,3 +333,212 @@ class Purchasing:
                 'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
 
+    #ApprovePurchaseOrder
+    def approve_purchase_order(
+            self,
+            aedat,
+            ernam,
+            ):        
+        self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=aedat, 
+                uname= ernam, 
+                chngid='I', 
+                fname='FRGZU', 
+                tabkey=f'{values.mandt}{self.purchase_order_number}', 
+                tabname='EKKO', 
+                valold=None,
+                valnew=None,
+            )
+
+    # RestorePurchaseOrderItem
+    def restore_purchase_order_item(
+            self,
+            badat,
+            ernam,
+            ebelp
+            ):
+        self.changes(
+            objid = str(uuid.uuid4()), 
+            objclas ='EINKBELEG', 
+            udate = badat, 
+            uname = ernam, 
+            chngid = 'I', 
+            fname = 'LOEKZ', 
+            tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
+            tabname = 'EKPO', 
+            valold = 'L', 
+            valnew = ''
+        )
+
+        for k, v in self.tables['EKPO_json'].items():
+            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
+                self.tables['EKPO_json'][k]['LOEKZ'] = ''
+
+    
+
+    # BlockPurchaseOrderItem
+    def block_purchase_order_item(
+            self,
+            badat,
+            ernam,
+            ebelp):
+        self.changes(
+            objid = str(uuid.uuid4()), 
+            objclas ='EINKBELEG', 
+            udate = badat, 
+            uname = ernam, 
+            chngid = 'I', 
+            fname = 'LOEKZ', 
+            tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
+            tabname = 'EKPO', 
+            valold = '%', 
+            valnew = 'S'
+        )
+
+        for k, v in self.tables['EKPO_json'].items():
+            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
+                self.tables['EKPO_json'][k]['LOEKZ'] = 'S'
+
+    def create_purchase_order_schedule_line(
+            self,
+            eindt,
+            ernam
+        ):
+
+        for i in range(len(self.params['matnrs'])):
+            self.tables['EKET_json'][str(uuid.uuid4())] = {
+                'EBELN': self.purchase_order_schedline_number,
+                'EBELP': i,
+                'EINDT': eindt,
+                'ETENR': i, # Delivery Schedule Line Counter
+                'MANDT': values.mandt,
+                'MENGE': self.params['quantities'][i], # Quatity Scheduled
+                'WEMNG': self.params['quantities'][i], # Quantity of goods received
+            }
+
+            #Create purchase order schedule line
+            self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas ='', 
+                udate = eindt, 
+                uname = ernam, 
+                chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
+                fname = 'KEY', 
+                tabkey = f'{values.mandt}{self.purchase_order_schedline_number}', 
+                tabname = 'EKET', 
+                valold = '', 
+                valnew = ''
+            )
+
+
+    def set_confirmed_poitem_delivery_date(self,
+                                   ebelp,
+                                   confdate):
+        self.etens +=1 
+        self.tables['EKES_json'][str(uuid.uuid4())] = {
+            'EBELN': self.purchase_order_number,
+            'EBELP': ebelp,
+            'EBTYP': 'L',
+            'EINDT': confdate, # Delivery Date of Vendor Confirmation
+            'ERDAT': confdate, # Creation Date of Confirmation
+            'ETENS': self.etens, # Sequential Number of Vendor Confirmation
+            'EZEIT': helpers.generate_random_time(),
+            'MANDT': values.mandt,
+            'MENGE': self.params['quantities'][ebelp],
+        }
+
+        self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas ='', 
+                udate = eindt, 
+                uname = ernam, 
+                chngid = 'U', #'I' then CreationTime, 'D' DeletionTime 
+                fname = 'EINDT', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{self.etens}', 
+                tabname = 'EKES', 
+                valold = '', 
+                valnew = ''
+            )
+
+    def create_vendor_invoice(
+            self,
+            bldat, 
+            ernam,
+            cputm):
+        self.tables['RBKP_json'][str(uuid.uuid4())] = {
+            'BELNR': self.beleg_number,
+            'BLDAT': bldat, # document date in document
+            'BUKRS': self.params['company_code'],
+            'CPUDT': bldat, # Day on which accounting doc was entered
+            'CPUTM': cputm, # Time of Entry
+            'GJAHR': bldat.year,
+            'LIFNR': self.params['lifnr'],
+            'MANDT': values.mandt,
+            'SGTXT': '', #Item text
+            'USNAM': ernam,
+            'VGART': 'RD', #Logistics Invoice (requirement)
+            'WAERS': 'EUR',
+            'ZBD1P': 0,
+            'ZBD1T': 0,
+            'ZBD2P': 0,
+            'ZBD2T': 0,
+            'ZBD3T': 0,
+            'ZFBDT': 0,
+            'ZLSCH': 'T', # No values found
+            'ZLSPR': 'D', #No values found for Payment Block Key
+            'ZTERM': self.params['payment_term']
+        }
+
+        for i in range(len(self.params['matnrs'])):
+            self.tables['RSEG_json'][str(uuid.uuid4())] = {
+                'BELNR': self.beleg_number,
+                'BSTME': self.unit, #Unit of Measurement
+                'BUKRS': self.params['company_code'],
+                'BUZEI': i, #Document Item in Invoice Document
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'GJAHR': bldat.year,
+                'LFBNR': self.beleg_number,
+                'LFGJA': bldat.year, #fiscal year of current perios
+                'LFPOS': i, #item of reference document
+                'LIFNR': self.params['lifnr'],
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MENGE': self.params['quantities'][i],
+                'WERKS': self.params['plant'],
+                'WRBTR': self.params['prices'][i] * self.params['quantities'][i] #Amount in document currency
+            }
+
+            #IncomingMaterialDocumentitem
+            self.tables['MSEG_json'][str(uuid.uuid4())] = {
+                'BWART':'101', #MaterialTransactionType: '101' THEN 'GoodsReceipt', '602' THEN 'ReverseGoodsIssue'
+                'CPUDT_MKPF': bldat,
+                'CPUTM_MKPF': cputm,
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'ERFME': self.unit,
+                'KDAUF':'', #Sales Order Number (AP)
+                'KDPOS':'', #Item Number in Sales Order (AP)
+                'LBKUM': 0, #Total valuated Stock before posting
+                'LFBJA': bldat.year,
+                'LFBNR': self.beleg_number,
+                'LGORT': '',#Storage location T001L
+                'LIFNR': self.params['lifnr'],
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MBLNR': self.incoming_material_document_item_number,
+                'MEINS': self.unit,
+                'MENGE': self.params['quantities'][i],
+                'MJAHR': bldat.year,
+                'SHKZG': 'S', #Debit(H), Credit(S) indicator
+                'SJAHR': '', #Material Document Year
+                'SMBLN': '', #Number of Material Document
+                'SMBLP': 0, # Item in Material Document
+                'USNAM_MKPF': ernam,
+                'VBELN_IM':'' , #From AP
+                'VBELP_IM':0 , #From AP
+                'WERKS': self.params['plant'],
+                'ZEILE': i,
+            }
