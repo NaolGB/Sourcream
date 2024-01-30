@@ -61,76 +61,77 @@ class Purchasing:
         }
 
     def create_contract(self, aedat, ernam):
-        self.tables['EKKO_json'][str(uuid.uuid4())] = {
-            'AEDAT': aedat,
-            'BSART': 'F',
-            'BSTYP': 'K', # type: Contract
-            'BUKRS': self.params['company_code'],
-            'EBELN': self.params['konnr'], # Contract's EBELN
-            'EKORG': self.params['purchasing_org'],
-            'ERNAM': ernam,
-            'FRGGR': 'D', # TODO add custom value
-            'FRGKE': '2',
-            'FRGSX': 'D', # TODO add custom value
-            'FRGZU': 'X', # TODO check the effects of this
-            'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
-            'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
-            'KONNR': self.params['konnr'],
-            'LIFNR': self.params['lifnr'],
-            'LOEKZ': 'D',
-            'MANDT': values.mandt,
-            'RESWK': 'D', # HACK
-            'STATU': 'B',
-            'WAERS': 'EUR',
-            'ZBD1P': 0,
-            'ZBD1T': 0,
-            'ZBD2P': 0,
-            'ZBD2T': 0,
-            'ZBD3T': 0,
-            'ZTERM': self.params['payment_term'],
-        }
-        self.changes(
-                objid=str(uuid.uuid4()), 
-                objclas='EINKBELEG', 
-                udate=aedat, 
-                uname=ernam, 
-                chngid='I', 
-                fname='KEY', 
-                tabkey=f'{values.mandt}{self.params["konnr"]}', 
-                tabname='EKKO', 
-                valold=None,
-                valnew=None,
-            )
-        for i in range(len(self.params['matnrs'])):
-            self.tables['EKPO_json'][str(uuid.uuid4())] = {
+        if self.params['has_contract']:
+            self.tables['EKKO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
-                'AFNAM': self.params['requested_by'],
-                'BPRME': 1,
-                'BSTYP': 'K',
+                'BSART': 'F',
+                'BSTYP': 'K', # type: Contract
                 'BUKRS': self.params['company_code'],
-                'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
-                'EBELN': self.params['konnr'],
-                'EBELP': i,
+                'EBELN': self.params['konnr'], # Contract's EBELN
+                'EKORG': self.params['purchasing_org'],
+                'ERNAM': ernam,
+                'FRGGR': 'D', # TODO add custom value
+                'FRGKE': '2',
+                'FRGSX': 'D', # TODO add custom value
+                'FRGZU': 'X', # TODO check the effects of this
+                'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+                'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
                 'KONNR': self.params['konnr'],
-                'KTMNG': self.params['quantities'][i],
-                'KTPNR': i, # NOTE matches with EBAN
-                'LOEKZ': 'D', # HACK
+                'LIFNR': self.params['lifnr'],
+                'LOEKZ': 'D',
                 'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'][i],
-                'MEINS': self.unit,
-                'MENGE': self.params['quantities'][i],
-                'NETPR': self.params['prices'][i],
-                'NETWR': self.params['prices'][i],
-                'PEINH': 1,
-                'REPOS': None, # Invoice not recieved
-                'TXZ01': 'D', # TODO add custom value
-                'UEBTO': 0,
-                'WEBRE': None,
-                'WEPOS': None, # Goods receipt indicator
-                'WERKS': self.params['plant'],
-                'ZWERT': self.params['prices'][i] # HACK target agreement value the same as total value
+                'RESWK': 'D', # HACK
+                'STATU': 'B',
+                'WAERS': 'EUR',
+                'ZBD1P': 0,
+                'ZBD1T': 0,
+                'ZBD2P': 0,
+                'ZBD2T': 0,
+                'ZBD3T': 0,
+                'ZTERM': self.params['payment_term'],
             }
             self.changes(
+                    objid=str(uuid.uuid4()), 
+                    objclas='EINKBELEG', 
+                    udate=aedat, 
+                    uname=ernam, 
+                    chngid='I', 
+                    fname='KEY', 
+                    tabkey=f'{values.mandt}{self.params["konnr"]}', 
+                    tabname='EKKO', 
+                    valold=None,
+                    valnew=None,
+                )
+            for i in range(len(self.params['matnrs'])):
+                self.tables['EKPO_json'][str(uuid.uuid4())] = {
+                    'AEDAT': aedat,
+                    'AFNAM': self.params['requested_by'],
+                    'BPRME': 1,
+                    'BSTYP': 'K',
+                    'BUKRS': self.params['company_code'],
+                    'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+                    'EBELN': self.params['konnr'],
+                    'EBELP': i,
+                    'KONNR': self.params['konnr'],
+                    'KTMNG': self.params['quantities'][i],
+                    'KTPNR': i, # NOTE matches with EBAN
+                    'LOEKZ': 'D', # HACK
+                    'MANDT': values.mandt,
+                    'MATNR': self.params['matnrs'][i],
+                    'MEINS': self.unit,
+                    'MENGE': self.params['quantities'][i],
+                    'NETPR': self.params['prices'][i],
+                    'NETWR': self.params['prices'][i],
+                    'PEINH': 1,
+                    'REPOS': None, # Invoice not recieved
+                    "TXZ01": self.params['matnrs'][i],
+                    'UEBTO': 0,
+                    'WEBRE': None,
+                    'WEPOS': None, # Goods receipt indicator
+                    'WERKS': self.params['plant'],
+                    'ZWERT': self.params['prices'][i] # HACK target agreement value the same as total value
+                }
+                self.changes(
                 objid=str(uuid.uuid4()), 
                 objclas='EINKBELEG', 
                 udate=aedat, 
@@ -159,18 +160,18 @@ class Purchasing:
                 "ERNAM": ernam,
                 "ESTKZ": 'B' if ernam == 'BATCH_JOB' else 'D', # Direct procurement if not from material planning
                 "FRGKZ": '2', # 'RFQ/purchase order' in values.release_indicators
-                "KONNR": self.params['konnr'], # matches with EKKO
-                "KTPNR": i, # matches with EKPO
+                "KONNR": self.params['konnr'] if self.params['has_contract'] else None,
+                "KTPNR": i if self.params['has_contract'] else None,
                 "LIFNR": self.params['lifnr'],
                 "LOEKZ": 'D', # TODO add custom value
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": None if self.params['is_free_text'] else self.params['matnrs'][i],
                 "MEINS": self.unit,
                 "MENGE": self.params['quantities'][i],
                 "PEINH": 1, # NOTE assumnig price is per item (pcs)
-                "PREIS": self.params['prices'][i],
+                "PREIS": self.params['pr_prices'][i] if self.params['has_pr_price_mismatch'] else self.params['prices'][i],
                 "STATU": 'N', # NOTE not edited (RFQ not yet created)
-                "TXZ01": 'D', # TODO add custom value
+                "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
                 "WAERS": 'EUR',
                 "WERKS": self.params['plant'],
             }
@@ -200,10 +201,10 @@ class Purchasing:
             'FRGGR': 'D', # TODO add custom value
             'FRGKE': '2',
             'FRGSX': 'D', # TODO add custom value
-            'FRGZU': 'X', # TODO check the effects of this
+            'FRGZU': None, # No Approval needed
             'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
             'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
-            'KONNR': self.params['konnr'],
+            'KONNR': self.params['konnr'] if self.params['has_contract'] else None,
             'LIFNR': self.params['lifnr'],
             'LOEKZ': 'D',
             'MANDT': values.mandt,
@@ -239,19 +240,19 @@ class Purchasing:
                 'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
                 'EBELN': self.purchase_order_number,
                 'EBELP': i,
-                'KONNR': self.params['konnr'],
+                'KONNR': self.params['konnr'] if self.params['has_contract'] else None,
                 'KTMNG': self.params['quantities'][i],
-                'KTPNR': i, # NOTE matches with EBAN
+                'KTPNR': i if self.params['has_contract'] else None,
                 'LOEKZ': 'D', # HACK
                 'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'][i],
+                "MATNR": None if self.params['is_free_text'] else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': self.params['prices'][i],
+                'NETPR': self.params['pr_prices'][i] if self.params['has_pr_price_mismatch'] else self.params['prices'][i],
                 'NETWR': self.params['prices'][i],
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
-                'TXZ01': 'D', # TODO add custom value
+                "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
                 'UEBTO': 0,
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
@@ -332,25 +333,89 @@ class Purchasing:
                 'WAERS': 'EUR',
                 'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
+            for k, v in self.tables['EKPO_json'].items():
+                if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
+                    self.tables['EKPO_json'][k]['WEPOS'] = 'X' # Goods Receipt Indicator
 
-    #ApprovePurchaseOrder
-    def approve_purchase_order(
-            self,
-            aedat,
-            ernam,
-            ):        
-        self.changes(
-                objid=str(uuid.uuid4()), 
-                objclas='EINKBELEG', 
-                udate=aedat, 
-                uname= ernam, 
-                chngid='I', 
-                fname='FRGZU', 
-                tabkey=f'{values.mandt}{self.purchase_order_number}', 
-                tabname='EKKO', 
-                valold=None,
-                valnew=None,
+    def create_purchase_order_schedule_line(self, eindt, ernam):
+        for i in range(len(self.params['matnrs'])):
+            self.tables['EKET_json'][str(uuid.uuid4())] = {
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'EINDT': eindt,
+                'ETENR': i, # Delivery Schedule Line Counter
+                'MANDT': values.mandt,
+                'MENGE': self.params['quantities'][i], # Quatity Scheduled
+                'WEMNG': self.params['quantities'][i], # Quantity of goods received
+            }
+            self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas =str(uuid.uuid4()), 
+                udate = eindt, 
+                uname = ernam, 
+                chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
+                fname = 'KEY', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{i}{i}', 
+                tabname = 'EKET', 
+                valold = None, 
+                valnew = None
             )
+
+    def approve_purchase_order(self, aedat, ernam):
+        new_value = 'X'        
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas='EINKBELEG', 
+            udate=aedat, 
+            uname= ernam, 
+            chngid='I', 
+            fname='FRGZU', 
+            tabkey=f'{values.mandt}{self.purchase_order_number}', 
+            tabname='EKKO', 
+            valold=None,
+            valnew=new_value,
+        )
+        for k, v in self.tables['EKKO_json'].items():
+            if( v['EBELN'] == self.purchase_order_number):
+                self.tables['EKKO_json'][k]['FRGZU'] = new_value
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Deviations
+# ==========
+    #ApprovePurchaseOrder
+    
 
     # RestorePurchaseOrderItem
     def restore_purchase_order_item(
@@ -377,6 +442,19 @@ class Purchasing:
                 self.tables['EKPO_json'][k]['LOEKZ'] = ''
 
     
+    def set_confirmed_poitem_delivery_date(self, ernam, confdate):
+        for i in range(len(self.params['matnrs'])): 
+            self.tables['EKES_json'][str(uuid.uuid4())] = {
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'EBTYP': 'L',
+                'EINDT': confdate, # Delivery Date of Vendor Confirmation
+                'ERDAT': confdate, # Creation Date of Confirmation
+                'ETENS': self.etens, # Sequential Number of Vendor Confirmation
+                'EZEIT': helpers.generate_random_time(),
+                'MANDT': values.mandt,
+                'MENGE': self.params['quantities'][i],
+            }
 
     # BlockPurchaseOrderItem
     def block_purchase_order_item(
@@ -401,54 +479,10 @@ class Purchasing:
             if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
                 self.tables['EKPO_json'][k]['LOEKZ'] = 'S'
 
-    def create_purchase_order_schedule_line(
-            self,
-            eindt,
-            ernam
-        ):
-
-        for i in range(len(self.params['matnrs'])):
-            self.tables['EKET_json'][str(uuid.uuid4())] = {
-                'EBELN': self.purchase_order_schedline_number,
-                'EBELP': i,
-                'EINDT': eindt,
-                'ETENR': i, # Delivery Schedule Line Counter
-                'MANDT': values.mandt,
-                'MENGE': self.params['quantities'][i], # Quatity Scheduled
-                'WEMNG': self.params['quantities'][i], # Quantity of goods received
-            }
-
-            #Create purchase order schedule line
-            self.changes(
-                objid = str(uuid.uuid4()), 
-                objclas ='', 
-                udate = eindt, 
-                uname = ernam, 
-                chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
-                fname = 'KEY', 
-                tabkey = f'{values.mandt}{self.purchase_order_schedline_number}', 
-                tabname = 'EKET', 
-                valold = '', 
-                valnew = ''
-            )
+    
 
 
-    def set_confirmed_poitem_delivery_date(self,
-                                    ernam,
-                                   ebelp,
-                                   confdate):
-        self.etens +=1 
-        self.tables['EKES_json'][str(uuid.uuid4())] = {
-            'EBELN': self.purchase_order_number,
-            'EBELP': ebelp,
-            'EBTYP': 'L',
-            'EINDT': confdate, # Delivery Date of Vendor Confirmation
-            'ERDAT': confdate, # Creation Date of Confirmation
-            'ETENS': self.etens, # Sequential Number of Vendor Confirmation
-            'EZEIT': helpers.generate_random_time(),
-            'MANDT': values.mandt,
-            'MENGE': self.params['quantities'][ebelp],
-        }
+    
 
         self.changes(
                 objid = str(uuid.uuid4()), 
