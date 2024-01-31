@@ -17,7 +17,7 @@ class Purchasing:
         self.params = params
 
         self.tables = {
-            'EBAN_json': {},
+            'EBAN_json': {}, 
             'CDHDR_json': {},
             'CDPOS_json': {},
             'EKKO_json': {},
