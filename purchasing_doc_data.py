@@ -13,7 +13,6 @@ class Purchasing:
         self.lfbja = int(start_date.year)
         self.beleg_number = f'{str(uuid.uuid4())[-17:]}'
         self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-17:]}'
-        self.purchase_order_schedline_number = f'{str(uuid.uuid4())[-17:]}'
         self.etens = 0
         self.params = params
 
@@ -368,7 +367,7 @@ class Purchasing:
             objclas='EINKBELEG', 
             udate=aedat, 
             uname= ernam, 
-            chngid='I', 
+            chngid='U', 
             fname='FRGZU', 
             tabkey=f'{values.mandt}{self.purchase_order_number}', 
             tabname='EKKO', 
@@ -414,8 +413,6 @@ class Purchasing:
 
 # Deviations
 # ==========
-    #ApprovePurchaseOrder
-    
 
     # RestorePurchaseOrderItem
     def restore_purchase_order_item(
@@ -429,12 +426,12 @@ class Purchasing:
             objclas ='EINKBELEG', 
             udate = badat, 
             uname = ernam, 
-            chngid = 'I', 
+            chngid = 'U', 
             fname = 'LOEKZ', 
             tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
             tabname = 'EKPO', 
             valold = 'L', 
-            valnew = ''
+            valnew = None
         )
 
         for k, v in self.tables['EKPO_json'].items():
@@ -450,11 +447,46 @@ class Purchasing:
                 'EBTYP': 'L',
                 'EINDT': confdate, # Delivery Date of Vendor Confirmation
                 'ERDAT': confdate, # Creation Date of Confirmation
-                'ETENS': self.etens, # Sequential Number of Vendor Confirmation
+                'ETENS': i, # Sequential Number of Vendor Confirmation
                 'EZEIT': helpers.generate_random_time(),
                 'MANDT': values.mandt,
                 'MENGE': self.params['quantities'][i],
             }
+            self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas ='', 
+                udate = confdate, 
+                uname = ernam, 
+                chngid = 'U', 
+                fname = 'EINDT', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{i}{i}', 
+                tabname = 'EKES', 
+                valold = None, 
+                valnew = None
+            )
+
+    def set_requested_poitem_delivery_date(self,
+                                    ernam,
+                                   ebelp,
+                                   udate,
+                                   new_delivery_date):
+        self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas ='EINKBELEG', 
+                udate = udate, 
+                uname = ernam, 
+                chngid = 'U',
+                fname = 'EINDT', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}{ebelp}', 
+                tabname = 'EKET', 
+                valold = None, 
+                valnew = new_delivery_date
+            )
+        
+        for k, v in self.tables['EKET_json'].items():
+            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
+                self.tables['EKET_json'][k]['EINDT'] = new_delivery_date
+
 
     # BlockPurchaseOrderItem
     def block_purchase_order_item(
@@ -467,11 +499,11 @@ class Purchasing:
             objclas ='EINKBELEG', 
             udate = badat, 
             uname = ernam, 
-            chngid = 'I', 
+            chngid = 'U', 
             fname = 'LOEKZ', 
             tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
             tabname = 'EKPO', 
-            valold = '%', 
+            valold = None, 
             valnew = 'S'
         )
 
@@ -480,22 +512,6 @@ class Purchasing:
                 self.tables['EKPO_json'][k]['LOEKZ'] = 'S'
 
     
-
-
-    
-
-        self.changes(
-                objid = str(uuid.uuid4()), 
-                objclas ='', 
-                udate = confdate, 
-                uname = ernam, 
-                chngid = 'U', #'I' then CreationTime, 'D' DeletionTime 
-                fname = 'EINDT', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}{self.etens}', 
-                tabname = 'EKES', 
-                valold = '', 
-                valnew = ''
-            )
 
     def create_vendor_invoice(
             self,
@@ -520,7 +536,7 @@ class Purchasing:
             'ZBD2P': 0,
             'ZBD2T': 0,
             'ZBD3T': 0,
-            'ZFBDT': 0,
+            'ZFBDT': bldat, # Baseline Date for Due Date Calculation
             'ZLSCH': 'T', # No values found
             'ZLSPR': 'D', #No values found for Payment Block Key
             'ZTERM': self.params['payment_term']
@@ -577,3 +593,46 @@ class Purchasing:
                 'WERKS': self.params['plant'],
                 'ZEILE': i,
             }
+    def change_purchase_order(
+            self,
+            udate,
+            ernam,
+            field_name,
+            val_new
+            ):
+        self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='EINKBELEG', 
+                udate=udate, 
+                uname=ernam, 
+                chngid='U', 
+                fname=field_name, # Vendor
+                tabkey=f'{values.mandt}{self.purchase_order_number}', 
+                tabname='EKKO', 
+                valold=None,
+                valnew=val_new,
+            )
+        
+        for k, v in self.tables['EKKO_json'].items():
+            if v['EBELN'] == self.purchase_order_number:
+                self.tables['EKKO_json'][k][field_name] = val_new
+    
+    def change_purchaserequisitionitem(
+            self,
+            udate,
+            ernam,
+            banfpo,
+            val_new # Release Indicator
+        ):
+        self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='', 
+                udate=udate, 
+                uname=ernam, 
+                chngid='U', 
+                fname='FRGKZ', # Vendor
+                tabkey=f'{values.mandt}{self.purchase_req_number}{banfpo}', 
+                tabname='EBAN', 
+                valold=None,
+                valnew=val_new,
+            )
