@@ -10,10 +10,10 @@ class Purchasing:
         self.purchase_order_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
         self.mat_doc_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
-        self.lfbja = int(start_date.year)
+        self.pr_req_date = start_date
+        self.fy = int(start_date.year)
         self.beleg_number = f'{str(uuid.uuid4())[-17:]}'
         self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-17:]}'
-        self.etens = 0
         self.params = params
 
         self.tables = {
@@ -131,24 +131,19 @@ class Purchasing:
                     'ZWERT': self.params['prices'][i] # HACK target agreement value the same as total value
                 }
                 self.changes(
-                objid=str(uuid.uuid4()), 
-                objclas='EINKBELEG', 
-                udate=aedat, 
-                uname=ernam, 
-                chngid='I', 
-                fname='KEY', 
-                tabkey=f'{values.mandt}{self.params["konnr"]}{i}', 
-                tabname='EKPO', 
-                valold=None,
-                valnew=None,
-            )
+                    objid=str(uuid.uuid4()), 
+                    objclas='EINKBELEG', 
+                    udate=aedat, 
+                    uname=ernam, 
+                    chngid='I', 
+                    fname='KEY', 
+                    tabkey=f'{values.mandt}{self.params["konnr"]}{i}', 
+                    tabname='EKPO', 
+                    valold=None,
+                    valnew=None,
+                )
 
-    def create_purchase_requisition_item(
-            self, 
-            badat, 
-            ernam,
-        ):
-        
+    def create_purchase_requisition_item(self, badat, ernam):
         for i in range(len(self.params['matnrs'])):
             self.tables['EBAN_json'][str(uuid.uuid4())] = {
                 "AFNAM": self.params['requested_by'],
@@ -160,7 +155,7 @@ class Purchasing:
                 "ESTKZ": 'B' if ernam == 'BATCH_JOB' else 'D', # Direct procurement if not from material planning
                 "FRGKZ": '2', # 'RFQ/purchase order' in values.release_indicators
                 "KONNR": self.params['konnr'] if self.params['has_contract'] else None,
-                "KTPNR": i if self.params['has_contract'] else None,
+                "KTPNR": i if self.params['has_contract'] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
                 "LIFNR": self.params['lifnr'],
                 "LOEKZ": 'D', # TODO add custom value
                 "MANDT": values.mandt,
@@ -241,7 +236,7 @@ class Purchasing:
                 'EBELP': i,
                 'KONNR': self.params['konnr'] if self.params['has_contract'] else None,
                 'KTMNG': self.params['quantities'][i],
-                'KTPNR': i if self.params['has_contract'] else None,
+                'KTPNR': i if self.params['has_contract'] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # HACK
                 'MANDT': values.mandt,
                 "MATNR": None if self.params['is_free_text'] else self.params['matnrs'][i],
@@ -302,7 +297,7 @@ class Purchasing:
                 'KDAUF': self.purchase_order_number,
                 'KDPOS': i,
                 'LBKUM': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-                'LFBJA': self.lfbja,
+                'LFBJA': self.fy,
                 'LFBNR': temp_uuid,
                 'LGORT': 'D', # TODO add custom value,
                 'LIFNR': self.params['lifnr'],
@@ -311,9 +306,9 @@ class Purchasing:
                 'MBLNR': self.mat_doc_number,
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'MJAHR': self.lfbja,
+                'MJAHR': self.fy,
                 'SHKZG': 'S',
-                'SJAHR': self.lfbja,
+                'SJAHR': self.fy,
                 'SMBLN': self.mat_doc_number,
                 'SMBLP': None, # NOTE is not a reversal
                 'USNAM_MKPF': usnam,
@@ -325,7 +320,7 @@ class Purchasing:
             self.tables['EKBE_json'][str(uuid.uuid4())] = { # TODO check how this affects OutgoingMaterialDocument (in OM/sales_doc_data)
                 'BELNR': self.mat_doc_number,
                 'BUZEI': i,
-                'GJAHR': self.lfbja,
+                'GJAHR': self.fy,
                 'MANDT': values.mandt,
                 'MENGE': self.params['quantities'][i],
                 'VGABE': '1',
@@ -335,6 +330,7 @@ class Purchasing:
             for k, v in self.tables['EKPO_json'].items():
                 if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
                     self.tables['EKPO_json'][k]['WEPOS'] = 'X' # Goods Receipt Indicator
+        self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam)
 
     def create_purchase_order_schedule_line(self, eindt, ernam):
         for i in range(len(self.params['matnrs'])):
@@ -360,6 +356,51 @@ class Purchasing:
                 valnew = None
             )
 
+    def create_vendor_invoice(self, ernam, cupdt):
+        self.tables['RBKP_json'][str(uuid.uuid4())] = {
+            'BELNR': self.beleg_number,
+            'BLDAT': cupdt, # document date in document
+            'BUKRS': self.params['company_code'],
+            'CPUDT': cupdt, # Day on which accounting doc was entered
+            'CPUTM': helpers.generate_random_time(),
+            'GJAHR': self.fy,
+            'LIFNR': self.params['lifnr'],
+            'MANDT': values.mandt,
+            'SGTXT': 'D', # TODO add custom value
+            'USNAM': ernam,
+            'VGART': 'RD', #Logistics Invoice (requirement)
+            'WAERS': 'EUR',
+            'ZBD1P': 0,
+            'ZBD1T': 0,
+            'ZBD2P': 0,
+            'ZBD2T': 0,
+            'ZBD3T': 0,
+            'ZFBDT': self.pr_req_date, # Baseline Date for Due Date Calculation
+            'ZLSCH': 'D', # TODO add custom value
+            'ZLSPR': 'D', # TODO add custom value
+            'ZTERM': self.params['payment_term']  # TODO see if this needs to match when self.change_payment_term is called
+        }
+
+        for i in range(len(self.params['matnrs'])):
+            self.tables['RSEG_json'][str(uuid.uuid4())] = {
+                'BELNR': self.beleg_number,
+                'BSTME': self.unit, #Unit of Measurement
+                'BUKRS': self.params['company_code'],
+                'BUZEI': i, #Document Item in Invoice Document
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'GJAHR': self.fy,
+                'LFBNR': self.mat_doc_number,
+                'LFGJA': self.fy,
+                'LFPOS': i, #item of reference document
+                'LIFNR': self.params['lifnr'],
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MENGE': self.params['quantities'][i],
+                'WERKS': self.params['plant'],
+                'WRBTR': self.params['prices'][i] * self.params['quantities'][i] #Amount in document currency
+            }
+
     def approve_purchase_order(self, aedat, ernam):
         new_value = 'X'        
         self.changes(
@@ -377,262 +418,62 @@ class Purchasing:
         for k, v in self.tables['EKKO_json'].items():
             if( v['EBELN'] == self.purchase_order_number):
                 self.tables['EKKO_json'][k]['FRGZU'] = new_value
-    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Deviations
-# ==========
-
-    # RestorePurchaseOrderItem
-    def restore_purchase_order_item(
-            self,
-            badat,
-            ernam,
-            ebelp
-            ):
-        self.changes(
-            objid = str(uuid.uuid4()), 
-            objclas ='EINKBELEG', 
-            udate = badat, 
-            uname = ernam, 
-            chngid = 'U', 
-            fname = 'LOEKZ', 
-            tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
-            tabname = 'EKPO', 
-            valold = 'L', 
-            valnew = None
-        )
-
-        for k, v in self.tables['EKPO_json'].items():
-            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
-                self.tables['EKPO_json'][k]['LOEKZ'] = ''
-
-    
-    def set_confirmed_poitem_delivery_date(self, ernam, confdate):
-        for i in range(len(self.params['matnrs'])): 
-            self.tables['EKES_json'][str(uuid.uuid4())] = {
-                'EBELN': self.purchase_order_number,
-                'EBELP': i,
-                'EBTYP': 'L',
-                'EINDT': confdate, # Delivery Date of Vendor Confirmation
-                'ERDAT': confdate, # Creation Date of Confirmation
-                'ETENS': i, # Sequential Number of Vendor Confirmation
-                'EZEIT': helpers.generate_random_time(),
-                'MANDT': values.mandt,
-                'MENGE': self.params['quantities'][i],
-            }
-            self.changes(
-                objid = str(uuid.uuid4()), 
-                objclas ='', 
-                udate = confdate, 
-                uname = ernam, 
-                chngid = 'U', 
-                fname = 'EINDT', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{i}{i}', 
-                tabname = 'EKES', 
-                valold = None, 
-                valnew = None
-            )
-
-    def set_requested_poitem_delivery_date(self,
-                                    ernam,
-                                   ebelp,
-                                   udate,
-                                   new_delivery_date):
-        self.changes(
-                objid = str(uuid.uuid4()), 
-                objclas ='EINKBELEG', 
-                udate = udate, 
-                uname = ernam, 
-                chngid = 'U',
-                fname = 'EINDT', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}{ebelp}', 
-                tabname = 'EKET', 
-                valold = None, 
-                valnew = new_delivery_date
-            )
-        
-        for k, v in self.tables['EKET_json'].items():
-            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
-                self.tables['EKET_json'][k]['EINDT'] = new_delivery_date
-
-
-    # BlockPurchaseOrderItem
-    def block_purchase_order_item(
-            self,
-            badat,
-            ernam,
-            ebelp):
-        self.changes(
-            objid = str(uuid.uuid4()), 
-            objclas ='EINKBELEG', 
-            udate = badat, 
-            uname = ernam, 
-            chngid = 'U', 
-            fname = 'LOEKZ', 
-            tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}', 
-            tabname = 'EKPO', 
-            valold = None, 
-            valnew = 'S'
-        )
-
-        for k, v in self.tables['EKPO_json'].items():
-            if v['EBELN'] == self.purchase_order_number and v['EBELP'] == ebelp:
-                self.tables['EKPO_json'][k]['LOEKZ'] = 'S'
-
-    
-
-    def create_vendor_invoice(
-            self,
-            bldat, 
-            ernam,
-            cputm):
-        self.tables['RBKP_json'][str(uuid.uuid4())] = {
-            'BELNR': self.beleg_number,
-            'BLDAT': bldat, # document date in document
-            'BUKRS': self.params['company_code'],
-            'CPUDT': bldat, # Day on which accounting doc was entered
-            'CPUTM': cputm, # Time of Entry
-            'GJAHR': bldat.year,
-            'LIFNR': self.params['lifnr'],
-            'MANDT': values.mandt,
-            'SGTXT': '', #Item text
-            'USNAM': ernam,
-            'VGART': 'RD', #Logistics Invoice (requirement)
-            'WAERS': 'EUR',
-            'ZBD1P': 0,
-            'ZBD1T': 0,
-            'ZBD2P': 0,
-            'ZBD2T': 0,
-            'ZBD3T': 0,
-            'ZFBDT': bldat, # Baseline Date for Due Date Calculation
-            'ZLSCH': 'T', # No values found
-            'ZLSPR': 'D', #No values found for Payment Block Key
-            'ZTERM': self.params['payment_term']
-        }
-
-        for i in range(len(self.params['matnrs'])):
-            self.tables['RSEG_json'][str(uuid.uuid4())] = {
-                'BELNR': self.beleg_number,
-                'BSTME': self.unit, #Unit of Measurement
-                'BUKRS': self.params['company_code'],
-                'BUZEI': i, #Document Item in Invoice Document
-                'EBELN': self.purchase_order_number,
-                'EBELP': i,
-                'GJAHR': bldat.year,
-                'LFBNR': self.beleg_number,
-                'LFGJA': bldat.year, #fiscal year of current perios
-                'LFPOS': i, #item of reference document
-                'LIFNR': self.params['lifnr'],
-                'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'][i],
-                'MENGE': self.params['quantities'][i],
-                'WERKS': self.params['plant'],
-                'WRBTR': self.params['prices'][i] * self.params['quantities'][i] #Amount in document currency
-            }
-
-            #IncomingMaterialDocumentitem
-            self.tables['MSEG_json'][str(uuid.uuid4())] = {
-                'BWART':'101', #MaterialTransactionType: '101' THEN 'GoodsReceipt', '602' THEN 'ReverseGoodsIssue'
-                'CPUDT_MKPF': bldat,
-                'CPUTM_MKPF': cputm,
-                'EBELN': self.purchase_order_number,
-                'EBELP': i,
-                'ERFME': self.unit,
-                'KDAUF':'', #Sales Order Number (AP)
-                'KDPOS':'', #Item Number in Sales Order (AP)
-                'LBKUM': 0, #Total valuated Stock before posting
-                'LFBJA': bldat.year,
-                'LFBNR': self.beleg_number,
-                'LGORT': '',#Storage location T001L
-                'LIFNR': self.params['lifnr'],
-                'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'][i],
-                'MBLNR': self.incoming_material_document_item_number,
-                'MEINS': self.unit,
-                'MENGE': self.params['quantities'][i],
-                'MJAHR': bldat.year,
-                'SHKZG': 'S', #Debit(H), Credit(S) indicator
-                'SJAHR': '', #Material Document Year
-                'SMBLN': '', #Number of Material Document
-                'SMBLP': 0, # Item in Material Document
-                'USNAM_MKPF': ernam,
-                'VBELN_IM':'' , #From AP
-                'VBELP_IM':0 , #From AP
-                'WERKS': self.params['plant'],
-                'ZEILE': i,
-            }
-    def change_purchase_order(
-            self,
-            udate,
-            ernam,
-            field_name,
-            val_new
-            ):
+    def change_payment_term(self, udate, ernam):
+        new_value = self.params['new_payment_term']
         self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas='EINKBELEG', 
+                objclas=str(uuid.uuid4()), 
                 udate=udate, 
                 uname=ernam, 
                 chngid='U', 
-                fname=field_name, # Vendor
+                fname='ZTERM',
                 tabkey=f'{values.mandt}{self.purchase_order_number}', 
                 tabname='EKKO', 
                 valold=None,
-                valnew=val_new,
+                valnew=new_value,
             )
         
         for k, v in self.tables['EKKO_json'].items():
             if v['EBELN'] == self.purchase_order_number:
-                self.tables['EKKO_json'][k][field_name] = val_new
-    
-    def change_purchaserequisitionitem(
-            self,
-            udate,
-            ernam,
-            banfpo,
-            val_new # Release Indicator
-        ):
+                self.tables['EKKO_json'][k]['ZTERM'] = new_value
+
+    def change_vendor(self, udate, ernam):
+        new_value = self.params['new_vendor']
         self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas='', 
+                objclas=str(uuid.uuid4()), 
                 udate=udate, 
                 uname=ernam, 
                 chngid='U', 
-                fname='FRGKZ', # Vendor
-                tabkey=f'{values.mandt}{self.purchase_req_number}{banfpo}', 
-                tabname='EBAN', 
-                valold=None,
-                valnew=val_new,
+                fname='LIFNR',
+                tabkey=f'{values.mandt}{self.purchase_order_number}', 
+                tabname='EKKO', 
+                valold=None, # HACK using none instead of the old EKKO.LIFNR because it is not a requirement in the transformation
+                valnew=new_value,
             )
+        
+        for k, v in self.tables['EKKO_json'].items():
+            if v['EBELN'] == self.purchase_order_number:
+                self.tables['EKKO_json'][k]['LIFNR'] = new_value
+    
+    def change_quantity(self, badat, ernam, line_numbers, line_quantities):
+        for i in line_numbers:
+            self.changes(
+                objid = str(uuid.uuid4()), 
+                objclas =str(uuid.uuid4()), 
+                udate = badat, 
+                uname = ernam, 
+                chngid = 'U', 
+                fname = 'MENGE', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{i}', 
+                tabname = 'EKPO', 
+                valold = None, 
+                valnew = line_quantities[i]
+            )
+
+            # change line 
+            for k, v in self.tables['EKPO_json'].items():
+                if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
+                    self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
+
