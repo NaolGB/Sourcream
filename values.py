@@ -192,6 +192,7 @@ om_material_groups = {
         'MATKL001': {
             'name': 'Carbonated Drinks',
             'availability': 0.35,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Coca Fizz 500ml': {'price': 0.50},
                 'Soda Stream 1L': {'price': 0.80},
@@ -203,6 +204,7 @@ om_material_groups = {
         'MATKL002': {
             'name': 'Fruit Juices',
             'availability': 0.75,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Apple Blend 1L': {'price': 0.60},
                 'Berry Burst 500ml': {'price': 0.45},
@@ -214,6 +216,7 @@ om_material_groups = {
         'MATKL003': {
             'name': 'Energy Drinks',
             'availability': 0.8,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Power Punch 500ml': {'price': 0.70},
                 'Charge Up 1L': {'price': 1.00},
@@ -225,6 +228,7 @@ om_material_groups = {
         'MATKL004': {
             'name': 'Bottled Water',
             'availability': 0.85,
+            'no_contract_probability': 0.2,
             'materials': {
                 'Pure Drop 500ml': {'price': 0.30},
                 'Crystal Clear 1L': {'price': 0.50},
@@ -236,6 +240,7 @@ om_material_groups = {
         'MATKL005': {
             'name': 'Coffee & Tea',
             'availability': 0.55,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Java Joy 500ml': {'price': 1.00},
                 'Tea Taste 1L': {'price': 0.80},
@@ -249,6 +254,7 @@ om_material_groups = {
         'MATKL010': {
             'name': 'Snacks & Chips',
             'availability': 0.6,
+            'no_contract_probability': 0.7,
             'materials': {
                 'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
                 'Snack Bite 100g': {'price': 0.80},  # per unit cost in bulk
@@ -260,6 +266,7 @@ om_material_groups = {
         'MATKL011': {
             'name': 'Canned Foods',
             'availability': 0.7,
+            'no_contract_probability': 0.6,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
                 'Tomato Sauce 250ml': {'price': 0.70},  # per unit cost in bulk
@@ -271,6 +278,7 @@ om_material_groups = {
         'MATKL012': {
             'name': 'Frozen Foods',
             'availability': 0.1,
+            'no_contract_probability': 0.9,
             'materials': {
                 'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
                 'Frozen Veggies 500g': {'price': 1.50},  # per unit cost in bulk
@@ -282,6 +290,7 @@ om_material_groups = {
         'MATKL013': {
             'name': 'Baked Goods',
             'availability': 0.2,
+            'no_contract_probability': 0.8,
             'materials': {
                 'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
                 'Whole Wheat Bread 500g': {'price': 1.50},  # per unit cost in bulk
@@ -293,6 +302,7 @@ om_material_groups = {
         'MATKL014': {
             'name': 'Breakfast Cereals',
             'availability': 0.65,
+            'no_contract_probability': 0.5,
             'materials': {
                 'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
                 'Corn Flakes 300g': {'price': 1.20},  # per unit cost in bulk
@@ -306,6 +316,7 @@ om_material_groups = {
         'MATKL020': {
             'name': 'Sugar & Sweeteners',
             'availability': 0.54,
+            'no_contract_probability': 0.8,
             'materials': {
                 'White Granular Sugar 1kg': {'price': 1.00},  # Wholesalers might pay around $1.00 for a 1kg pack of white granular sugar.
                 'Liquid Glucose 5L': {'price': 10.00},  # For 5 liters of liquid glucose, the wholesale price might be approximately $10.00.
@@ -317,6 +328,7 @@ om_material_groups = {
         'MATKL021': {
             'name': 'Flour & Grains',
             'availability': 0.75,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Wheat Flour 10kg': {'price': 8.00},  # Wholesalers might pay around $8.00 for a 10kg bag of wheat flour.
                 'Cornmeal 5kg': {'price': 4.50},  # For 5kg of cornmeal, the wholesale price might be approximately $4.50.
@@ -328,6 +340,7 @@ om_material_groups = {
         'MATKL022': {
             'name': 'Dairy Products',
             'availability': 0.32,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Whole Milk Powder 2kg': {'price': 12.00},  # The price for 2kg of whole milk powder for wholesalers might be around $12.00.
                 'Butter 500g': {'price': 4.50},  # Butter's price can fluctuate, but for wholesalers, it might be around $4.50 for 500g.
@@ -339,6 +352,7 @@ om_material_groups = {
         'MATKL023': {
             'name': 'Spices & Seasonings',
             'availability': 0.12,
+            'no_contract_probability': 0.5,
             'materials': {
                 'Black Pepper 100g': {'price': 2.50},  # Price per 100g for wholesalers might be around $2.50, but this could vary.
                 'Salt 5kg': {'price': 2.00},  # The cost of bulk salt for wholesalers can be quite low, around $2.00 for 5kg.
@@ -350,6 +364,7 @@ om_material_groups = {
         'MATKL024': {
             'name': 'Oils & Fats',
             'availability': 0.6,
+            'no_contract_probability': 0.5,
             'materials': {
                 'Vegetable Oil 5L': {'price': 10.00},       # per unit (for 5-liter container)
                 'Olive Oil 1L': {'price': 8.00},            # per unit (for 1-liter bottle)
@@ -363,6 +378,7 @@ om_material_groups = {
         'MATKL030': {
             'name': 'Glass Bottles',
             'availability': 0.90,
+            'no_contract_probability': 0.3,
             'materials': {
                 'Clear Glass 500ml': {'price': 0.15},      # per unit (for 500ml capacity)
                 'Green Glass 750ml': {'price': 0.20},      # per unit (for 750ml capacity)
@@ -374,6 +390,7 @@ om_material_groups = {
         'MATKL031': {
             'name': 'Plastic Bottles',
             'availability': 0.8,
+            'no_contract_probability': 0.2,
             'materials': {
                 'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
                 'HDPE White 1L': {'price': 0.10},            # per unit (for 1-liter capacity)
@@ -385,6 +402,7 @@ om_material_groups = {
         'MATKL032': {
             'name': 'Aluminum Cans',
             'availability': 0.75,
+            'no_contract_probability': 0.4,
             'materials': {
                 'Aluminum Silver 330ml': {'price': 0.10},        # per unit (for 330ml capacity)
                 'Aluminum Gold 500ml': {'price': 0.12},          # per unit (for 500ml capacity)
@@ -396,6 +414,7 @@ om_material_groups = {
         'MATKL033': {
             'name': 'Paper & Cardboard',
             'availability': 0.75,
+            'no_contract_probability': 0.2,
             'materials': {
                 'White Cardboard 1L': {'price': 0.15},       # per unit (for 1-liter capacity)
                 'Kraft Paper 500ml': {'price': 0.10},        # per unit (for 500ml capacity)
@@ -407,6 +426,7 @@ om_material_groups = {
         'MATKL034': {
             'name': 'Sealing Materials',
             'availability': 0.43,
+            'no_contract_probability': 0.1,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
                 'Polyethylene Seals': {'price': 0.05},   

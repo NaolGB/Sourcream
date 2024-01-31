@@ -28,7 +28,6 @@ class Purchasing:
             'RBKP_json': {},
             'RSEG_json': {},
             'EKET_json': {},
-            'EKES_json': {},
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
@@ -101,7 +100,8 @@ class Purchasing:
                     valold=None,
                     valnew=None,
                 )
-            for i in range(len(self.params['matnrs'])):
+        for i in range(len(self.params['matnrs'])):
+            if self.params['item_has_contract'][i]:
                 self.tables['EKPO_json'][str(uuid.uuid4())] = {
                     'AEDAT': aedat,
                     'AFNAM': self.params['requested_by'],
@@ -154,8 +154,8 @@ class Purchasing:
                 "ERNAM": ernam,
                 "ESTKZ": 'B' if ernam == 'BATCH_JOB' else 'D', # Direct procurement if not from material planning
                 "FRGKZ": '2', # 'RFQ/purchase order' in values.release_indicators
-                "KONNR": self.params['konnr'] if self.params['has_contract'] else None,
-                "KTPNR": i if self.params['has_contract'] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
+                "KONNR": self.params['konnr'] if self.params['item_has_contract'][i] else None,
+                "KTPNR": i if self.params['item_has_contract'][i] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
                 "LIFNR": self.params['lifnr'],
                 "LOEKZ": 'D', # TODO add custom value
                 "MANDT": values.mandt,
@@ -198,7 +198,7 @@ class Purchasing:
             'FRGZU': None, # No Approval needed
             'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
             'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
-            'KONNR': self.params['konnr'] if self.params['has_contract'] else None,
+            'KONNR': self.params['konnr'] if self.params['has_contract'] else None, # TODO check what the effect of using has_contract is vs having multiple POs for contracts
             'LIFNR': self.params['lifnr'],
             'LOEKZ': 'D',
             'MANDT': values.mandt,
@@ -234,9 +234,9 @@ class Purchasing:
                 'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
                 'EBELN': self.purchase_order_number,
                 'EBELP': i,
-                'KONNR': self.params['konnr'] if self.params['has_contract'] else None,
+                'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] else None,
                 'KTMNG': self.params['quantities'][i],
-                'KTPNR': i if self.params['has_contract'] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
+                'KTPNR': i if self.params['item_has_contract'][i] else -1, # HACK not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # HACK
                 'MANDT': values.mandt,
                 "MATNR": None if self.params['is_free_text'] else self.params['matnrs'][i],
