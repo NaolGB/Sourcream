@@ -458,7 +458,7 @@ class Purchasing:
                 self.tables['EKKO_json'][k]['LIFNR'] = new_value
     
     def change_quantity(self, badat, ernam, line_numbers, line_quantities):
-        for i in line_numbers:
+        for i, item_position in enumerate(line_numbers):
             self.changes(
                 objid = str(uuid.uuid4()), 
                 objclas =str(uuid.uuid4()), 
@@ -466,7 +466,7 @@ class Purchasing:
                 uname = ernam, 
                 chngid = 'U', 
                 fname = 'MENGE', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{i}', 
+                tabkey = f'{values.mandt}{self.purchase_order_number}{item_position}', 
                 tabname = 'EKPO', 
                 valold = None, 
                 valnew = line_quantities[i]
@@ -474,6 +474,6 @@ class Purchasing:
 
             # change line 
             for k, v in self.tables['EKPO_json'].items():
-                if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
+                if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == item_position):
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
 
