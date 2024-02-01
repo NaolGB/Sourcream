@@ -330,31 +330,46 @@ class Purchasing:
             for k, v in self.tables['EKPO_json'].items():
                 if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
                     self.tables['EKPO_json'][k]['WEPOS'] = 'X' # Goods Receipt Indicator
-        self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam)
+# --------------------------------------------------------------------------
+            # Logic by Tim von Luecken
+            # Create schedule based on desired delivery Status
+            # Evtl deviation in days
+            days_deviation = helpers.UPTO_MONTH()*self.params['delivery_status'][i]['prob']
+            days_temp = round(days_deviation.total_seconds()/(24*3600))
+            days_deviation = timedelta(days=days_temp)
+            if self.params['delivery_status'][i]['status'] == 'late':
+                scheduled_date = cpudt - days_deviation
+                cpudt = max(self.pr_req_date + timedelta(days=5), scheduled_date)
+            elif self.params['delivery_status'][i]['status'] == 'early':
+                cpudt = cpudt + days_deviation
 
-    def create_purchase_order_schedule_line(self, eindt, ernam):
-        for i in range(len(self.params['matnrs'])):
-            self.tables['EKET_json'][str(uuid.uuid4())] = {
-                'EBELN': self.purchase_order_number,
-                'EBELP': i,
-                'EINDT': eindt,
-                'ETENR': i, # Delivery Schedule Line Counter
-                'MANDT': values.mandt,
-                'MENGE': self.params['quantities'][i], # Quatity Scheduled
-                'WEMNG': self.params['quantities'][i], # Quantity of goods received
-            }
-            self.changes(
-                objid = str(uuid.uuid4()), 
-                objclas =str(uuid.uuid4()), 
-                udate = eindt, 
-                uname = ernam, 
-                chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
-                fname = 'KEY', 
-                tabkey = f'{values.mandt}{self.purchase_order_number}{i}{i}', 
-                tabname = 'EKET', 
-                valold = None, 
-                valnew = None
-            )
+            # Create schedule of po item. If it is neither late nor early, the cpudt
+            # has not changed and is the same as the posting date
+            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i)
+
+    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp):
+        self.tables['EKET_json'][str(uuid.uuid4())] = {
+            'EBELN': self.purchase_order_number,
+            'EBELP': ebelp,
+            'EINDT': eindt,
+            'ETENR': ebelp, # Delivery Schedule Line Counter
+            'MANDT': values.mandt,
+            'MENGE': self.params['quantities'][ebelp], # Quatity Scheduled
+            'WEMNG': self.params['quantities'][ebelp], # Quantity of goods received
+        }
+        self.changes(
+            objid = str(uuid.uuid4()), 
+            objclas =str(uuid.uuid4()), 
+            udate = eindt, 
+            uname = ernam, 
+            chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
+            fname = 'KEY', 
+            tabkey = f'{values.mandt}{self.purchase_order_number}{ebelp}{ebelp}', 
+            tabname = 'EKET', 
+            valold = None, 
+            valnew = None
+        )
+# --------------------------------------------------------------------------
 
     def create_vendor_invoice(self, ernam, cupdt):
         self.tables['RBKP_json'][str(uuid.uuid4())] = {
