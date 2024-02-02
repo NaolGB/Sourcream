@@ -172,7 +172,7 @@ def purchasing_doc_types(all_doc_types=values.proc_doc_types):
     for k, v in all_doc_types.items():
         T161T_json[str(uuid.uuid4())] = {
             "BATXT": v,
-            "BSART": v,
+            "BSART": 'F', # HACK similar to EKKO.BSART
             "BSTYP": k,
             "MANDT": values.mandt,
             "SPRAS": 'E'

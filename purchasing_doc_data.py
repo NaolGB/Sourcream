@@ -6,14 +6,14 @@ import values, helpers
 class Purchasing:
     def __init__(self, params, start_date, index) -> None:
         self.index = index
-        self.purchase_req_number = f'{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
-        self.purchase_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
-        self.mat_doc_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.purchase_req_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
+        self.purchase_order_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        self.mat_doc_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.pr_req_date = start_date
         self.fy = int(start_date.year)
-        self.beleg_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
-        self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        self.incoming_material_document_item_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
 
         self.tables = {
@@ -31,7 +31,7 @@ class Purchasing:
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        changenr = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -285,7 +285,7 @@ class Purchasing:
         }
 
     def post_goods_receipt(self, cpudt, usnam, atime):
-        temp_uuid = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        temp_uuid = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 'BWART': '101',
@@ -337,17 +337,20 @@ class Purchasing:
             days_deviation = helpers.UPTO_MONTH()*self.params['delivery_status'][i]['prob']
             days_temp = round(days_deviation.total_seconds()/(24*3600))
             days_deviation = timedelta(days=days_temp)
+            delivered_quanity = self.params['quantities'][i] # scheduled quantity
             if self.params['delivery_status'][i]['status'] == 'late':
                 scheduled_date = cpudt - days_deviation
                 cpudt = max(self.pr_req_date + timedelta(days=14), scheduled_date)
             elif self.params['delivery_status'][i]['status'] == 'early':
                 cpudt = cpudt + days_deviation
+                if random.random() < 0.5: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
+                    delivered_quanity -= delivered_quanity*random.random()
 
             # Create schedule of po item. If it is neither late nor early, the cpudt
             # has not changed and is the same as the posting date
-            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i)
+            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, delivered_quanity=delivered_quanity)
 
-    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp):
+    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp, delivered_quanity):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
             'EBELN': self.purchase_order_number,
             'EBELP': ebelp,
@@ -355,7 +358,7 @@ class Purchasing:
             'ETENR': ebelp, # Delivery Schedule Line Counter
             'MANDT': values.mandt,
             'MENGE': self.params['quantities'][ebelp], # Quatity Scheduled
-            'WEMNG': self.params['quantities'][ebelp], # Quantity of goods received
+            'WEMNG': delivered_quanity, # Quantity of goods received
         }
         self.changes(
             objid = str(uuid.uuid4()), 

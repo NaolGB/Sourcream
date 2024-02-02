@@ -192,7 +192,7 @@ om_material_groups = {
     'Beverages': {
         'MATKL001': {
             'name': 'Carbonated Drinks',
-            'availability': 0.35,
+            'availability': 0.9,
             'has_contract_probability': 0.9,
             'materials': {
                 'Coca Fizz 500ml': {'price': 0.50},
@@ -204,7 +204,7 @@ om_material_groups = {
         },
         'MATKL002': {
             'name': 'Fruit Juices',
-            'availability': 0.75,
+            'availability': 0.9,
             'has_contract_probability': 1.0,
             'materials': {
                 'Apple Blend 1L': {'price': 0.60},
@@ -240,7 +240,7 @@ om_material_groups = {
         },
         'MATKL005': {
             'name': 'Coffee & Tea',
-            'availability': 0.55,
+            'availability': 0.8,
             'has_contract_probability': 0.9,
             'materials': {
                 'Java Joy 500ml': {'price': 1.00},
@@ -254,7 +254,7 @@ om_material_groups = {
     'Packaged Foods': {
         'MATKL010': {
             'name': 'Snacks & Chips',
-            'availability': 0.6,
+            'availability': 0.8,
             'has_contract_probability': 1.0,
             'materials': {
                 'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
@@ -266,7 +266,7 @@ om_material_groups = {
         },
         'MATKL011': {
             'name': 'Canned Foods',
-            'availability': 0.7,
+            'availability': 0.9,
             'has_contract_probability': 1.0,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
@@ -302,7 +302,7 @@ om_material_groups = {
         },
         'MATKL014': {
             'name': 'Breakfast Cereals',
-            'availability': 0.65,
+            'availability': 0.3,
             'has_contract_probability': 1.0,
             'materials': {
                 'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
@@ -316,7 +316,7 @@ om_material_groups = {
     'Raw Ingredients': {
         'MATKL020': {
             'name': 'Sugar & Sweeteners',
-            'availability': 0.54,
+            'availability': 0.2,
             'has_contract_probability': 0.2,
             'materials': {
                 'White Granular Sugar 1kg': {'price': 1.00},  # Wholesalers might pay around $1.00 for a 1kg pack of white granular sugar.
@@ -364,7 +364,7 @@ om_material_groups = {
         },
         'MATKL024': {
             'name': 'Oils & Fats',
-            'availability': 0.6,
+            'availability': 0.3,
             'has_contract_probability': 0.1,
             'materials': {
                 'Vegetable Oil 5L': {'price': 10.00},       # per unit (for 5-liter container)
@@ -426,7 +426,7 @@ om_material_groups = {
         },
         'MATKL034': {
             'name': 'Sealing Materials',
-            'availability': 0.43,
+            'availability': 0.8,
             'has_contract_probability': 1.0,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
@@ -470,7 +470,7 @@ om_customers = {
     "NoshNation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "FreshNosh": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "Greyjoy Foods Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
 }
 
 proc_purchasing_orgs = {
