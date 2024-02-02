@@ -13,7 +13,7 @@ def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
                 "DDTEXT": v_item['DDTEXT'],
                 "AS4LOCAL": 'A',
                 "VALPOS": 99, # TODO add custom value
-                "AS4VERS": 99, # TODO add custom value
+                "AS4VERS": 99, # TODO add custom d
             }
 
     return {'DD07T_json': DD07T_json}
@@ -167,7 +167,6 @@ def releases(all_release_indicators=values.release_indicators):
         }
     return {'T161U_json': T161U_json}
 
-
 def purchasing_doc_types(all_doc_types=values.proc_doc_types):
     T161T_json = {}
     for k, v in all_doc_types.items():
@@ -180,6 +179,7 @@ def purchasing_doc_types(all_doc_types=values.proc_doc_types):
         }
     
     return {'T161T_json': T161T_json}
+    
 def purchasing_organizations(proc_orgs=values.proc_purchasing_orgs):
     T024E_json = {}
 

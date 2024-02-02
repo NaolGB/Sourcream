@@ -9,8 +9,8 @@ def users(all_users=values.om_users):
     USR02_json = {}
     USR21_json = {}
 
-    for k, v in all_users.items():
-        person_number = str(uuid.uuid4())
+    for index, (k, v) in enumerate(all_users.items()):
+        person_number = f'SCPRS{index}'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
             "DATE_FROM": '00010101',
@@ -83,8 +83,8 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     LFA1_json = {}
     LFB1_json = {}
 
-    for k, v in all_customers.items():
-        customer_number = f'{str(uuid.uuid4())[-17:]}'
+    for index, (k, v) in enumerate(all_customers.items()):
+        customer_number = f'SCCUT{index}'
         KNA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -100,15 +100,15 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
         for bukrs in list(all_company_codes.keys()):
             KNB1_json[str(uuid.uuid4())] = {
                 "BUKRS": bukrs, # HACK all company codes for all customers
-                "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)),
                 "ERNAM": random.choice(list(all_users.keys())),
                 "KUNNR": customer_number,
                 "MANDT": values.mandt,
                 "ZTERM": v['payment_term']
             }
     
-    for k, v in all_vendors.items():
-        vendor_number = f'{str(uuid.uuid4())[-17:]}'
+    for index, (k, v) in enumerate(all_vendors.items()):
+        vendor_number = f'SCVND{index}'
         LFA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "LAND1": v['country'],
@@ -121,7 +121,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
         for bukrs in list(all_company_codes.keys()):
             LFB1_json[str(uuid.uuid4())] = {
                 "BUKRS": bukrs, # HACK all company codes for all vendors
-                "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)),
                 "ERNAM": random.choice(list(all_users.keys())),
                 "LIFNR": vendor_number,
                 "MANDT": values.mandt,
@@ -145,14 +145,14 @@ def materials(
     MARC_json = {}
     MBEW_json = {}
 
-    for _, mat_grps in all_material_groups.items():
-        for grp_code, v in mat_grps.items():
-            for name, attributes in v['materials'].items():
-                matnr = f'{str(uuid.uuid4())[-17:]}'
+    for index_0, (_, mat_grps) in enumerate(all_material_groups.items()):
+        for index_1, (grp_code, v) in enumerate(mat_grps.items()):
+            for index_2, (name, attributes) in enumerate(v['materials'].items()):
+                matnr = f'SCMAT{index_0}{index_1}{index_2}'
                 material = name
                 price = attributes['price']
                 quantity = random.randint(500, 10_000)
-                creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
+                creation_time = helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1))
 
                 MAKT_json[str(uuid.uuid4())] = {
                     "MAKTX": material,
@@ -178,7 +178,7 @@ def materials(
                 }
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
-                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 1, 1), end_date=datetime(2025, 1, 1)), # HACK after all SO and procurement have passed
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 12, 1), end_date=datetime(2026, 1, 1)), # HACK after all SO and procurement have passed
                         "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value

@@ -184,7 +184,8 @@ om_users = {
     "Riley Walker": {'type': 'A', 'nation': 'UK'},
     "Sasha Baker": {'type': 'A', 'nation': 'UK'},
     "Taylor Turner": {'type': 'A', 'nation': 'UK'},
-    'Catelyn Stark': {'type': 'A', 'nation': 'Westeros'},
+    'Catelyn Stark': {'type': 'A', 'nation': 'WS'},
+    "Bilbo Baggins": {'type': 'A', 'nation': 'BE'},
     "BATCH_JOB": {'type': 'B', 'nation': 'UK'},
 }
 om_material_groups = {

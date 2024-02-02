@@ -6,14 +6,14 @@ import values, helpers
 class Purchasing:
     def __init__(self, params, start_date, index) -> None:
         self.index = index
-        self.purchase_req_number = f'{str(uuid.uuid4())[-15:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
-        self.purchase_order_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
-        self.mat_doc_number = f'{str(uuid.uuid4())[-15:]}{self.index}'
+        self.purchase_req_number = f'{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
+        self.purchase_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.mat_doc_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.pr_req_date = start_date
         self.fy = int(start_date.year)
-        self.beleg_number = f'{str(uuid.uuid4())[-17:]}'
-        self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-17:]}'
+        self.beleg_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
 
         self.tables = {
@@ -31,7 +31,7 @@ class Purchasing:
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = f'{str(uuid.uuid4())[-15:]}{self.index}'
+        changenr = f'{str(uuid.uuid4())[-5:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -285,7 +285,7 @@ class Purchasing:
         }
 
     def post_goods_receipt(self, cpudt, usnam, atime):
-        temp_uuid = f'{str(uuid.uuid4())[-15:]}{self.index}'
+        temp_uuid = f'{str(uuid.uuid4())[-5:]}{self.index}'
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 'BWART': '101',
@@ -339,7 +339,7 @@ class Purchasing:
             days_deviation = timedelta(days=days_temp)
             if self.params['delivery_status'][i]['status'] == 'late':
                 scheduled_date = cpudt - days_deviation
-                cpudt = max(self.pr_req_date + timedelta(days=5), scheduled_date)
+                cpudt = max(self.pr_req_date + timedelta(days=14), scheduled_date)
             elif self.params['delivery_status'][i]['status'] == 'early':
                 cpudt = cpudt + days_deviation
 
