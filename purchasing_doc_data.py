@@ -119,8 +119,8 @@ class Purchasing:
                     'MATNR': self.params['matnrs'][i],
                     'MEINS': self.unit,
                     'MENGE': self.params['quantities'][i],
-                    'NETPR': self.params['prices'][i],
-                    'NETWR': self.params['prices'][i],
+                    'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                    'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                     'PEINH': 1,
                     'REPOS': None, # Invoice not recieved
                     "TXZ01": self.params['matnrs'][i],
@@ -128,7 +128,7 @@ class Purchasing:
                     'WEBRE': None,
                     'WEPOS': None, # Goods receipt indicator
                     'WERKS': self.params['plant'],
-                    'ZWERT': self.params['prices'][i] # HACK target agreement value the same as total value
+                    'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 }
                 self.changes(
                     objid=str(uuid.uuid4()), 
@@ -163,7 +163,7 @@ class Purchasing:
                 "MEINS": self.unit,
                 "MENGE": self.params['quantities'][i],
                 "PEINH": 1, # NOTE assumnig price is per item (pcs)
-                "PREIS": self.params['pr_prices'][i] if self.params['has_pr_price_mismatch'] else self.params['prices'][i],
+                "PREIS": self.params['prices'][i],
                 "STATU": 'N', # NOTE not edited (RFQ not yet created)
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
                 "WAERS": 'EUR',
@@ -242,8 +242,8 @@ class Purchasing:
                 "MATNR": None if self.params['is_free_text'] else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': self.params['pr_prices'][i] if self.params['has_pr_price_mismatch'] else self.params['prices'][i],
-                'NETWR': self.params['prices'][i],
+                'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
@@ -251,7 +251,7 @@ class Purchasing:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': self.params['prices'][i], # TODO add custom value
+                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -413,7 +413,7 @@ class Purchasing:
                 'MATNR': self.params['matnrs'][i],
                 'MENGE': self.params['quantities'][i],
                 'WERKS': self.params['plant'],
-                'WRBTR': self.params['prices'][i] * self.params['quantities'][i] #Amount in document currency
+                'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
 
     def approve_purchase_order(self, aedat, ernam):
