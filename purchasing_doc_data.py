@@ -30,7 +30,7 @@ class Purchasing:
             'EKET_json': {},
         }
 
-    def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
+    def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, utime, tcode='DEFAULT'):
         changenr = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
@@ -42,7 +42,7 @@ class Purchasing:
             "TCODE": tcode,
             "UDATE": udate,
             "USERNAME": uname,
-            "UTIME": helpers.generate_random_time(),
+            "UTIME": utime,
         }
 
         self.tables['CDPOS_json'][str(uuid.uuid4())] = {
@@ -59,6 +59,7 @@ class Purchasing:
         }
 
     def create_contract(self, aedat, ernam):
+        header_time = helpers.generate_random_time()
         if self.params['has_contract']:
             self.tables['EKKO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
@@ -92,6 +93,7 @@ class Purchasing:
                     objid=str(uuid.uuid4()), 
                     objclas='EINKBELEG', 
                     udate=aedat, 
+                    utime=header_time,
                     uname=ernam, 
                     chngid='I', 
                     fname='KEY', 
@@ -134,6 +136,7 @@ class Purchasing:
                     objid=str(uuid.uuid4()), 
                     objclas='EINKBELEG', 
                     udate=aedat, 
+                    utime=helpers.add_time(header_time, helpers.UPTO_3_HOURS()),
                     uname=ernam, 
                     chngid='I', 
                     fname='KEY', 
@@ -175,6 +178,7 @@ class Purchasing:
                 objclas='BANF', 
                 udate=badat, 
                 uname=ernam, 
+                utime=helpers.generate_random_time(),
                 chngid='I', 
                 fname='KEY', 
                 tabkey=f'{values.mandt}{self.purchase_req_number}{i}', 
@@ -184,6 +188,7 @@ class Purchasing:
             )
 
     def create_purchase_order(self, aedat, ernam):
+        header_time = helpers.generate_random_time()
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
             'AEDAT': aedat,
             'BSART': 'F',
@@ -216,6 +221,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas='EINKBELEG', 
                 udate=aedat, 
+                utime=header_time,
                 uname=ernam, 
                 chngid='I', 
                 fname='KEY', 
@@ -257,6 +263,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas='EINKBELEG', 
                 udate=aedat, 
+                utime=helpers.add_time(header_time, helpers.UPTO_3_HOURS()),
                 uname=ernam, 
                 chngid='I', 
                 fname='KEY', 
@@ -330,24 +337,14 @@ class Purchasing:
             for k, v in self.tables['EKPO_json'].items():
                 if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
                     self.tables['EKPO_json'][k]['WEPOS'] = 'X' # Goods Receipt Indicator
-# --------------------------------------------------------------------------
-            # Logic by Tim von Luecken
-            # Create schedule based on desired delivery Status
-            # Evtl deviation in days
-            days_deviation = helpers.UPTO_MONTH()*self.params['delivery_status'][i]['prob']
-            days_temp = round(days_deviation.total_seconds()/(24*3600))
-            days_deviation = timedelta(days=days_temp)
+
             delivered_quanity = self.params['quantities'][i] # scheduled quantity
-            if self.params['delivery_status'][i]['status'] == 'late':
-                scheduled_date = cpudt - days_deviation
-                cpudt = max(self.pr_req_date + timedelta(days=14), scheduled_date)
-            elif self.params['delivery_status'][i]['status'] == 'early':
-                cpudt = cpudt + days_deviation
+            cpudt = cpudt + timedelta(days=self.params['delivery_status'][i])
+
+            if self.params['delivery_status'][i] < 0:
                 if random.random() < 0.5: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
                     delivered_quanity -= delivered_quanity*random.random()
 
-            # Create schedule of po item. If it is neither late nor early, the cpudt
-            # has not changed and is the same as the posting date
             self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, delivered_quanity=delivered_quanity)
 
     def create_purchase_order_schedule_line(self, eindt, ernam, ebelp, delivered_quanity):
@@ -364,6 +361,7 @@ class Purchasing:
             objid = str(uuid.uuid4()), 
             objclas =str(uuid.uuid4()), 
             udate = eindt, 
+            utime=helpers.generate_random_time(),
             uname = ernam, 
             chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
             fname = 'KEY', 
@@ -372,7 +370,6 @@ class Purchasing:
             valold = None, 
             valnew = None
         )
-# --------------------------------------------------------------------------
 
     def create_vendor_invoice(self, ernam, cupdt):
         self.tables['RBKP_json'][str(uuid.uuid4())] = {
@@ -426,6 +423,7 @@ class Purchasing:
             objclas='EINKBELEG', 
             udate=aedat, 
             uname= ernam, 
+            utime=helpers.generate_random_time(),
             chngid='U', 
             fname='FRGZU', 
             tabkey=f'{values.mandt}{self.purchase_order_number}', 
@@ -443,6 +441,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime=helpers.generate_random_time(),
                 uname=ernam, 
                 chngid='U', 
                 fname='ZTERM',
@@ -462,6 +461,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime=helpers.generate_random_time(),
                 uname=ernam, 
                 chngid='U', 
                 fname='LIFNR',
@@ -481,6 +481,7 @@ class Purchasing:
                 objid = str(uuid.uuid4()), 
                 objclas =str(uuid.uuid4()), 
                 udate = badat, 
+                utime=helpers.generate_random_time(),
                 uname = ernam, 
                 chngid = 'U', 
                 fname = 'MENGE', 

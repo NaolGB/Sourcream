@@ -44,9 +44,16 @@ def process_strings(strings):
         sorted_strings_with_new_line += f"{i}\n" 
     
     return sorted_strings_with_new_line
+
+def add_time(original_time, time_delta):
+    reference_date = datetime(1970, 1, 1)
+    total_time_Delta = timedelta(hours=original_time.hour, minutes=original_time.minute, seconds=original_time.second) + time_delta
+    result_datetime = reference_date + total_time_Delta
+    return result_datetime.time()
     
 UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
 UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
 UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
 UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
+UPTO_3_HOURS = lambda: timedelta(days=0, hours=random.randint(0, 3), minutes=random.randint(5, 59), seconds=random.randint(0, 59))
 UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))

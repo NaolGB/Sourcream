@@ -44,44 +44,44 @@ om_sales_orgs = {
     },
 }
 om_plants = {
-    'PL01': {'country_key': 'ID', 'country_name': 'Indonesia', 'name': 'Jakarta Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL02': {'country_key': 'QA', 'country_name': 'Qatar', 'name': 'Doha Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL03': {'country_key': 'AE', 'country_name': 'United Arab Emirates', 'name': 'Dubai Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL04': {'country_key': 'IN', 'country_name': 'India', 'name': 'Bangalore Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL05': {'country_key': 'DE', 'country_name': 'Germany', 'name': 'Franfurt Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL06': {'country_key': 'AU', 'country_name': 'Australia', 'name': 'Australia Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL07': {'country_key': 'BE', 'country_name': 'Belgium', 'name': 'Belgium Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL08': {'country_key': 'CA', 'country_name': 'Canada', 'name': 'Canada Plant', 'purchasing_orgs': ['NAM']},	
-    'PL09': {'country_key': 'US', 'country_name': 'United States', 'name': 'Philadelphia Plant', 'purchasing_orgs': ['NAM']},	
-    'PL10': {'country_key': 'GB', 'country_name': 'Great Britain', 'name': 'Great Britain Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL11': {'country_key': 'HK', 'country_name': 'Hong Kong', 'name': 'Hong Kong Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL12': {'country_key': 'IE', 'country_name': 'Ireland', 'name': 'Ireland Plant', 'purchasing_orgs': ['EMEA']},	
-    'PL13': {'country_key': 'MY', 'country_name': 'Malaysia', 'name': 'Kuala Lumpur Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL14': {'country_key': 'NZ', 'country_name': 'New Zealand', 'name': 'New Zealand Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL15': {'country_key': 'PH', 'country_name': 'Philippines', 'name': 'Manila Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL16': {'country_key': 'SG', 'country_name': 'Singapore', 'name': 'Singapore Plant', 'purchasing_orgs': ['JAPC']},	
-    'PL17': {'country_key': 'US', 'country_name': 'United States', 'name': 'New York Plant', 'purchasing_orgs': ['NAM']},	
-    'PL18': {'country_key': 'ZA', 'country_name': 'South Africa', 'name': 'South Africa Plant', 'purchasing_orgs': ['EMEA']},	
+    'PL01': {'country_key': 'ID', 'country_name': 'Indonesia', 'name': 'Jakarta Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL02': {'country_key': 'QA', 'country_name': 'Qatar', 'name': 'Doha Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL03': {'country_key': 'AE', 'country_name': 'United Arab Emirates', 'name': 'Dubai Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL04': {'country_key': 'IN', 'country_name': 'India', 'name': 'Bangalore Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL05': {'country_key': 'DE', 'country_name': 'Germany', 'name': 'Franfurt Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL06': {'country_key': 'AU', 'country_name': 'Australia', 'name': 'Australia Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL07': {'country_key': 'BE', 'country_name': 'Belgium', 'name': 'Belgium Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL08': {'country_key': 'CA', 'country_name': 'Canada', 'name': 'Canada Plant', 'purchasing_orgs': ['NAM'], 'high_value': True},
+    'PL09': {'country_key': 'US', 'country_name': 'United States', 'name': 'Philadelphia Plant', 'purchasing_orgs': ['NAM'], 'high_value': True},
+    'PL10': {'country_key': 'GB', 'country_name': 'Great Britain', 'name': 'Great Britain Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL11': {'country_key': 'HK', 'country_name': 'Hong Kong', 'name': 'Hong Kong Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL12': {'country_key': 'IE', 'country_name': 'Ireland', 'name': 'Ireland Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
+    'PL13': {'country_key': 'MY', 'country_name': 'Malaysia', 'name': 'Kuala Lumpur Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL14': {'country_key': 'NZ', 'country_name': 'New Zealand', 'name': 'New Zealand Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL15': {'country_key': 'PH', 'country_name': 'Philippines', 'name': 'Manila Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL16': {'country_key': 'SG', 'country_name': 'Singapore', 'name': 'Singapore Plant', 'purchasing_orgs': ['JAPC'], 'high_value': False},	
+    'PL17': {'country_key': 'US', 'country_name': 'United States', 'name': 'New York Plant', 'purchasing_orgs': ['NAM'], 'high_value': True},
+    'PL18': {'country_key': 'ZA', 'country_name': 'South Africa', 'name': 'South Africa Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
 }
 om_valuation_areas = ['VA01']
 om_company_codes = {
     'ID01': {'BUTXT': 'SourCream ID01', 'plants': ['PL01'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.1},
-    'QA01': {'BUTXT': 'SourCream QA01', 'plants': ['PL02'], 'free_text_pr_probability': 0.8, 'incorrect_qty_prbobability': 0.1},
-    'AE01': {'BUTXT': 'SourCream AE01', 'plants': ['PL03'], 'free_text_pr_probability': 0.7, 'incorrect_qty_prbobability': 0.2},
-    'IN01': {'BUTXT': 'SourCream IN01', 'plants': ['PL04'], 'free_text_pr_probability': 0.6, 'incorrect_qty_prbobability': 0.4},
+    'QA01': {'BUTXT': 'SourCream QA01', 'plants': ['PL02'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.1},
+    'AE01': {'BUTXT': 'SourCream AE01', 'plants': ['PL03'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.2},
+    'IN01': {'BUTXT': 'SourCream IN01', 'plants': ['PL04'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.4},
     'DE01': {'BUTXT': 'SourCream DE01', 'plants': ['PL05'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.3},
-    'AU01': {'BUTXT': 'SourCream AU01', 'plants': ['PL06'], 'free_text_pr_probability': 0.5, 'incorrect_qty_prbobability': 0.2},
-    'BE01': {'BUTXT': 'SourCream BE01', 'plants': ['PL07'], 'free_text_pr_probability': 0.3, 'incorrect_qty_prbobability': 0.2},
+    'AU01': {'BUTXT': 'SourCream AU01', 'plants': ['PL06'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.2},
+    'BE01': {'BUTXT': 'SourCream BE01', 'plants': ['PL07'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.2},
     'CA01': {'BUTXT': 'SourCream CA01', 'plants': ['PL08'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.1},
     'US02': {'BUTXT': 'SourCream US02', 'plants': ['PL09'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.3},
     'GB01': {'BUTXT': 'SourCream GB01', 'plants': ['PL10'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.5},
-    'HK01': {'BUTXT': 'SourCream HK01', 'plants': ['PL11'], 'free_text_pr_probability': 0.3, 'incorrect_qty_prbobability': 0.2},
-    'IE01': {'BUTXT': 'SourCream IE01', 'plants': ['PL12'], 'free_text_pr_probability': 0.4, 'incorrect_qty_prbobability': 0.1},
+    'HK01': {'BUTXT': 'SourCream HK01', 'plants': ['PL11'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.2},
+    'IE01': {'BUTXT': 'SourCream IE01', 'plants': ['PL12'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.1},
     'MY01': {'BUTXT': 'SourCream MY01', 'plants': ['PL13'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.9},
     'NZ01': {'BUTXT': 'SourCream NZ01', 'plants': ['PL14'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.9},
     'PH01': {'BUTXT': 'SourCream PH01', 'plants': ['PL15'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.9},
     'SG01': {'BUTXT': 'SourCream SG01', 'plants': ['PL16'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.8},
-    'US01': {'BUTXT': 'SourCream US01', 'plants': ['PL17'], 'free_text_pr_probability': 0.3, 'incorrect_qty_prbobability': 0.7},
+    'US01': {'BUTXT': 'SourCream US01', 'plants': ['PL17'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.7},
     'ZA01': {'BUTXT': 'SourCream ZA01', 'plants': ['PL18'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.9},
 }
 om_sales_doc_types = {
@@ -216,7 +216,7 @@ om_material_groups = {
         },
         'MATKL003': {
             'name': 'Energy Drinks',
-            'availability': 0.8,
+            'availability': 0.9,
             'has_contract_probability': 0.9,
             'materials': {
                 'Power Punch 500ml': {'price': 0.70},
@@ -228,7 +228,7 @@ om_material_groups = {
         },
         'MATKL004': {
             'name': 'Bottled Water',
-            'availability': 0.85,
+            'availability': 0.9,
             'has_contract_probability': 0.9,
             'materials': {
                 'Pure Drop 500ml': {'price': 0.30},
@@ -240,7 +240,7 @@ om_material_groups = {
         },
         'MATKL005': {
             'name': 'Coffee & Tea',
-            'availability': 0.8,
+            'availability': 0.9,
             'has_contract_probability': 0.9,
             'materials': {
                 'Java Joy 500ml': {'price': 1.00},
@@ -254,7 +254,7 @@ om_material_groups = {
     'Packaged Foods': {
         'MATKL010': {
             'name': 'Snacks & Chips',
-            'availability': 0.8,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
@@ -266,7 +266,7 @@ om_material_groups = {
         },
         'MATKL011': {
             'name': 'Canned Foods',
-            'availability': 0.9,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
@@ -278,7 +278,7 @@ om_material_groups = {
         },
         'MATKL012': {
             'name': 'Frozen Foods',
-            'availability': 0.1,
+            'availability': 0.6,
             'has_contract_probability': 0.9,
             'materials': {
                 'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
@@ -290,7 +290,7 @@ om_material_groups = {
         },
         'MATKL013': {
             'name': 'Baked Goods',
-            'availability': 0.2,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
@@ -302,7 +302,7 @@ om_material_groups = {
         },
         'MATKL014': {
             'name': 'Breakfast Cereals',
-            'availability': 0.3,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
@@ -328,7 +328,7 @@ om_material_groups = {
         },
         'MATKL021': {
             'name': 'Flour & Grains',
-            'availability': 0.75,
+            'availability': 0.1,
             'has_contract_probability': 0.1,
             'materials': {
                 'Wheat Flour 10kg': {'price': 8.00},  # Wholesalers might pay around $8.00 for a 10kg bag of wheat flour.
@@ -340,7 +340,7 @@ om_material_groups = {
         },
         'MATKL022': {
             'name': 'Dairy Products',
-            'availability': 0.32,
+            'availability': 0.1,
             'has_contract_probability': 0.2,
             'materials': {
                 'Whole Milk Powder 2kg': {'price': 12.00},  # The price for 2kg of whole milk powder for wholesalers might be around $12.00.
@@ -352,7 +352,7 @@ om_material_groups = {
         },
         'MATKL023': {
             'name': 'Spices & Seasonings',
-            'availability': 0.12,
+            'availability': 0.1,
             'has_contract_probability': 0.3,
             'materials': {
                 'Black Pepper 100g': {'price': 2.50},  # Price per 100g for wholesalers might be around $2.50, but this could vary.
@@ -364,7 +364,7 @@ om_material_groups = {
         },
         'MATKL024': {
             'name': 'Oils & Fats',
-            'availability': 0.3,
+            'availability': 0.1,
             'has_contract_probability': 0.1,
             'materials': {
                 'Vegetable Oil 5L': {'price': 10.00},       # per unit (for 5-liter container)
@@ -378,7 +378,7 @@ om_material_groups = {
     'Packaging Materials': {
         'MATKL030': {
             'name': 'Glass Bottles',
-            'availability': 0.90,
+            'availability': 0.6,
             'has_contract_probability': 0.1,
             'materials': {
                 'Clear Glass 500ml': {'price': 0.15},      # per unit (for 500ml capacity)
@@ -390,7 +390,7 @@ om_material_groups = {
         },
         'MATKL031': {
             'name': 'Plastic Bottles',
-            'availability': 0.8,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
@@ -402,7 +402,7 @@ om_material_groups = {
         },
         'MATKL032': {
             'name': 'Aluminum Cans',
-            'availability': 0.75,
+            'availability': 0.6,
             'has_contract_probability': 0.9,
             'materials': {
                 'Aluminum Silver 330ml': {'price': 0.10},        # per unit (for 330ml capacity)
@@ -414,7 +414,7 @@ om_material_groups = {
         },
         'MATKL033': {
             'name': 'Paper & Cardboard',
-            'availability': 0.75,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'White Cardboard 1L': {'price': 0.15},       # per unit (for 1-liter capacity)
@@ -426,7 +426,7 @@ om_material_groups = {
         },
         'MATKL034': {
             'name': 'Sealing Materials',
-            'availability': 0.8,
+            'availability': 0.6,
             'has_contract_probability': 1.0,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
@@ -527,38 +527,38 @@ proc_doc_types = {
     'W': 'Source list',
 }
 proc_vendors = {
-    "Tasty Bites Co.": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Brewmaster's Blend": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.8},
-    "Crispy Cravings": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Sips & Savories": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Gourmet Delights Inc.": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Flavor Fusion Foods": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Café Elegance": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "SodaStreamers": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Sweets & Sips": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Gastronomy Galore": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Nectar Nook": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.4},
-    "Spice & Savor": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.6},
-    "Wholesome Treats": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.3},
-    "Munchies Magic": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Siplicity Drinks": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Foodie Fantasy": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Yummy Morsels": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Baker's Bliss Co.": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Thirst Quencher": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Epicurean Eats": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Gusto Gourmets": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "Beverage Bliss": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
-    "Taste Troupe": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'late_delivery_rate': 0.8, 'early_delivery_rate': 0.1},
-    "ChocoCharm Confections": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
-    "SavorStreet": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'late_delivery_rate': 0.8, 'early_delivery_rate': 0.1},
-    "Culinary Crafters": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
-    "Brew Burst Beverages": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'late_delivery_rate': 0.8, 'early_delivery_rate': 0.1},
-    "Nosh Nation": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
-    "Gastronomic Gather": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
-    "Fresh Nosh": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'late_delivery_rate': 0.8, 'early_delivery_rate': 0.1},
-    "Basti's Bakery": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.9},
-    "Greyjoy Foods Inc.": {'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'late_delivery_rate': 0.9, 'early_delivery_rate': 0.1},
+    "Tasty Bites Co.": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'payment_term_stsability': 0.9},
+    "Brewmaster's Blend": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'payment_term_stsability': 0.9},
+    "Crispy Cravings": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'payment_term_stsability': 0.9},
+    "Sips & Savories": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'payment_term_stsability': 0.9},
+    "Gourmet Delights Inc.": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'payment_term_stsability': 0.9},
+    "Flavor Fusion Foods": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'payment_term_stsability': 0.9},
+    "Café Elegance": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'payment_term_stsability': 0.9},
+    "SodaStreamers": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'payment_term_stsability': 0.9},
+    "Sweets & Sips": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.9},
+    "Gastronomy Galore": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.9},
+    "Nectar Nook": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'payment_term_stsability': 0.9},
+    "Spice & Savor": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'payment_term_stsability': 0.9},
+    "Wholesome Treats": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'payment_term_stsability': 0.9},
+    "Munchies Magic": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'payment_term_stsability': 0.9},
+    "Siplicity Drinks": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'payment_term_stsability': 0.9},
+    "Foodie Fantasy": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'payment_term_stsability': 0.9},
+    "Yummy Morsels": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'payment_term_stsability': 0.9},
+    "Baker's Bliss Co.": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'payment_term_stsability': 0.9},
+    "Thirst Quencher": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'payment_term_stsability': 0.9},
+    "Epicurean Eats": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'payment_term_stsability': 0.9},
+    "Gusto Gourmets": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'payment_term_stsability': 0.9},
+    "Beverage Bliss": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'payment_term_stsability': 0.9},
+    "Taste Troupe": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
+    "ChocoCharm Confections": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
+    "SavorStreet": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
+    "Culinary Crafters": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
+    "Brew Burst Beverages": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
+    "Nosh Nation": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
+    "Gastronomic Gather": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
+    "Fresh Nosh": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
+    "Basti's Bakery": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.1},
+    "Greyjoy Foods Inc.": {'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'payment_term_stsability': 0.9},
 }
 
 shipping_conditions = {
