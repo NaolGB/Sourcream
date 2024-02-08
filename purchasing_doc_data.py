@@ -291,70 +291,74 @@ class Purchasing:
             'USNAM': usnam,
         }
 
-    def post_goods_receipt(self, cpudt, usnam, atime):
-        temp_uuid = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
-        for i in range(len(self.params['matnrs'])): 
-            self.tables['MSEG_json'][str(uuid.uuid4())] = {
-                'BWART': '101',
-                'CPUDT_MKPF': cpudt,
-                'CPUTM_MKPF': atime,
-                'EBELN': self.purchase_order_number,
-                'EBELP': i,
-                'ERFME': self.unit,
-                'KDAUF': self.purchase_order_number,
-                'KDPOS': i,
-                'LBKUM': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-                'LFBJA': self.fy,
-                'LFBNR': temp_uuid,
-                'LGORT': 'D', # TODO add custom value,
-                'LIFNR': self.params['lifnr'],
-                'MANDT': values.mandt,
-                'MATNR': self.params['matnrs'][i],
-                'MBLNR': self.mat_doc_number,
-                'MEINS': self.unit,
-                'MENGE': self.params['quantities'][i],
-                'MJAHR': self.fy,
-                'SHKZG': 'S',
-                'SJAHR': self.fy,
-                'SMBLN': self.mat_doc_number,
-                'SMBLP': None, # NOTE is not a reversal
-                'USNAM_MKPF': usnam,
-                'VBELN_IM': None,
-                'VBELP_IM': None,
-                'WERKS': self.params['plant'],
-                'ZEILE': i,
-            }
-            self.tables['EKBE_json'][str(uuid.uuid4())] = { # TODO check how this affects OutgoingMaterialDocument (in OM/sales_doc_data)
-                'BELNR': self.mat_doc_number,
-                'BUZEI': i,
-                'GJAHR': self.fy,
-                'MANDT': values.mandt,
-                'MENGE': self.params['quantities'][i],
-                'VGABE': '1',
-                'WAERS': 'EUR',
-                'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-            }
+    def goods_receipt(self, cpudt, usnam, atime):
+        for i in range(len(self.params['matnrs'])):
             for k, v in self.tables['EKPO_json'].items():
                 if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
                     self.tables['EKPO_json'][k]['WEPOS'] = 'X' # Goods Receipt Indicator
 
             delivered_quanity = self.params['quantities'][i] # scheduled quantity
+            scheduled_quanity = self.params['quantities'][i] # scheduled quantity
             cpudt = cpudt + timedelta(days=self.params['delivery_status'][i])
 
             if self.params['delivery_status'][i] < 0:
                 if random.random() < 0.5: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
                     delivered_quanity -= delivered_quanity*random.random()
 
-            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, delivered_quanity=delivered_quanity)
+            self.post_goods_receipt(cpudt=cpudt, usnam=usnam, atime=atime, item_position=i, delivered_quanity=delivered_quanity)
+            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
 
-    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp, delivered_quanity):
+    def post_goods_receipt(self, cpudt, usnam, atime, item_position, delivered_quanity):
+        temp_uuid = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        self.tables['MSEG_json'][str(uuid.uuid4())] = {
+            'BWART': '101',
+            'CPUDT_MKPF': cpudt,
+            'CPUTM_MKPF': atime,
+            'EBELN': self.purchase_order_number,
+            'EBELP': item_position,
+            'ERFME': self.unit,
+            'KDAUF': self.purchase_order_number,
+            'KDPOS': item_position,
+            'LBKUM': round(self.params['prices'][item_position]*delivered_quanity, 4),
+            'LFBJA': self.fy,
+            'LFBNR': temp_uuid,
+            'LGORT': 'D', # TODO add custom value,
+            'LIFNR': self.params['lifnr'],
+            'MANDT': values.mandt,
+            'MATNR': self.params['matnrs'][item_position],
+            'MBLNR': self.mat_doc_number,
+            'MEINS': self.unit,
+            'MENGE': delivered_quanity,
+            'MJAHR': self.fy,
+            'SHKZG': 'S',
+            'SJAHR': self.fy,
+            'SMBLN': self.mat_doc_number,
+            'SMBLP': None, # NOTE is not a reversal
+            'USNAM_MKPF': usnam,
+            'VBELN_IM': None,
+            'VBELP_IM': None,
+            'WERKS': self.params['plant'],
+            'ZEILE': item_position,
+        }
+        self.tables['EKBE_json'][str(uuid.uuid4())] = { # TODO check how this affects OutgoingMaterialDocument (in OM/sales_doc_data)
+            'BELNR': self.mat_doc_number,
+            'BUZEI': item_position,
+            'GJAHR': self.fy,
+            'MANDT': values.mandt,
+            'MENGE': delivered_quanity,
+            'VGABE': '1',
+            'WAERS': 'EUR',
+            'WRBTR': round(self.params['prices'][item_position]*delivered_quanity, 4),
+        }
+
+    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp, scheduled_quanity, delivered_quanity):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
             'EBELN': self.purchase_order_number,
             'EBELP': ebelp,
             'EINDT': eindt,
             'ETENR': ebelp, # Delivery Schedule Line Counter
             'MANDT': values.mandt,
-            'MENGE': self.params['quantities'][ebelp], # Quatity Scheduled
+            'MENGE': scheduled_quanity, # Quatity Scheduled
             'WEMNG': delivered_quanity, # Quantity of goods received
         }
         self.changes(
