@@ -187,7 +187,7 @@ class Purchasing:
                 valnew=None,
             )
 
-    def create_purchase_order(self, aedat, ernam):
+    def create_purchase_order(self, aedat, ernam, utime):
         header_time = helpers.generate_random_time()
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
             'AEDAT': aedat,
@@ -221,7 +221,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas='EINKBELEG', 
                 udate=aedat, 
-                utime=header_time,
+                utime=utime,
                 uname=ernam, 
                 chngid='I', 
                 fname='KEY', 
@@ -265,7 +265,7 @@ class Purchasing:
                 objid=str(uuid.uuid4()), 
                 objclas='EINKBELEG', 
                 udate=aedat, 
-                utime=helpers.add_time(header_time, helpers.UPTO_3_HOURS()),
+                utime=helpers.add_time(utime, helpers.UPTO_3_HOURS()),
                 uname=ernam, 
                 chngid='I', 
                 fname='KEY', 
@@ -293,7 +293,7 @@ class Purchasing:
             'USNAM': usnam,
         }
 
-    def goods_receipt(self, cpudt, usnam, atime):
+    def goods_receipt(self, cpudt, usnam, atime, udate, utime):
         for i in range(len(self.params['matnrs'])):
             for k, v in self.tables['EKPO_json'].items():
                 if( v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
@@ -311,7 +311,7 @@ class Purchasing:
             self.post_goods_receipt(cpudt=cpudt, usnam=usnam, atime=atime, item_position=i, delivered_quanity=delivered_quanity)
             
             cpudt = cpudt - timedelta(days=self.params['delivery_status'][i])
-            self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
+            self.create_purchase_order_schedule_line(eindt=cpudt, creation_date=udate, creation_time=utime, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
 
     def post_goods_receipt(self, cpudt, usnam, atime, item_position, delivered_quanity):
         temp_uuid = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
@@ -356,7 +356,7 @@ class Purchasing:
             'WRBTR': round(self.params['prices'][item_position]*delivered_quanity, 4),
         }
 
-    def create_purchase_order_schedule_line(self, eindt, ernam, ebelp, scheduled_quanity, delivered_quanity):
+    def create_purchase_order_schedule_line(self, eindt, creation_date, creation_time, ernam, ebelp, scheduled_quanity, delivered_quanity):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
             'EBELN': self.purchase_order_number,
             'EBELP': ebelp,
@@ -369,8 +369,8 @@ class Purchasing:
         self.changes(
             objid = str(uuid.uuid4()), 
             objclas =str(uuid.uuid4()), 
-            udate = eindt, 
-            utime=helpers.generate_random_time(),
+            udate = creation_date, 
+            utime=creation_time,
             uname = ernam, 
             chngid = 'I', #'I' then CreationTime, 'D' DeletionTime 
             fname = 'KEY', 

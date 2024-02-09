@@ -205,7 +205,7 @@ om_material_groups = {
         'MATKL002': {
             'name': 'Fruit Juices',
             'availability': 0.9,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.4,
             'materials': {
                 'Apple Blend 1L': {'price': 0.60},
                 'Berry Burst 500ml': {'price': 0.45},
@@ -229,7 +229,7 @@ om_material_groups = {
         'MATKL004': {
             'name': 'Bottled Water',
             'availability': 0.9,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.5,
             'materials': {
                 'Pure Drop 500ml': {'price': 0.30},
                 'Crystal Clear 1L': {'price': 0.50},
@@ -267,7 +267,7 @@ om_material_groups = {
         'MATKL011': {
             'name': 'Canned Foods',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.6,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
                 'Tomato Sauce 250ml': {'price': 0.70},  # per unit cost in bulk
@@ -303,7 +303,7 @@ om_material_groups = {
         'MATKL014': {
             'name': 'Breakfast Cereals',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
                 'Corn Flakes 300g': {'price': 1.20},  # per unit cost in bulk
@@ -391,7 +391,7 @@ om_material_groups = {
         'MATKL031': {
             'name': 'Plastic Bottles',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.6,
             'materials': {
                 'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
                 'HDPE White 1L': {'price': 0.10},            # per unit (for 1-liter capacity)
@@ -415,7 +415,7 @@ om_material_groups = {
         'MATKL033': {
             'name': 'Paper & Cardboard',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'White Cardboard 1L': {'price': 0.15},       # per unit (for 1-liter capacity)
                 'Kraft Paper 500ml': {'price': 0.10},        # per unit (for 500ml capacity)
@@ -427,7 +427,7 @@ om_material_groups = {
         'MATKL034': {
             'name': 'Sealing Materials',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.6,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
                 'Polyethylene Seals': {'price': 0.05},   
