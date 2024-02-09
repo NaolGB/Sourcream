@@ -65,17 +65,17 @@ om_plants = {
 }
 om_valuation_areas = ['VA01']
 om_company_codes = {
-    'ID01': {'BUTXT': 'SourCream ID01', 'plants': ['PL01'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.1},
-    'QA01': {'BUTXT': 'SourCream QA01', 'plants': ['PL02'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.1},
+    'ID01': {'BUTXT': 'SourCream ID01', 'plants': ['PL01'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.6},
+    'QA01': {'BUTXT': 'SourCream QA01', 'plants': ['PL02'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.6},
     'AE01': {'BUTXT': 'SourCream AE01', 'plants': ['PL03'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.2},
     'IN01': {'BUTXT': 'SourCream IN01', 'plants': ['PL04'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.4},
     'DE01': {'BUTXT': 'SourCream DE01', 'plants': ['PL05'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.3},
-    'AU01': {'BUTXT': 'SourCream AU01', 'plants': ['PL06'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.2},
-    'BE01': {'BUTXT': 'SourCream BE01', 'plants': ['PL07'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.2},
+    'AU01': {'BUTXT': 'SourCream AU01', 'plants': ['PL06'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.6},
+    'BE01': {'BUTXT': 'SourCream BE01', 'plants': ['PL07'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.6},
     'CA01': {'BUTXT': 'SourCream CA01', 'plants': ['PL08'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.1},
     'US02': {'BUTXT': 'SourCream US02', 'plants': ['PL09'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.3},
     'GB01': {'BUTXT': 'SourCream GB01', 'plants': ['PL10'], 'free_text_pr_probability': 0.1, 'incorrect_qty_prbobability': 0.5},
-    'HK01': {'BUTXT': 'SourCream HK01', 'plants': ['PL11'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.2},
+    'HK01': {'BUTXT': 'SourCream HK01', 'plants': ['PL11'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.6},
     'IE01': {'BUTXT': 'SourCream IE01', 'plants': ['PL12'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.1},
     'MY01': {'BUTXT': 'SourCream MY01', 'plants': ['PL13'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.9},
     'NZ01': {'BUTXT': 'SourCream NZ01', 'plants': ['PL14'], 'free_text_pr_probability': 0.2, 'incorrect_qty_prbobability': 0.9},
@@ -193,7 +193,7 @@ om_material_groups = {
         'MATKL001': {
             'name': 'Carbonated Drinks',
             'availability': 0.9,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.7,
             'materials': {
                 'Coca Fizz 500ml': {'price': 0.50},
                 'Soda Stream 1L': {'price': 0.80},
@@ -205,7 +205,7 @@ om_material_groups = {
         'MATKL002': {
             'name': 'Fruit Juices',
             'availability': 0.9,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Apple Blend 1L': {'price': 0.60},
                 'Berry Burst 500ml': {'price': 0.45},
@@ -217,7 +217,7 @@ om_material_groups = {
         'MATKL003': {
             'name': 'Energy Drinks',
             'availability': 0.9,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.7,
             'materials': {
                 'Power Punch 500ml': {'price': 0.70},
                 'Charge Up 1L': {'price': 1.00},
@@ -229,7 +229,7 @@ om_material_groups = {
         'MATKL004': {
             'name': 'Bottled Water',
             'availability': 0.9,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.7,
             'materials': {
                 'Pure Drop 500ml': {'price': 0.30},
                 'Crystal Clear 1L': {'price': 0.50},
@@ -241,7 +241,7 @@ om_material_groups = {
         'MATKL005': {
             'name': 'Coffee & Tea',
             'availability': 0.9,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.6,
             'materials': {
                 'Java Joy 500ml': {'price': 1.00},
                 'Tea Taste 1L': {'price': 0.80},
@@ -255,7 +255,7 @@ om_material_groups = {
         'MATKL010': {
             'name': 'Snacks & Chips',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
                 'Snack Bite 100g': {'price': 0.80},  # per unit cost in bulk
@@ -267,7 +267,7 @@ om_material_groups = {
         'MATKL011': {
             'name': 'Canned Foods',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
                 'Tomato Sauce 250ml': {'price': 0.70},  # per unit cost in bulk
@@ -279,7 +279,7 @@ om_material_groups = {
         'MATKL012': {
             'name': 'Frozen Foods',
             'availability': 0.6,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.7,
             'materials': {
                 'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
                 'Frozen Veggies 500g': {'price': 1.50},  # per unit cost in bulk
@@ -291,7 +291,7 @@ om_material_groups = {
         'MATKL013': {
             'name': 'Baked Goods',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
                 'Whole Wheat Bread 500g': {'price': 1.50},  # per unit cost in bulk
@@ -391,7 +391,7 @@ om_material_groups = {
         'MATKL031': {
             'name': 'Plastic Bottles',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
                 'HDPE White 1L': {'price': 0.10},            # per unit (for 1-liter capacity)
@@ -403,7 +403,7 @@ om_material_groups = {
         'MATKL032': {
             'name': 'Aluminum Cans',
             'availability': 0.6,
-            'has_contract_probability': 0.9,
+            'has_contract_probability': 0.7,
             'materials': {
                 'Aluminum Silver 330ml': {'price': 0.10},        # per unit (for 330ml capacity)
                 'Aluminum Gold 500ml': {'price': 0.12},          # per unit (for 500ml capacity)
@@ -427,7 +427,7 @@ om_material_groups = {
         'MATKL034': {
             'name': 'Sealing Materials',
             'availability': 0.6,
-            'has_contract_probability': 1.0,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
                 'Polyethylene Seals': {'price': 0.05},   

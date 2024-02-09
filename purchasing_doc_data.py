@@ -234,6 +234,8 @@ class Purchasing:
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
+                "BANFN": self.purchase_req_number,
+                "BNFPO": i,
                 'BPRME': 1,
                 'BSTYP': 'F',
                 'BUKRS': self.params['company_code'],
@@ -299,6 +301,7 @@ class Purchasing:
 
             delivered_quanity = self.params['quantities'][i] # scheduled quantity
             scheduled_quanity = self.params['quantities'][i] # scheduled quantity
+
             cpudt = cpudt + timedelta(days=self.params['delivery_status'][i])
 
             if self.params['delivery_status'][i] < 0:
