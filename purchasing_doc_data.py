@@ -302,13 +302,15 @@ class Purchasing:
             delivered_quanity = self.params['quantities'][i] # scheduled quantity
             scheduled_quanity = self.params['quantities'][i] # scheduled quantity
 
-            cpudt = cpudt + timedelta(days=self.params['delivery_status'][i])
+           
 
             if self.params['delivery_status'][i] < 0:
                 if random.random() < 0.5: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
                     delivered_quanity -= delivered_quanity*random.random()
 
             self.post_goods_receipt(cpudt=cpudt, usnam=usnam, atime=atime, item_position=i, delivered_quanity=delivered_quanity)
+            
+            cpudt = cpudt - timedelta(days=self.params['delivery_status'][i])
             self.create_purchase_order_schedule_line(eindt=cpudt, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
 
     def post_goods_receipt(self, cpudt, usnam, atime, item_position, delivered_quanity):
