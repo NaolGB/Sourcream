@@ -24,6 +24,31 @@ data_types = {
     'UNIT' : 'VARCHAR(20)',
 }
 
+# list of required columns 
+required_table_columns = {
+    'BSEG' : ['MANDT', 'BUKRS', 'AUGBL', 'AUGGJ', 'AUGDT', 'KOART', 'BUZEI', 'GJAHR', 'SHKZG', 'BELNR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'WRBTR', 'WSKTO', 'SKFBT', 'ZTERM', 'ZFBDT', 'LIFNR', 'MATNR', 'BSCHL', 'ZLSPR', 'KUNNR', 'MANSP', 'MANST'],
+    'VBAP' : ['POSNR', 'OBJNR', 'VBELN', 'MANDT', 'NETWR', 'WAERK', 'ABGRU', 'FKREL', 'PSTYV', 'BRGEW', 'GEWEI', 'NTGEW', 'VRKME', 'KWMENG', 'KDMAT', 'ERNAM', 'NETPR', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'KPEIN', 'ROUTE', 'VGTYP', 'VGPOS', 'VGBEL', 'FAKSP'],
+    'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN' ],
+    'LIPS' : ['POSNR', 'VBELN', 'VGPOS', 'VGTYP', 'MANDT', 'VGBEL', 'LFIMG', 'VRKME', 'NTGEW', 'GEWEI', 'VOLUM', 'VOLEH', 'LGORT', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET' ],
+    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP'],
+    'VBEP' : ['MANDT', 'ETENR', 'POSNR', 'VBELN', 'BMENG', 'MEINS', 'MBDAT', 'WADAT', 'EDATU', 'LMENG'],
+    'EKBE' : ['WRBTR', 'WAERS', 'MENGE', 'BUZEI', 'MANDT', 'BELNR', 'GJAHR', 'VGABE'],
+    'EBAN' : ['LOEKZ', 'AFNAM', 'WAERS', 'MENGE', 'MEINS', 'STATU', 'FRGKZ', 'TXZ01', 'MANDT', 'BANFN', 'BNFPO', 'ERNAM', 'LIFNR', 'PREIS', 'KTPNR', 'MATNR', 'WERKS', 'PEINH', 'KONNR', 'BSTYP', 'BADAT', 'ESTKZ'],
+    'EKKO' : ['LOEKZ', 'WAERS', 'ZTERM', 'FRGSX', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'BSART', 'BUKRS', 'RESWK', 'FRGGR', 'EKORG', 'FRGKE', 'STATU', 'BSTYP', 'EBELN', 'MANDT', 'LIFNR', 'ERNAM', 'AEDAT', 'FRGZU', 'KONNR', 'KDATE', 'KDATB'],
+    'EKPO' : ['LOEKZ', 'NETWR', 'MENGE', 'MEINS', 'TXZ01', 'WEPOS', 'BUKRS', 'BPRME', 'REPOS', 'KONNR', 'KTPNR', 'EBELN', 'EBELP', 'MANDT', 'UEBTO', 'WEBRE', 'NETPR', 'WERKS', 'MATNR', 'DPDAT', 'AFNAM', 'AEDAT', 'PEINH', 'BSTYP', 'KTMNG', 'ZWERT', 'BNFPO', 'BANFN'],
+    'NAST' : ['TCODE', 'ERUHR', 'MANDT', 'USNAM', 'ERDAT', 'DATVR', 'UHRVR', 'KSCHL', 'PARVW', 'KAPPL', 'PARNR', 'AENDE', 'OBJKY', 'SPRAS'],
+    'MSEG' : ['ERFME', 'MEINS', 'LGORT', 'LBKUM', 'MANDT', 'MBLNR', 'ZEILE', 'USNAM_MKPF', 'MENGE', 'EBELP', 'LFBJA', 'SMBLP', 'LIFNR', 'MATNR', 'WERKS', 'MJAHR', 'CPUDT_MKPF', 'CPUTM_MKPF', 'EBELN', 'LFBNR', 'SJAHR', 'BWART', 'SHKZG', 'SMBLN', 'VBELP_IM', 'KDPOS', 'VBELN_IM', 'KDAUF'],
+    'EKBE' : ['WRBTR', 'WAERS', 'MENGE', 'BUZEI', 'MANDT', 'BELNR', 'GJAHR', 'VGABE'],
+    'RBKP' : ['GJAHR', 'BELNR', 'MANDT', 'BUKRS', 'ZTERM', 'ZLSPR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'USNAM', 'BLDAT', 'ZFBDT', 'LIFNR', 'CPUDT', 'CPUTM', 'VGART', 'WAERS', 'STJAH', 'STBLG' ],
+    'RSEG' : ['MENGE', 'BSTME', 'WRBTR', 'MANDT', 'BELNR', 'BUZEI', 'GJAHR', 'EBELP', 'LFPOS', 'MATNR', 'WERKS', 'BUKRS', 'LIFNR', 'EBELN', 'LFGJA', 'LFBNR'],
+    'EKET' : ['WEMNG', 'MENGE', 'MANDT', 'EBELN', 'EBELP', 'ETENR', 'EINDT'],
+    'CDHDR' : ['UDATE', 'UTIME', 'USERNAME', 'OBJECTID', 'OBJECTCLAS', 'MANDANT', 'CHANGENR', 'TCODE'],
+    'CDPOS' : ['MANDANT', 'TABKEY', 'OBJECTID', 'CHNGIND', 'OBJECTCLAS', 'FNAME', 'CHANGENR', 'TABNAME', 'VALUE_OLD', 'VALUE_NEW'],
+    'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS'],
+    'LFB1' : ['BUKRS', 'ERDAT', 'ERNAM', 'LIFNR', 'MANDT', 'ZTERM'],
+    'LFA1' : ['ERNAM', 'LAND1', 'LIFNR', 'MANDT', 'NAME1', 'ORT01', 'VBUND'],
+    'KNB1' : ['MANDT', 'ZTERM', 'BUKRS', 'ERDAT', 'KUNNR', 'ERNAM']
+}
 
 def fetch_table(table_name: str):
     # validate
@@ -77,6 +102,15 @@ def write_query(table_name: str, fileds: list):
             print(f"Script generated successfully. File create_{table_name}.sql created.")
         except:
             print("Failed, please check if the table exists on https://www.leanx.eu/en/sap/table/search. If problem persists, please get in touch @n.basaye")
+
+def clean_columns(columns_df,tablename): 
+    # Check if table in dict and remove unnecessary columns from df 
+    if tablename in required_table_columns:
+        columns_required = required_table_columns[tablename]
+        for name in columns_df.items():
+            if name[0] not in columns_required:
+                columns_df = columns_df.drop(name[0], axis=1)
+    return columns_df
 
 def get_query(table_name: str):
     fields = fetch_table(table_name=table_name)
