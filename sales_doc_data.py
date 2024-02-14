@@ -134,7 +134,7 @@ class SalesAndDistribution:
         for i in range(len(self.params['matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
-                "ABGRU": 'D', # HACK
+                "ABGRU": None, # 'D' HACK
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
                 "ERNAM": ernam,
@@ -167,11 +167,11 @@ class SalesAndDistribution:
                 "EDATU": erdat,
                 "ETENR": i,
                 "MANDT": values.mandt,
-                "MBDAT": 1970, # TODO MaterialAvailabilityDate edit later on shipping
+                "MBDAT": None, # TODO MaterialAvailabilityDate edit later on shipping
                 "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "POSNR": i,
                 "VBELN": self.vbeln,
-                "WADAT": 1970, # TODO MaterialAvailabilityDate edit later on shipping,
+                "WADAT": None, # TODO MaterialAvailabilityDate edit later on shipping,
             }
 
         self.record_flow( # HACK no quotation before
@@ -466,9 +466,9 @@ class SalesAndDistribution:
 
         for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
-                "AUGDT": 1970,
+                "AUGDT": None,
                 "AUGBL": None,
-                "AUGGJ": 1970, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
+                "AUGGJ": None, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
                 "BSCHL": '01',
                 "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
