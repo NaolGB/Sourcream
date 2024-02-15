@@ -436,7 +436,7 @@ class SalesAndDistribution:
             "KUNAG": self.params['kunnr'],
             "MANDT": values.mandt,
             "VBELN": self.vbrk_vbeln,
-            "VBTYP": 'M', # M: Invoice
+            "VBTYP": 'M' # M: Invoice
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -467,7 +467,7 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "USNAM": ernam,
             "WAERS": 'EUR',
-            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+            "XREVERSAL": None # NOTE might need change if P2P or AR is involved
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -496,7 +496,7 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": erdat, # TODO add custom value
-                "ZTERM": self.params['payment_term'],
+                "ZTERM": self.params['payment_term']
             }
 
 
@@ -546,7 +546,7 @@ class SalesAndDistribution:
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=None,
-                valnew=new_value,
+                valnew=new_value
             )
 
             for k, v in self.tables['VBAP_json'].items():
@@ -566,7 +566,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -589,7 +589,7 @@ class SalesAndDistribution:
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=old_value,
-                valnew=None,
+                valnew=None
             )
 
             for k, v in self.tables['VBAP_json'].items():
@@ -609,7 +609,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=None,
-            valnew=new_value,
+            valnew=new_value
         )
 
     def release_customer_billing_block(self, udate, usnam):
@@ -625,7 +625,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
     def delivery_confirmation(self, usnam, udate):
@@ -662,7 +662,7 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "USNAM": usnam,
             "WAERS": 'EUR',
-            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+            "XREVERSAL": None # NOTE might need change if P2P or AR is involved
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -691,7 +691,7 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": cpudt, # TODO add custom value
-                "ZTERM": self.params['payment_term'],
+                "ZTERM": self.params['payment_term']
             }
 
     def change_payment_term(self, udate, usnam):
@@ -708,7 +708,7 @@ class SalesAndDistribution:
             tabkey='000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
             tabname='VBKD', 
             valold=old_value,
-            valnew=new_value, # TODO add custom value
+            valnew=new_value # TODO add custom value
         )
 
         for k, v in self.tables['VBKD_json'].items():
