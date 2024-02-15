@@ -111,8 +111,8 @@ class SalesAndDistribution:
             "VSBED": shipping_condition,
             "VTWEG": self.params['distribution_channel'],
             "WAERK": 'EUR',
-            "LIFSK": 'None',
-            'FAKSK': 'None'
+            "LIFSK": None,
+            'FAKSK': None
         }
         self.tables['VBKD_json'][str(uuid.uuid4())] = {
             "INCO1": 'D', # TODO add custom value
@@ -160,7 +160,7 @@ class SalesAndDistribution:
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "WAERK": 'EUR',
                 "WERKS": self.params['plant'],
-                'FAKSP': 'None'
+                'FAKSP': None
             }
             self.tables['VBEP_json'][temp_vbeln] = {
                 "BMENG": self.params['quantities'][i], # HACK all qauntities are the same as their confirmed queantities
@@ -213,12 +213,12 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBUK', 
             valold='B',
-            valnew='A'
+            valnew='D'
         )
 
         for k, v in self.tables['VBUK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBUK_json'][k]['CMGST'] = 'A'
+                self.tables['VBUK_json'][k]['CMGST'] = 'D'
 
     def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
         for i  in range(len(self.params['matnrs'])):
@@ -331,8 +331,8 @@ class SalesAndDistribution:
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold='None',
-            valnew=new_value,
+            valold=None,
+            valnew=new_value
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -352,7 +352,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -364,7 +364,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
-            utime = atime,
+            utime =atime,
             uname=usnam, 
             chngid='U', 
             fname='KOSTK', 
@@ -521,7 +521,7 @@ class SalesAndDistribution:
             fname='FAKSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold='None',
+            valold=None,
             valnew=new_value,
         )
 
@@ -545,7 +545,7 @@ class SalesAndDistribution:
                 fname='FAKSP', 
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
-                valold='None',
+                valold=None,
                 valnew=new_value,
             )
 
@@ -571,7 +571,7 @@ class SalesAndDistribution:
 
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBAK_json'][k]['FAKSK'] = 'None'
+                self.tables['VBAK_json'][k]['FAKSK'] = None
 
         for matnr in blocked_matnrs:
             for k, v in self.tables['VBAP_json'].items():
@@ -589,12 +589,12 @@ class SalesAndDistribution:
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=old_value,
-                valnew='None',
+                valnew=None,
             )
 
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
-                    self.tables['VBAP_json'][k]['FAKSP'] = 'None'
+                    self.tables['VBAP_json'][k]['FAKSP'] = None
 
     def set_customer_billing_block(self, udate, usnam):
         new_value='02' # HACK match with values.om_billing_blocks
@@ -625,7 +625,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=old_value,
-            valnew='None',
+            valnew=None,
         )
 
     def delivery_confirmation(self, usnam, udate):
