@@ -522,7 +522,7 @@ class SalesAndDistribution:
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=None,
-            valnew=new_value,
+            valnew=new_value
         )
 
         for k, v in self.tables['VBAK_json'].items():
