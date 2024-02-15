@@ -35,7 +35,7 @@ class SalesAndDistribution:
             'VBFA_json': {}
         }
 
-    def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
+    def changes(self, objid, objclas, udate, utime, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
         changenr = f'{str(uuid.uuid4())[-17:]}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
@@ -47,7 +47,7 @@ class SalesAndDistribution:
             "TCODE": tcode,
             "UDATE": udate,
             "USERNAME": uname,
-            "UTIME": helpers.generate_random_time(),
+            "UTIME": utime,
         }
 
         self.tables['CDPOS_json'][str(uuid.uuid4())] = {
@@ -187,6 +187,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='CMGST', 
@@ -205,6 +206,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='CMGST', 
@@ -226,6 +228,7 @@ class SalesAndDistribution:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='ABGRU', 
@@ -271,8 +274,8 @@ class SalesAndDistribution:
             "ERNAM": ernam,
             "ERZET": atime,
             "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-            "KODAT": picking_date,
-            "KOUHR": atime,
+            "KODAT": picking_date,  #PickingDate
+            "KOUHR": atime,         #PickingDate
             "KUNNR": self.params['kunnr'],
             "LFART": 'D', # TODO add custom value
             "LFDAT": delivery_date,
@@ -322,6 +325,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='LIFSK', 
@@ -341,24 +345,26 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew='None',
+            valnew=None,
         )
 
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBAK_json'][k]['LIFSK'] = 'None'
+                self.tables['VBAK_json'][k]['LIFSK'] = None
 
     def pick_items(self, usnam, udate, atime):
         self.changes(
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = atime,
             uname=usnam, 
             chngid='U', 
             fname='KOSTK', 
@@ -509,6 +515,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSK', 
@@ -532,6 +539,7 @@ class SalesAndDistribution:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
@@ -551,6 +559,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSK', 
@@ -573,6 +582,7 @@ class SalesAndDistribution:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
@@ -592,6 +602,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSD', 
@@ -607,13 +618,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=old_value,
-            valnew=None,
+            valnew='None',
         )
 
     def delivery_confirmation(self, usnam, udate):
@@ -621,6 +633,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='PODAT', 
@@ -688,6 +701,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='ZTERM', 
