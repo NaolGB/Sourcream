@@ -47,7 +47,11 @@ required_table_columns = {
     'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS'],
     'LFB1' : ['BUKRS', 'ERDAT', 'ERNAM', 'LIFNR', 'MANDT', 'ZTERM'],
     'LFA1' : ['ERNAM', 'LAND1', 'LIFNR', 'MANDT', 'NAME1', 'ORT01', 'VBUND'],
-    'KNB1' : ['MANDT', 'ZTERM', 'BUKRS', 'ERDAT', 'KUNNR', 'ERNAM']
+    'KNB1' : ['MANDT', 'ZTERM', 'BUKRS', 'ERDAT', 'KUNNR', 'ERNAM'],
+    'VBAK' : ['MANDT', 'OBJNR', 'VBELN', 'VBTYP', 'AUART', 'BSTDK', 'BSTNK', 'BUKRS_VF', 'ERDAT', 'ERNAM', 'ERZET', 'FAKSK', 'KKBER', 'KUNNR', 'LIFSK', 'NETWR', 'VDATU', 'VKBUR', 'VKORG', 'VSBED', 'VTWEG', 'WAERK' ],
+    'LIKP' : ['MANDT', 'VBELN', 'VBTYP', 'BTGEW', 'ERDAT', 'ERNAM', 'ERZET', 'GEWEI', 'KODAT', 'KOUHR', 'KUNNR', 'LFART', 'LFDAT', 'NTGEW', 'PODAT', 'POTIM', 'VOLEH', 'VOLUM', 'WADAT' ],
+    'BKPF' : ['BELNR', 'BUKRS', 'GJAHR', 'MANDT', 'AWKEY', 'AWTYP', 'BLART', 'BLDAT', 'CPUDT', 'CPUTM', 'USNAM', 'WAERS', 'XREVERSAL', 'XBLNR'],
+    'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
 }
 
 def fetch_table(table_name: str):
