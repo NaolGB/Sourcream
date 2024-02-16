@@ -714,3 +714,32 @@ class SalesAndDistribution:
         for k, v in self.tables['VBKD_json'].items():
             if v['VBELN'] == self.vbeln:
                 self.tables['VBKD_json'][k]['ZTERM'] = new_value
+    
+    def change_quantity(self, udate, usnam, line_numbers, line_quantities):
+        for i, item_position in enumerate(line_numbers):
+            old_value = self.params['quantities'][item_position]
+            new_value = line_quantities[i]
+            self.params['quantities'][i] = new_value
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas=str(uuid.uuid4()), 
+                udate=udate, 
+                utime = helpers.generate_random_time(),
+                uname=usnam, 
+                chngid='U', 
+                fname='KWMENG', 
+                tabkey=f'{values.mandt}{self.vbeln}{item_position}',
+                tabname='VBAP', 
+                valold=old_value,
+                valnew=new_value 
+            )
+
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
+                    self.tables['VBAP_json'][k]['KWMENG'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+
+        for k, v in self.tables['VBAK_json'].items():
+                if v['VBELN'] == self.vbeln:
+                    self.tables['VBAK_json'][k]['NETWR'] = round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4)
+
