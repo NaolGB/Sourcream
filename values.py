@@ -1,4 +1,4 @@
-mandt = 'SC1'
+mandt = 'SC'
 om_sales_orgs = {
     'EMEA': {
         'distribution_channels': {
@@ -16,7 +16,7 @@ om_sales_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -30,7 +30,7 @@ om_sales_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -184,6 +184,18 @@ om_sales_doc_rejection_reasons = {
     'Z1': {
         'ABGRU': 'Z1',
         'BEZEI': 'Invalid Sales Order'
+    },
+    '00': {
+        'ABGRU': '00',
+        'BEZEI': 'Too expensive'
+    },
+    '01': {
+        'ABGRU': '01',
+        'BEZEI': 'Delivery date too late'
+    },
+    'Z4': {
+        'ABGRU': 'Z4',
+        'BEZEI': 'Poor quality'
     }
 }
 om_users = {
