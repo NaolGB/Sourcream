@@ -12,6 +12,13 @@ om_sales_orgs = {
             'UK01': 'London, Holborn',
             'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
             'GR01': 'Munich, Theresienstr',
+        },
+        'Automation_rate': {
+            '10': 0.8,
+            '20': 0.6,
+            '30': 0.7,
+            '40': 0.5,
+            '50': 0.4
         }
     },
     'NAM': {
@@ -26,6 +33,13 @@ om_sales_orgs = {
             'US01': 'New York, One World Trade Center',
             'US02': 'Raleigh, 223 S. West',
             'US03': 'San Francisco, 28 2nd',
+        },
+        'Automation_rate': {
+            '10': 1,
+            '20': 0.8,
+            '30': 0.9,
+            '40': 0.7,
+            '50': 0.6
         }
     },
     'JAPC': {
@@ -39,6 +53,13 @@ om_sales_orgs = {
         'sales_offices': {
             'JP01': 'Tokyo, Marunouchi Kitaguchi',
             'IN01': 'Bengaluru, The Pavilion 62/63',
+        },
+        'Automation_rate': {
+            '10': 0.6,
+            '20': 0.4,
+            '30': 0.5,
+            '40': 0.3,
+            '50': 0.25
         }
     },
 }
