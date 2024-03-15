@@ -109,7 +109,7 @@ columns_to_parse = {
 "VBFA" : ['ERZET', 'ERDAT'],
 "VBKD" : [],
 "VBRK" : ['ERDAT', 'ERZET'],
-"VBRP" : ['ERDAT', 'ERZET', 'ERDAT', 'ERZET'],
+"VBRP" : ['ERDAT', 'ERZET'],
 "VBUK" : [],
 "VTTK" : [],
 "VTTP" : []

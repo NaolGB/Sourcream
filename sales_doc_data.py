@@ -12,7 +12,7 @@ class SalesAndDistribution:
         self.vbrk_vbeln = f'{str(uuid.uuid4())[-17:]}'
         self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
         self.mblnr = f'{str(uuid.uuid4())[-17:]}'
-        start_date = start_date
+        self.start_date = start_date
         self.mjahr = int(start_date.year)
 
         self.tables = {
@@ -382,7 +382,7 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['KODAT'] = udate
                 self.tables['LIKP_json'][k]['KOUHR'] = atime
 
-    def post_goods_issue(self, cpudt, usnam, atime, all_units=values.om_units):
+    def post_goods_issue(self, cpudt, usnam, atime, delivery_date_deviation, all_units=values.om_units):
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
@@ -420,6 +420,18 @@ class SalesAndDistribution:
                 "WAERS": 'EUR',
                 "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
+
+            # Change the confirmed delivery date of the item to influence late, early
+            #creation_date
+            #late or early
+            #self.params['delivery_date_deviation'][i]
+            date_dev = max(self.start_date + timedelta(days=5), cpudt+timedelta(days=delivery_date_deviation[i]))
+            print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            for k, v in self.tables['VBEP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
+                    self.tables['VBEP_json'][k]["EDATU"] = date_dev
+
+
         
         self.record_flow( 
             erdat=cpudt, 

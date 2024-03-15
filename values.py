@@ -5,7 +5,7 @@ om_sales_orgs = {
             '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
@@ -26,7 +26,7 @@ om_sales_orgs = {
             '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
@@ -47,7 +47,7 @@ om_sales_orgs = {
             '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
@@ -110,14 +110,14 @@ om_company_codes = {
 }
 om_sales_doc_types = {
     'ZOR': 'Standard order',
-    'BV': 'Cash Sale',
+    #'BV': 'Cash Sale',
     'ZDLR': 'Dealer Sales',
     'ZDIR': 'Direct Sales',
-    'ZDOM': 'Domestic Sales',
-    'SO': 'Rush Order',
+    #'ZDOM': 'Domestic Sales',
+    #'SO': 'Rush Order',
     'ZDIS': 'Distributor Sales',
     'ZEXP': 'Export Sales',
-    'ZSCR': 'Scrap Sales',
+    #'ZSCR': 'Scrap Sales',
 }
 dd07t_combinations = {
     'VBAK': [
