@@ -1,7 +1,12 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-import values, helpers
+import helpers
+#Castlelight
+import values_Castlelight as values
+
+#sourcream
+#import values
 
 class SalesAndDistribution:
     def __init__(self, vbeln, params, start_date: datetime) -> None:
