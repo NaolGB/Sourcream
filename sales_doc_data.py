@@ -240,7 +240,8 @@ class SalesAndDistribution:
                 fname='ABGRU', 
                 tabkey=f'{values.mandt}{self.vbeln}{i}', 
                 tabname='VBAP', 
-                valold='D', # HACK
+                valold=None,
+                #valold='D', # HACK
                 valnew=new_val,
             )
 
