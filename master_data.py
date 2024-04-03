@@ -8,14 +8,13 @@ import values_Castlelight as values
 #sourcream
 #import values
 
-
 def users(all_users=values.om_users):
     ADRP_json = {}
     USR02_json = {}
     USR21_json = {}
 
-    for k, v in all_users.items():
-        person_number = str(uuid.uuid4())
+    for index, (k, v) in enumerate(all_users.items()):
+        person_number = f'SCPRS{index}'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
             "DATE_FROM": '00010101',
@@ -82,9 +81,11 @@ def company_codes(all_company_codes=values.om_company_codes):
 
     return {'T001_json': T001_json, 'T001K_json': T001K_json}
 
-def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes):
+def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes, all_vendors=values.proc_vendors):
     KNB1_json = {}
     KNA1_json = {}
+    LFA1_json = {}
+    LFB1_json = {}
 
     for index, (k, v) in enumerate (all_customers.items()):
         customer_number = f'{values.mandt}CUT{index}'
@@ -103,14 +104,35 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
         for bukrs in list(all_company_codes.keys()):
             KNB1_json[str(uuid.uuid4())] = {
                 "BUKRS": bukrs, # HACK all company codes for all customers
-                "ERDAT": helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1)),
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)),
                 "ERNAM": random.choice(list(all_users.keys())),
                 "KUNNR": customer_number,
                 "MANDT": values.mandt,
                 "ZTERM": v['payment_term']
             }
     
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
+    for index, (k, v) in enumerate(all_vendors.items()):
+        vendor_number = f'SCVND{index}'
+        LFA1_json[str(uuid.uuid4())] = {
+            "ERNAM": random.choice(list(all_users.keys())),
+            "LAND1": v['country'],
+            "LIFNR": vendor_number,
+            "MANDT": values.mandt,
+            "NAME1": k,
+            "ORT01": v['city'],
+            "VBUND": None,
+        }
+        for bukrs in list(all_company_codes.keys()):
+            LFB1_json[str(uuid.uuid4())] = {
+                "BUKRS": bukrs, # HACK all company codes for all vendors
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)),
+                "ERNAM": random.choice(list(all_users.keys())),
+                "LIFNR": vendor_number,
+                "MANDT": values.mandt,
+                "ZTERM": v['payment_term']
+            }
+    
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'LFA1_json': LFA1_json, 'LFB1_json': LFB1_json}
 
 def materials(
         all_material_groups=values.om_material_groups, 
@@ -134,7 +156,7 @@ def materials(
                 material = name
                 price = attributes['price']
                 quantity = random.randint(500, 10_000)
-                creation_time = helpers.generate_random_date(start_date=datetime(2020, 1, 1), end_date=datetime(2021, 1, 1))
+                creation_time = helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1))
 
                 MAKT_json[str(uuid.uuid4())] = {
                     "MAKTX": material,
@@ -161,7 +183,7 @@ def materials(
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
                         "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 12, 1), end_date=datetime(2026, 1, 1)), # HACK after all SO and procurement have passed
-                        "BESKZ": 'E',
+                        "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value
                         "DISMM": 'D', # TODO add custom value
