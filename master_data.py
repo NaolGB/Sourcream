@@ -1,8 +1,12 @@
 import uuid
 from datetime import datetime
 import random
+import helpers
 
-import values, helpers
+#castleLight
+import values_Castlelight as values
+#sourcream
+#import values
 
 
 def users(all_users=values.om_users):
@@ -82,8 +86,8 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     KNB1_json = {}
     KNA1_json = {}
 
-    for k, v in all_customers.items():
-        customer_number = f'{str(uuid.uuid4())[-17:]}'
+    for index, (k, v) in enumerate (all_customers.items()):
+        customer_number = f'{values.mandt}CUT{index}'
         KNA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -123,10 +127,10 @@ def materials(
     MARC_json = {}
     MBEW_json = {}
 
-    for _, mat_grps in all_material_groups.items():
-        for grp_code, v in mat_grps.items():
-            for name, attributes in v['materials'].items():
-                matnr = f'{str(uuid.uuid4())[-17:]}'
+    for index_0, (_, mat_grps) in enumerate(all_material_groups.items()):
+        for index_1, (grp_code, v) in enumerate(mat_grps.items()):
+            for index_2, (name, attributes) in enumerate(v['materials'].items()):
+                matnr = f'{values.mandt}MAT{index_0}{index_1}{index_2}'
                 material = name
                 price = attributes['price']
                 quantity = random.randint(500, 10_000)
@@ -156,7 +160,7 @@ def materials(
                 }
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
-                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 1, 1), end_date=datetime(2025, 1, 1)), # HACK after all SO and procurement have passed
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 12, 1), end_date=datetime(2026, 1, 1)), # HACK after all SO and procurement have passed
                         "BESKZ": 'E',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value

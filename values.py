@@ -1,44 +1,65 @@
-mandt = 'SC1'
+mandt = 'SC'
 om_sales_orgs = {
     'EMEA': {
         'distribution_channels': {
             '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
             'UK01': 'London, Holborn',
             'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
             'GR01': 'Munich, Theresienstr',
+        },
+        'Automation_rate': {
+            '10': 0.8,
+            '20': 0.6,
+            '30': 0.7,
+            '40': 0.5,
+            '50': 0.4
         }
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
             'US01': 'New York, One World Trade Center',
             'US02': 'Raleigh, 223 S. West',
             'US03': 'San Francisco, 28 2nd',
+        },
+        'Automation_rate': {
+            '10': 1,
+            '20': 0.8,
+            '30': 0.9,
+            '40': 0.7,
+            '50': 0.6
         }
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
-            '40': 'Stock Transfer',
+            '40': 'Standard order',
             '50': 'Exports Sales'
         },
         'sales_offices': {
             'JP01': 'Tokyo, Marunouchi Kitaguchi',
             'IN01': 'Bengaluru, The Pavilion 62/63',
+        },
+        'Automation_rate': {
+            '10': 0.6,
+            '20': 0.4,
+            '30': 0.5,
+            '40': 0.3,
+            '50': 0.25
         }
     },
 }
@@ -89,14 +110,14 @@ om_company_codes = {
 }
 om_sales_doc_types = {
     'ZOR': 'Standard order',
-    'BV': 'Cash Sale',
+    #'BV': 'Cash Sale',
     'ZDLR': 'Dealer Sales',
     'ZDIR': 'Direct Sales',
-    'ZDOM': 'Domestic Sales',
-    'SO': 'Rush Order',
+    #'ZDOM': 'Domestic Sales',
+    #'SO': 'Rush Order',
     'ZDIS': 'Distributor Sales',
     'ZEXP': 'Export Sales',
-    'ZSCR': 'Scrap Sales',
+    #'ZSCR': 'Scrap Sales',
 }
 dd07t_combinations = {
     'VBAK': [
@@ -184,30 +205,43 @@ om_sales_doc_rejection_reasons = {
     'Z1': {
         'ABGRU': 'Z1',
         'BEZEI': 'Invalid Sales Order'
+    },
+    '00': {
+        'ABGRU': '00',
+        'BEZEI': 'Too expensive'
+    },
+    '01': {
+        'ABGRU': '01',
+        'BEZEI': 'Delivery date too late'
+    },
+    'Z4': {
+        'ABGRU': 'Z4',
+        'BEZEI': 'Poor quality'
     }
 }
 om_users = {
-    "Alex Johnson": {'type': 'A', 'nation': 'UK'},
-    "Bailey Smith": {'type': 'A', 'nation': 'UK'},
-    "Carmen Davis": {'type': 'A', 'nation': 'UK'},
-    "Darnell Williams": {'type': 'A', 'nation': 'UK'},
-    "Evelyn Brown": {'type': 'A', 'nation': 'UK'},
-    "Francis Taylor": {'type': 'A', 'nation': 'UK'},
-    "Gabriel Moore": {'type': 'A', 'nation': 'UK'},
-    "Harper Clark": {'type': 'A', 'nation': 'UK'},
-    "Ibrahim Lewis": {'type': 'A', 'nation': 'UK'},
-    "Jaden Hall": {'type': 'A', 'nation': 'UK'},
-    "Kai Lee": {'type': 'A', 'nation': 'UK'},
-    "Logan Mitchell": {'type': 'A', 'nation': 'UK'},
-    "Morgan Anderson": {'type': 'A', 'nation': 'UK'},
-    "Nathan Harris": {'type': 'A', 'nation': 'UK'},
-    "Olive White": {'type': 'A', 'nation': 'UK'},
-    "Peyton Turner": {'type': 'A', 'nation': 'UK'},
-    "Quinn Martin": {'type': 'A', 'nation': 'UK'},
+    "Alex Johnson": {'type': 'A', 'nation': 'ID'},
+    "Bailey Smith": {'type': 'A', 'nation': 'QA'},
+    "Carmen Davis": {'type': 'A', 'nation': 'AE'},
+    "Darnell Williams": {'type': 'A', 'nation': 'IN'},
+    "Evelyn Brown": {'type': 'A', 'nation': 'DE'},
+    "Francis Taylor": {'type': 'A', 'nation': 'AU'},
+    "Gabriel Moore": {'type': 'A', 'nation': 'BE'},
+    "Harper Clark": {'type': 'A', 'nation': 'CA'},
+    "Ibrahim Lewis": {'type': 'A', 'nation': 'US'},
+    "Jaden Hall": {'type': 'A', 'nation': 'GB'},
+    "Kai Lee": {'type': 'A', 'nation': 'HK'},
+    "Logan Mitchell": {'type': 'A', 'nation': 'IE'},
+    "Morgan Anderson": {'type': 'A', 'nation': 'MY'},
+    "Nathan Harris": {'type': 'A', 'nation': 'NZ'},
+    "Olive White": {'type': 'A', 'nation': 'PH'},
+    "Peyton Turner": {'type': 'A', 'nation': 'SG'},
+    "Quinn Martin": {'type': 'A', 'nation': 'US'},
     "Riley Walker": {'type': 'A', 'nation': 'UK'},
     "Sasha Baker": {'type': 'A', 'nation': 'UK'},
     "Taylor Turner": {'type': 'A', 'nation': 'UK'},
-    'Catelyn Stark': {'type': 'A', 'nation': 'Westeros'},
+    'Catelyn Stark': {'type': 'A', 'nation': 'WS'},
+    "Bilbo Baggins": {'type': 'A', 'nation': 'BE'},
     "BATCH_JOB": {'type': 'B', 'nation': 'UK'},
 }
 om_material_groups = {
