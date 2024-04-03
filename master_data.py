@@ -1,8 +1,12 @@
 import uuid
 from datetime import datetime
 import random
+import helpers
 
-import values, helpers
+#castleLight
+import values_Castlelight as values
+#sourcream
+#import values
 
 def users(all_users=values.om_users):
     ADRP_json = {}
@@ -83,8 +87,8 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     LFA1_json = {}
     LFB1_json = {}
 
-    for index, (k, v) in enumerate(all_customers.items()):
-        customer_number = f'SCCUT{index}'
+    for index, (k, v) in enumerate (all_customers.items()):
+        customer_number = f'{values.mandt}CUT{index}'
         KNA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -148,7 +152,7 @@ def materials(
     for index_0, (_, mat_grps) in enumerate(all_material_groups.items()):
         for index_1, (grp_code, v) in enumerate(mat_grps.items()):
             for index_2, (name, attributes) in enumerate(v['materials'].items()):
-                matnr = f'SCMAT{index_0}{index_1}{index_2}'
+                matnr = f'{values.mandt}MAT{index_0}{index_1}{index_2}'
                 material = name
                 price = attributes['price']
                 quantity = random.randint(500, 10_000)

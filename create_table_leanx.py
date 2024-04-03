@@ -93,8 +93,6 @@ required_table_columns = {
     'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
 }
-   
-
 
 def fetch_table(table_name: str):
     # validate

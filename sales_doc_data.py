@@ -1,7 +1,12 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-import values, helpers
+import helpers
+#Castlelight
+import values_Castlelight as values
+
+#sourcream
+#import values
 
 class SalesAndDistribution:
     def __init__(self, vbeln, params, start_date: datetime) -> None:
@@ -12,7 +17,7 @@ class SalesAndDistribution:
         self.vbrk_vbeln = f'{str(uuid.uuid4())[-17:]}'
         self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
         self.mblnr = f'{str(uuid.uuid4())[-17:]}'
-        start_date = start_date
+        self.start_date = start_date
         self.mjahr = int(start_date.year)
 
         self.tables = {
@@ -35,7 +40,7 @@ class SalesAndDistribution:
             'VBFA_json': {}
         }
 
-    def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
+    def changes(self, objid, objclas, udate, utime, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
         changenr = f'{str(uuid.uuid4())[-17:]}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
@@ -47,7 +52,7 @@ class SalesAndDistribution:
             "TCODE": tcode,
             "UDATE": udate,
             "USERNAME": uname,
-            "UTIME": helpers.generate_random_time(),
+            "UTIME": utime,
         }
 
         self.tables['CDPOS_json'][str(uuid.uuid4())] = {
@@ -112,6 +117,7 @@ class SalesAndDistribution:
             "VTWEG": self.params['distribution_channel'],
             "WAERK": 'EUR',
             "LIFSK": None,
+            'FAKSK': None
         }
         self.tables['VBKD_json'][str(uuid.uuid4())] = {
             "INCO1": 'D', # TODO add custom value
@@ -133,7 +139,7 @@ class SalesAndDistribution:
         for i in range(len(self.params['matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
-                "ABGRU": 'None', # HACK
+                "ABGRU": None, # 'D' HACK
                 "BRGEW": 99, # TODO add custom value
                 "ERDAT": erdat,
                 "ERNAM": ernam,
@@ -158,7 +164,8 @@ class SalesAndDistribution:
                 "VGTYP": 'C',
                 "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "WAERK": 'EUR',
-                "WERKS": self.params['plant']
+                "WERKS": self.params['plant'],
+                'FAKSP': None
             }
             self.tables['VBEP_json'][temp_vbeln] = {
                 "BMENG": self.params['quantities'][i], # HACK all qauntities are the same as their confirmed queantities
@@ -185,6 +192,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='CMGST', 
@@ -203,33 +211,37 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='CMGST', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBUK', 
             valold='B',
-            valnew='A'
+            valnew='D'
         )
 
         for k, v in self.tables['VBUK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBUK_json'][k]['CMGST'] = 'A'
+                self.tables['VBUK_json'][k]['CMGST'] = 'D'
 
     def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
         for i  in range(len(self.params['matnrs'])):
             # new_val = all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU']
-            new_val = 'Z0' if random.random() < 0.7 else 'Z1'
+            new_val = 'Z0' if random.random() < 0.7 else random.choice(list(values.om_sales_doc_rejection_reasons.keys()))
+            #new_val = 'Z0' if random.random() < 0.7 else 'Z1'
             self.changes(
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='ABGRU', 
                 tabkey=f'{values.mandt}{self.vbeln}{i}', 
                 tabname='VBAP', 
-                valold='None', # HACK
+                valold=None,
+                #valold='D', # HACK
                 valnew=new_val,
             )
 
@@ -269,15 +281,15 @@ class SalesAndDistribution:
             "ERNAM": ernam,
             "ERZET": atime,
             "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-            "KODAT": picking_date,
-            "KOUHR": None if picking_date == None else atime,
+            "KODAT": picking_date,  #PickingDate
+            "KOUHR": atime,         #PickingDate
             "KUNNR": self.params['kunnr'],
             "LFART": 'D', # TODO add custom value
             "LFDAT": delivery_date,
             "MANDT": values.mandt,
             "NTGEW": len(self.params['matnrs'])*99, # TODO add custom weight and assign accordingly to VBAP
             "PODAT": confirmation_date,
-            "POTIM": None if confirmation_date == None else atime,
+            "POTIM": atime,
             "VBELN": self.likp_vbeln,
             "VBTYP": 'J',
             "VOLEH": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
@@ -320,13 +332,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=None,
-            valnew=new_value,
+            valnew=new_value
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -339,13 +352,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -357,6 +371,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime =atime,
             uname=usnam, 
             chngid='U', 
             fname='KOSTK', 
@@ -373,7 +388,7 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['KODAT'] = udate
                 self.tables['LIKP_json'][k]['KOUHR'] = atime
 
-    def post_goods_issue(self, cpudt, usnam, atime, all_units=values.om_units):
+    def post_goods_issue(self, cpudt, usnam, atime, delivery_date_deviation, all_units=values.om_units):
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
@@ -411,6 +426,18 @@ class SalesAndDistribution:
                 "WAERS": 'EUR',
                 "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
+
+            # Change the confirmed delivery date of the item to influence late, early
+            #creation_date
+            #late or early
+            #self.params['delivery_date_deviation'][i]
+            date_dev = max(self.start_date + timedelta(days=5), cpudt+timedelta(days=delivery_date_deviation[i]))
+            print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            for k, v in self.tables['VBEP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
+                    self.tables['VBEP_json'][k]["EDATU"] = date_dev
+
+
         
         self.record_flow( 
             erdat=cpudt, 
@@ -428,7 +455,7 @@ class SalesAndDistribution:
             "KUNAG": self.params['kunnr'],
             "MANDT": values.mandt,
             "VBELN": self.vbrk_vbeln,
-            "VBTYP": 'M', # M: Invoice
+            "VBTYP": 'M' # M: Invoice
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -459,14 +486,14 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "USNAM": ernam,
             "WAERS": 'EUR',
-            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+            "XREVERSAL": None # NOTE might need change if P2P or AR is involved
         }
 
         for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
                 "AUGDT": None,
                 "AUGBL": None,
-                "AUGGJ": 1970, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
+                "AUGGJ": None, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
                 "BSCHL": '01',
                 "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
@@ -488,7 +515,7 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": erdat, # TODO add custom value
-                "ZTERM": self.params['payment_term'],
+                "ZTERM": self.params['payment_term']
             }
 
 
@@ -507,13 +534,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=None,
-            valnew=new_value,
+            valnew=new_value
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -530,13 +558,14 @@ class SalesAndDistribution:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=None,
-                valnew=new_value,
+                valnew=new_value
             )
 
             for k, v in self.tables['VBAP_json'].items():
@@ -549,13 +578,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
         for k, v in self.tables['VBAK_json'].items():
@@ -571,13 +601,14 @@ class SalesAndDistribution:
                 objid=str(uuid.uuid4()), 
                 objclas=str(uuid.uuid4()), 
                 udate=udate, 
+                utime = helpers.generate_random_time(),
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
                 valold=old_value,
-                valnew=None,
+                valnew=None
             )
 
             for k, v in self.tables['VBAP_json'].items():
@@ -590,13 +621,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=None,
-            valnew=new_value,
+            valnew=new_value
         )
 
     def release_customer_billing_block(self, udate, usnam):
@@ -605,13 +637,14 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1', 
             valold=old_value,
-            valnew=None,
+            valnew=None
         )
 
     def delivery_confirmation(self, usnam, udate):
@@ -619,6 +652,7 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='PODAT', 
@@ -647,7 +681,7 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "USNAM": usnam,
             "WAERS": 'EUR',
-            "XREVERSAL": None, # NOTE might need change if P2P or AR is involved
+            "XREVERSAL": None # NOTE might need change if P2P or AR is involved
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -676,7 +710,7 @@ class SalesAndDistribution:
                 "ZBD2T": 0, # TODO add custom value
                 "ZBD3T": 0, # TODO add custom value
                 "ZFBDT": cpudt, # TODO add custom value
-                "ZTERM": self.params['payment_term'],
+                "ZTERM": self.params['payment_term']
             }
 
     def change_payment_term(self, udate, usnam):
@@ -686,15 +720,45 @@ class SalesAndDistribution:
             objid=str(uuid.uuid4()), 
             objclas=str(uuid.uuid4()), 
             udate=udate, 
+            utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='ZTERM', 
             tabkey='000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
             tabname='VBKD', 
             valold=old_value,
-            valnew=new_value, # TODO add custom value
+            valnew=new_value # TODO add custom value
         )
 
         for k, v in self.tables['VBKD_json'].items():
             if v['VBELN'] == self.vbeln:
                 self.tables['VBKD_json'][k]['ZTERM'] = new_value
+    
+    def change_quantity(self, udate, usnam, line_numbers, line_quantities):
+        for i, item_position in enumerate(line_numbers):
+            old_value = self.params['quantities'][item_position]
+            new_value = line_quantities[i]
+            self.params['quantities'][i] = new_value
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas=str(uuid.uuid4()), 
+                udate=udate, 
+                utime = helpers.generate_random_time(),
+                uname=usnam, 
+                chngid='U', 
+                fname='KWMENG', 
+                tabkey=f'{values.mandt}{self.vbeln}{item_position}',
+                tabname='VBAP', 
+                valold=old_value,
+                valnew=new_value 
+            )
+
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
+                    self.tables['VBAP_json'][k]['KWMENG'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+
+        for k, v in self.tables['VBAK_json'].items():
+                if v['VBELN'] == self.vbeln:
+                    self.tables['VBAK_json'][k]['NETWR'] = round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4)
+

@@ -50,7 +50,7 @@ def add_time(original_time, time_delta):
     total_time_Delta = timedelta(hours=original_time.hour, minutes=original_time.minute, seconds=original_time.second) + time_delta
     result_datetime = reference_date + total_time_Delta
     return result_datetime.time()
-    
+
 UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
 UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
 UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
