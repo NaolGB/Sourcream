@@ -431,8 +431,12 @@ class SalesAndDistribution:
             #creation_date
             #late or early
             #self.params['delivery_date_deviation'][i]
-            date_dev = max(self.start_date + timedelta(days=5), cpudt+timedelta(days=delivery_date_deviation[i]))
-            print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            if delivery_date_deviation[i] != 0:
+                date_dev = max(self.start_date + timedelta(days=1), cpudt+timedelta(days=delivery_date_deviation[i]))
+                print(f'---- Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=1)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            else:
+                date_dev = cpudt
+            #print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
             for k, v in self.tables['VBEP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
                     self.tables['VBEP_json'][k]["EDATU"] = date_dev
