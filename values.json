@@ -1,0 +1,30 @@
+{
+    "organizationId": "SC1",
+    "orderManagement": {
+        "users": {
+            "Alex Johnson":     {"type": "A", "nation_id": "ID"},
+            "Bailey Smith":     {"type": "A", "nation_id": "QA"},
+            "Carmen Davis":     {"type": "A", "nation_id": "AE"},
+            "Darnell Williams": {"type": "A", "nation_id": "IN"},
+            "Evelyn Brown":     {"type": "A", "nation_id": "DE"},
+            "Francis Taylor":   {"type": "A", "nation_id": "AU"},
+            "Gabriel Moore":    {"type": "A", "nation_id": "BE"},
+            "Harper Clark":     {"type": "A", "nation_id": "CA"},
+            "Ibrahim Lewis":    {"type": "A", "nation_id": "US"},
+            "Jaden Hall":       {"type": "A", "nation_id": "GB"},
+            "Kai Lee":          {"type": "A", "nation_id": "HK"},
+            "Logan Mitchell":   {"type": "A", "nation_id": "IE"},
+            "Morgan Anderson":  {"type": "A", "nation_id": "MY"},
+            "Nathan Harris":    {"type": "A", "nation_id": "NZ"},
+            "Olive White":      {"type": "A", "nation_id": "PH"},
+            "Peyton Turner":    {"type": "A", "nation_id": "SG"},
+            "Quinn Martin":     {"type": "A", "nation_id": "US"},
+            "Riley Walker":     {"type": "A", "nation_id": "UK"},
+            "Sasha Baker":      {"type": "A", "nation_id": "UK"},
+            "Taylor Turner":    {"type": "A", "nation_id": "UK"},
+            "Catelyn Stark":    {"type": "A", "nation_id": "WS"},
+            "Bilbo Baggins":    {"type": "A", "nation_id": "BE"},
+            "BATCH_JOB":        {"type": "B", "nation_id": "UK"}
+        }
+    }
+}

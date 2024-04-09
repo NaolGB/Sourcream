@@ -1,28 +1,57 @@
 import uuid
 from datetime import datetime
 import random
-import helpers
+from helpers import get_unique_id as uid
+import values as values
 
-#castleLight
-import values_Castlelight as values
-#sourcream
-#import values
+class MasterData:
+    def __init__(self, values = None, processes = []) -> None:
+        """
+        currently supported processes
+            1. Order Management
+            2. Procurement
+        """
+        self.values = values # from values*.json file
+        self.organization = values["organizationId"]
+        self.processes = processes
+        self.user_tables = {"ADRP": {}, "USR02": {}, "USR21": {}}
 
+    def create_users(self):
+        users_dict = {}
+        for process in self.processes:
+            for _k, _v in self.values[process]["users"]:
+                users_dict[_k] = _v
+        
+        for index, (name, row) in enumerate(users_dict.items()):
+            person_number = f'{self.organization}{index}'
+            self.user_tables["ADRP"][uid()] = {
+                "CLIENT": self.organization,
+                "DATE_FROM": '00010101', # reffer https://www.leanx.eu/en/sap/table/adrp.html
+                "NAME_FIRST": name.split(' ')[0],
+                "NAME_LAST": name.split(' ')[-1],
+                "NATION": row['nation_id'],
+                "PERSNUMBER": person_number 
+            }
+            
+
+
+
+
+
+
+
+
+
+
+# ------------------------------------------------------------
 def users(all_users=values.om_users):
-    ADRP_json = {}
-    USR02_json = {}
-    USR21_json = {}
+    _json = {}
+    _json = {}
 
     for index, (k, v) in enumerate(all_users.items()):
         person_number = f'SCPRS{index}'
-        ADRP_json[str(uuid.uuid4())] = {
-            "CLIENT": values.mandt,
-            "DATE_FROM": '00010101',
-            "NAME_FIRST": k, # TODO split bname
-            "NAME_LAST": k, # TODO split bname
-            "NATION": v['nation'],
-            "PERSNUMBER": person_number 
-        }
+        ADRP_json[] = 
+
         USR02_json[str(uuid.uuid4())] = {
             "BNAME": k,
             "MANDT": values.mandt,

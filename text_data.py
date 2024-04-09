@@ -195,3 +195,14 @@ def purchasing_organizations(proc_orgs=values.proc_purchasing_orgs):
         }
     
     return {'T024E_json': T024E_json}
+
+
+"""
+1. plug in `values_*` files
+    - test each `values_*` file for certain variables
+    - pass data folder
+    - create the files in master_data or text_data py
+2. generate all types of processes in one run
+    - if `values_*` is empty for that process, then it means it is not wanted (data will come out empty)
+3. test files not to have duplicate ids (in master data, text data, document data)
+"""

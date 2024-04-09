@@ -1,4 +1,3 @@
-mandt = 'SC1'
 
 om_sales_orgs = {
     'EMEA': {
@@ -163,31 +162,7 @@ om_sales_doc_rejection_reasons = {
         'BEZEI': 'Invalid Sales Order'
     }
 }
-om_users = {
-    "Alex Johnson": {'type': 'A', 'nation': 'ID'},
-    "Bailey Smith": {'type': 'A', 'nation': 'QA'},
-    "Carmen Davis": {'type': 'A', 'nation': 'AE'},
-    "Darnell Williams": {'type': 'A', 'nation': 'IN'},
-    "Evelyn Brown": {'type': 'A', 'nation': 'DE'},
-    "Francis Taylor": {'type': 'A', 'nation': 'AU'},
-    "Gabriel Moore": {'type': 'A', 'nation': 'BE'},
-    "Harper Clark": {'type': 'A', 'nation': 'CA'},
-    "Ibrahim Lewis": {'type': 'A', 'nation': 'US'},
-    "Jaden Hall": {'type': 'A', 'nation': 'GB'},
-    "Kai Lee": {'type': 'A', 'nation': 'HK'},
-    "Logan Mitchell": {'type': 'A', 'nation': 'IE'},
-    "Morgan Anderson": {'type': 'A', 'nation': 'MY'},
-    "Nathan Harris": {'type': 'A', 'nation': 'NZ'},
-    "Olive White": {'type': 'A', 'nation': 'PH'},
-    "Peyton Turner": {'type': 'A', 'nation': 'SG'},
-    "Quinn Martin": {'type': 'A', 'nation': 'US'},
-    "Riley Walker": {'type': 'A', 'nation': 'UK'},
-    "Sasha Baker": {'type': 'A', 'nation': 'UK'},
-    "Taylor Turner": {'type': 'A', 'nation': 'UK'},
-    'Catelyn Stark': {'type': 'A', 'nation': 'WS'},
-    "Bilbo Baggins": {'type': 'A', 'nation': 'BE'},
-    "BATCH_JOB": {'type': 'B', 'nation': 'UK'},
-}
+
 om_material_groups = {
     'Beverages': {
         'MATKL001': {

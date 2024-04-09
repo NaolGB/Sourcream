@@ -1,6 +1,13 @@
+import uuid
 import random
 from datetime import timedelta, time, datetime
 import numpy as np
+
+def get_unique_id():
+    return str(uuid.uuid4())
+
+
+# ------------------------------------------------------------
 
 def generate_random_date(start_date, end_date):
     time_delta = end_date - start_date
