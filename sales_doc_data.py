@@ -13,10 +13,10 @@ class SalesAndDistribution:
         self.vbeln = vbeln
         self.params = params
         self.objnr = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
-        self.likp_vbeln = f'{str(uuid.uuid4())[-17:]}' 
-        self.vbrk_vbeln = f'{str(uuid.uuid4())[-17:]}'
-        self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
-        self.mblnr = f'{str(uuid.uuid4())[-17:]}'
+        self.likp_vbeln = f'{str(uuid.uuid4())[-11:]}' 
+        self.vbrk_vbeln = f'{str(uuid.uuid4())[-11:]}'
+        self.bkpf_belnr = f'{str(uuid.uuid4())[-11:]}'
+        self.mblnr = f'{str(uuid.uuid4())[-11:]}'
         self.start_date = start_date
         self.mjahr = int(start_date.year)
 
@@ -41,7 +41,7 @@ class SalesAndDistribution:
         }
 
     def changes(self, objid, objclas, udate, utime, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = f'{str(uuid.uuid4())[-17:]}'
+        changenr = f'{str(uuid.uuid4())[-11:]}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -137,7 +137,7 @@ class SalesAndDistribution:
         }
 
         for i in range(len(self.params['matnrs'])):
-            temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
+            temp_vbeln = f'{str(uuid.uuid4())[-11:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
                 "ABGRU": None, # 'D' HACK
                 "BRGEW": 99, # TODO add custom value
@@ -250,7 +250,7 @@ class SalesAndDistribution:
                     self.tables['VBAP_json'][k]['ABGRU'] = new_val
 
     def approve_sales_order(self, udate, usnam, atime):
-        changenr = f'{str(uuid.uuid4())[-17:]}'
+        changenr = f'{str(uuid.uuid4())[-11:]}'
 
         self.tables['JCDS_json'][str(uuid.uuid4())] = {
             "CDTCODE": changenr, # TODO add custom value
@@ -330,7 +330,7 @@ class SalesAndDistribution:
         new_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -350,7 +350,7 @@ class SalesAndDistribution:
         old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -369,7 +369,7 @@ class SalesAndDistribution:
     def pick_items(self, usnam, udate, atime):
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='LIEFERUNG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime =atime,
             uname=usnam, 
@@ -483,7 +483,7 @@ class SalesAndDistribution:
             "BELNR": self.bkpf_belnr,
             "BLART": 'D', # TODO add custom value
             "BLDAT": erdat, # FIXME use document creation date
-            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "BUKRS": self.params['company_code'],  # 'CC01', TODO make thie comapny code the same as used in KNB1
             "CPUDT": erdat,
             "CPUTM": atime,
             "GJAHR": self.mjahr,
@@ -500,7 +500,7 @@ class SalesAndDistribution:
                 "AUGGJ": None, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
                 "BSCHL": '01',
-                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUKRS": self.params['company_code'], # 'cc01' TODO make thie comapny code the same as used in KNB1
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
@@ -536,7 +536,7 @@ class SalesAndDistribution:
         new_value='01' # HACK match with values.om_billing_blocks
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -560,7 +560,7 @@ class SalesAndDistribution:
 
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG',
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -580,7 +580,7 @@ class SalesAndDistribution:
         old_value='01' # HACK match with values.om_billing_blocks
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -603,7 +603,7 @@ class SalesAndDistribution:
 
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -646,7 +646,7 @@ class SalesAndDistribution:
             chngid='U', 
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
-            tabname='KNA1', 
+            tabname='KNA1',     
             valold=old_value,
             valnew=None
         )
@@ -671,14 +671,14 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['POTIM'] = helpers.generate_random_time()
         
     def clear_debit_invoice(self, cpudt, usnam, cleared_date, atime):
-        cleared_bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
+        cleared_bkpf_belnr = f'{str(uuid.uuid4())[-11:]}'
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
             "AWKEY": self.vbrk_vbeln,
             "AWTYP": 'VBRK',
             "BELNR": cleared_bkpf_belnr,
             "BLART": 'D', # TODO add custom value
             "BLDAT": cpudt, # FIXME use document creation date
-            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "BUKRS": self.params['company_code'], #'CC01', # TODO make thie comapny code the same as used in KNB1
             "CPUDT": cpudt,
             "CPUTM": atime,
             "GJAHR": self.mjahr,
@@ -695,7 +695,7 @@ class SalesAndDistribution:
                 "AUGBL": cleared_bkpf_belnr, # TODO add custom value
                 "AUGGJ": self.mjahr,
                 "BSCHL": '01',
-                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUKRS": self.params['company_code'], #'CC01', # TODO make thie comapny code the same as used in KNB1
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
@@ -722,13 +722,13 @@ class SalesAndDistribution:
         new_value = 'Z060'
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG'
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='ZTERM', 
-            tabkey='000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
+            tabkey=f'{values.mandt}{self.vbeln}000000', #'000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
             tabname='VBKD', 
             valold=old_value,
             valnew=new_value # TODO add custom value
@@ -745,7 +745,7 @@ class SalesAndDistribution:
             self.params['quantities'][i] = new_value
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG'
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
