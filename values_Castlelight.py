@@ -154,6 +154,10 @@ om_delivery_blocks = {
     '01': {
         'LIFSP': '01',
         'VTEXT': 'Standard Delivery Block'
+    },
+    '02': {
+        'LIFSP': '02',
+        'VTEXT': 'Customer'
     }
 }
 
