@@ -233,7 +233,7 @@ class SalesAndDistribution:
             #new_val = 'Z0' if random.random() < 0.7 else 'Z1'
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', 
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -249,6 +249,27 @@ class SalesAndDistribution:
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
                     self.tables['VBAP_json'][k]['ABGRU'] = new_val
+
+            if new_val == '01':  #ROOT CAUSE delivery changes if customer cancellation
+                newdate = helpers.add_random_days(4, 15, udate)
+                self.changes(
+                    objid=str(uuid.uuid4()), 
+                    objclas='VERKBELEG', 
+                    udate=udate, 
+                    utime = helpers.generate_random_time(),
+                    uname=usnam, 
+                    chngid='U', 
+                    fname='EDATU', 
+                    tabkey=f'{values.mandt}{self.vbeln}{i}{i}', 
+                    tabname='VBEP', 
+                    valold=udate,
+                    #valold='D', # HACK
+                    valnew=newdate
+                )
+
+                for k, v in self.tables['VBEP_json'].items():
+                    if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
+                        self.tables['VBEP_json'][k]["EDATU"] = newdate
 
     def approve_sales_order(self, udate, usnam, atime):
         changenr = f'{str(uuid.uuid4())[-11:]}'
@@ -793,10 +814,10 @@ class SalesAndDistribution:
                 valnew=new_value 
             )
 
-        for k, v in self.tables['VBAP_json'].items():
-            if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
-                self.tables['VBAP_json'][k]['KWMENG'] = new_value
-                self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
+                    self.tables['VBAP_json'][k]['KWMENG'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
 
         for k, v in self.tables['VBAK_json'].items():
                 if v['VBELN'] == self.vbeln:
@@ -821,10 +842,10 @@ class SalesAndDistribution:
                 valnew=new_value 
             )
 
-        for k, v in self.tables['VBAP_json'].items():
-            if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
-                self.tables['VBAP_json'][k]['NETPR'] = new_value
-                self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
+                    self.tables['VBAP_json'][k]['NETPR'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
 
         for k, v in self.tables['VBAK_json'].items():
                 if v['VBELN'] == self.vbeln:
