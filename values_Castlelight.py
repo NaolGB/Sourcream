@@ -366,7 +366,7 @@ om_material_groups = {
     'Operations and Support': {
         'MATKL020': {
             'name': 'Monitoring and Management Tools',
-            'availability': 0.54,
+            'availability': 0.67,
             'materials': {
                 'Monitoring Software License (per node)': {'price': 100.00},
                 'Network Analyzer Tool': {'price': 499.00},
@@ -388,7 +388,7 @@ om_material_groups = {
         },
         'MATKL022': {
             'name': 'Backup and Disaster Recovery Solutions',
-            'availability': 0.32,
+            'availability': 0.88,
             'materials': {
                 'Backup Server (RAID Array)': {'price': 1999.00},
                 'Offsite Backup Storage (per TB/month)': {'price': 20.00},
@@ -399,7 +399,7 @@ om_material_groups = {
         },
         'MATKL023': {
             'name': 'Automation and Orchestration Tools',
-            'availability': 0.12,
+            'availability': 0.87,
             'materials': {
                 'Automation Software License (per user)': {'price': 500.00},
                 'Configuration Management System': {'price': 650.00},
@@ -410,7 +410,7 @@ om_material_groups = {
         },
         'MATKL024': {
             'name': 'Configuration Management Systems',
-            'availability': 0.6,
+            'availability': 0.72,
             'materials': {
                 'Configuration Management Software License (per node)': {'price': 500.00},
                 'Automation Script Library': {'price': 899.00},
@@ -467,7 +467,7 @@ om_material_groups = {
         },
         'MATKL034': {
             'name': 'Equipment Decommissioning Services',
-            'availability': 0.43,
+            'availability': 0.79,
             'materials': {
                 'Data Sanitization Service (per drive)': {'price': 50.00},
                 'Equipment Removal and Disposal Service': {'price': 200.00},
@@ -530,12 +530,12 @@ How are the following attributes realted to Touchless Order rate in the Order-to
 om_customers = {
     "CloudScape Solutions": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'JAPC', 'city': 'Jakarta', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "NetForge Technologies": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "DataNexis Systems": {"credit_risk": 0.85, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "DataNexis Systems": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "OptiCore Data Centers": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "Streamline Hosting Services": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "DataWorks Innovations": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Melbourne', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "SecureNet Data Centers": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Brussels', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "NexusPoint Infrastructure": {"credit_risk": 0.48, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NexusPoint Infrastructure": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "ByteVault Technologies": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "GridGuardian Hosting": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'London', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "SilverLinx Data Centers": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'Ireland', 'region': 'EMEA', 'city': 'Dublin', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
@@ -545,20 +545,20 @@ om_customers = {
     "DataHaven Technologies": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'Singapore', 'region': 'JAPC', 'city': 'Singapore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "InfiniteLoop Data": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'United States', 'region': 'EMEA', 'city': 'New York', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "TitanTech Hosting": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'South Africa', 'region': 'EMEA', 'city': 'Cape Town', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "QuantumCloud Solutions": {"credit_risk": 0.67, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "QuantumCloud Solutions": {"credit_risk": 0.32, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "SkyNet Centers": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "PeakGuardian Stream": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "PeakGuardian Stream": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "CloudGuard Nets": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "DataFusion Galore": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "SecureNex Tech": {"credit_risk": 0.77, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SecureNex Tech": {"credit_risk": 0.47, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "NexusSphere Networks": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "DataFortress": {"credit_risk": 0.1, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "SecureGrid Inc.": {"credit_risk": 0.70, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SecureGrid Inc.": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "NovaNex": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "TitanCloud Nation": {"credit_risk": 0.82, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "TitanCloud Nation": {"credit_risk": 0.12, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "ByteSphere Assembly": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "EonNexSoft": {"credit_risk": 0.73, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
-    "GridNova Inc.": {"credit_risk": 0.63, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1}
+    "EonNexSoft": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "GridNova Inc.": {"credit_risk": 0.14, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1}
 }
 
 
