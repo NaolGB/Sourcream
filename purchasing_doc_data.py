@@ -6,14 +6,14 @@ import values, helpers
 class Purchasing:
     def __init__(self, params, start_date, index) -> None:
         self.index = index
-        self.purchase_req_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
-        self.purchase_order_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
-        self.mat_doc_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        self.purchase_req_number = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
+        self.purchase_order_number = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
+        self.mat_doc_number = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.pr_req_date = start_date
         self.fy = int(start_date.year)
-        self.beleg_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
-        self.incoming_material_document_item_number = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
+        self.incoming_material_document_item_number = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
 
         self.tables = {
@@ -31,7 +31,7 @@ class Purchasing:
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, utime, tcode='DEFAULT'):
-        changenr = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        changenr = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -314,7 +314,7 @@ class Purchasing:
             self.create_purchase_order_schedule_line(eindt=cpudt, creation_date=udate, creation_time=utime, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
 
     def post_goods_receipt(self, cpudt, usnam, atime, item_position, delivered_quanity):
-        temp_uuid = f'SC{str(uuid.uuid4())[-5:]}{self.index}'
+        temp_uuid = f'{values.mandt}{str(uuid.uuid4())[-5:]}{self.index}'
         self.tables['MSEG_json'][str(uuid.uuid4())] = {
             'BWART': '101',
             'CPUDT_MKPF': cpudt,
