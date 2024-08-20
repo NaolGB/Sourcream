@@ -195,7 +195,7 @@ def materials(
                         "MATNR": matnr,
                         "MMSTD": creation_time,
                         "NFMAT": matnr,
-                        "PLIFZ": random.randint(5, 10),
+                        "PLIFZ": random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
                         "WEBAZ": random.randint(2, 10),
                         "WERKS": plnt
