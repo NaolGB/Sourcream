@@ -233,6 +233,7 @@ class Purchasing:
                 valnew=None,
             )
         for i in range(len(self.params['matnrs'])):
+            randnom = random.random()
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
@@ -249,14 +250,14 @@ class Purchasing:
                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # HACK
                 'MANDT': values.mandt,
-                "MATNR": None if self.params['is_free_text'] and random.random() > 0.3 else self.params['matnrs'][i],
+                "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
                 'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
-                "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
+                "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'UEBTO': 0,
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
