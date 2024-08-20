@@ -80,7 +80,7 @@ class Purchasing:
             'LIFNR': self.params['lifnr'],
             'LOEKZ': 'D',
             'MANDT': values.mandt,
-            'RESWK': 'D', # HACK
+            'RESWK': None, # HACK
             'STATU': 'B',
             'WAERS': 'EUR',
             'ZBD1P': 0,
@@ -209,7 +209,7 @@ class Purchasing:
             'LIFNR': self.params['lifnr'],
             'LOEKZ': 'D',
             'MANDT': values.mandt,
-            'RESWK': 'D', # HACK
+            'RESWK': None, # HACK
             'STATU': 'B',
             'WAERS': 'EUR',
             'ZBD1P': 0,
