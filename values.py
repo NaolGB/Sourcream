@@ -190,7 +190,7 @@ om_users = {
 }
 om_material_groups = {
     'Beverages': {
-        'MATKL001': {
+        'MATKL000': {
             'name': 'Carbonated Drinks',
             'availability': 0.9,
             'has_contract_probability': 0.79,
@@ -202,7 +202,7 @@ om_material_groups = {
                 'Aero Sip 250ml': {'price': 0.30}
             }
         },
-        'MATKL002': {
+        'MATKL001': {
             'name': 'Fruit Juices',
             'availability': 0.9,
             'has_contract_probability': 0.86,
@@ -214,7 +214,7 @@ om_material_groups = {
                 'Tropical Twist 250ml': {'price': 0.25}
             }
         },
-        'MATKL003': {
+        'MATKL002': {
             'name': 'Energy Drinks',
             'availability': 0.9,
             'has_contract_probability': 0.78,
@@ -226,7 +226,7 @@ om_material_groups = {
                 'Stamina Shot 250ml': {'price': 0.40}
             }
         },
-        'MATKL004': {
+        'MATKL003': {
             'name': 'Bottled Water',
             'availability': 0.9,
             'has_contract_probability': 0.68,
@@ -238,7 +238,7 @@ om_material_groups = {
                 'Hydro Haven 250ml': {'price': 0.20}
             }
         },
-        'MATKL005': {
+        'MATKL004': {
             'name': 'Coffee & Tea',
             'availability': 0.9,
             'has_contract_probability': 0.68,
