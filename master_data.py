@@ -197,7 +197,7 @@ def materials(
                         "NFMAT": matnr,
                         "PLIFZ": random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
-                        "WEBAZ": random.randint(2, 10),
+                        "WEBAZ": random.randint(2, 6),
                         "WERKS": plnt
                     }
                 MBEW_json[str(uuid.uuid4())] = {

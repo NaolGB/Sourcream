@@ -308,13 +308,14 @@ class Purchasing:
            
 
             if self.params['delivery_status'][i] < 0:
-                if random.random() < 0.5: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
+                if random.random() < 0.3: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
                     delivered_quanity -= delivered_quanity*random.random()
 
+            
             self.post_goods_receipt(cpudt=cpudt, usnam=usnam, atime=atime, item_position=i, delivered_quanity=delivered_quanity)
             
-            cpudt = cpudt - timedelta(days=self.params['delivery_status'][i])
-            self.create_purchase_order_schedule_line(eindt=cpudt, creation_date=udate, creation_time=utime, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity)
+            receiptdate = cpudt - timedelta(days=self.params['delivery_status'][i])
+            self.create_purchase_order_schedule_line(eindt=receiptdate, creation_date=udate, creation_time=utime, ernam=usnam, ebelp=i, scheduled_quanity=scheduled_quanity, delivered_quanity=delivered_quanity, item_position=i)
 
     def post_goods_receipt(self, cpudt, usnam, atime, item_position, delivered_quanity):
         temp_uuid = f'{str(uuid.uuid4())[-5:]}{self.index}'
@@ -359,7 +360,7 @@ class Purchasing:
             'WRBTR': round(self.params['prices'][item_position]*delivered_quanity, 4),
         }
 
-    def create_purchase_order_schedule_line(self, eindt, creation_date, creation_time, ernam, ebelp, scheduled_quanity, delivered_quanity):
+    def create_purchase_order_schedule_line(self, eindt, creation_date, creation_time, ernam, ebelp, scheduled_quanity, delivered_quanity, item_position):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
             'EBELN': self.purchase_order_number,
             'EBELP': ebelp,
