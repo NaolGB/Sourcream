@@ -90,7 +90,7 @@ required_table_columns = {
     'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN', 'ERZET', 'ERDAT', 'MATNR'], #last three here not in required field sheet
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
     'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP'],
-    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP'],
+    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
 }
 

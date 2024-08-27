@@ -1,4 +1,4 @@
-mandt = 'SC1'
+mandt = 'SC'
 
 om_sales_orgs = {
     'EMEA': {
@@ -190,10 +190,10 @@ om_users = {
 }
 om_material_groups = {
     'Beverages': {
-        'MATKL001': {
+        'MATKL000': {
             'name': 'Carbonated Drinks',
             'availability': 0.9,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.79,
             'materials': {
                 'Coca Fizz 500ml': {'price': 0.50},
                 'Soda Stream 1L': {'price': 0.80},
@@ -202,10 +202,10 @@ om_material_groups = {
                 'Aero Sip 250ml': {'price': 0.30}
             }
         },
-        'MATKL002': {
+        'MATKL001': {
             'name': 'Fruit Juices',
             'availability': 0.9,
-            'has_contract_probability': 0.4,
+            'has_contract_probability': 0.86,
             'materials': {
                 'Apple Blend 1L': {'price': 0.60},
                 'Berry Burst 500ml': {'price': 0.45},
@@ -214,10 +214,10 @@ om_material_groups = {
                 'Tropical Twist 250ml': {'price': 0.25}
             }
         },
-        'MATKL003': {
+        'MATKL002': {
             'name': 'Energy Drinks',
             'availability': 0.9,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.78,
             'materials': {
                 'Power Punch 500ml': {'price': 0.70},
                 'Charge Up 1L': {'price': 1.00},
@@ -226,10 +226,10 @@ om_material_groups = {
                 'Stamina Shot 250ml': {'price': 0.40}
             }
         },
-        'MATKL004': {
+        'MATKL003': {
             'name': 'Bottled Water',
             'availability': 0.9,
-            'has_contract_probability': 0.5,
+            'has_contract_probability': 0.68,
             'materials': {
                 'Pure Drop 500ml': {'price': 0.30},
                 'Crystal Clear 1L': {'price': 0.50},
@@ -238,10 +238,10 @@ om_material_groups = {
                 'Hydro Haven 250ml': {'price': 0.20}
             }
         },
-        'MATKL005': {
+        'MATKL004': {
             'name': 'Coffee & Tea',
             'availability': 0.9,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.68,
             'materials': {
                 'Java Joy 500ml': {'price': 1.00},
                 'Tea Taste 1L': {'price': 0.80},
@@ -254,7 +254,7 @@ om_material_groups = {
     'Packaged Foods': {
         'MATKL010': {
             'name': 'Snacks & Chips',
-            'availability': 0.6,
+            'availability': 0.8,
             'has_contract_probability': 0.8,
             'materials': {
                 'Chippy Crunch 50g': {'price': 0.50},  # per unit cost in bulk
@@ -267,7 +267,7 @@ om_material_groups = {
         'MATKL011': {
             'name': 'Canned Foods',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.76,
             'materials': {
                 'Bean Delight 400g': {'price': 1.00},  # per unit cost in bulk
                 'Tomato Sauce 250ml': {'price': 0.70},  # per unit cost in bulk
@@ -279,7 +279,7 @@ om_material_groups = {
         'MATKL012': {
             'name': 'Frozen Foods',
             'availability': 0.6,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.85,
             'materials': {
                 'Pizza Slice 200g': {'price': 1.20},  # per unit cost in bulk
                 'Frozen Veggies 500g': {'price': 1.50},  # per unit cost in bulk
@@ -291,7 +291,7 @@ om_material_groups = {
         'MATKL013': {
             'name': 'Baked Goods',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.87,
             'materials': {
                 'Cocoa Muffin 150g': {'price': 0.80},  # per unit cost in bulk
                 'Whole Wheat Bread 500g': {'price': 1.50},  # per unit cost in bulk
@@ -303,7 +303,7 @@ om_material_groups = {
         'MATKL014': {
             'name': 'Breakfast Cereals',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.89,
             'materials': {
                 'Oat Flakes 250g': {'price': 1.50},  # per unit cost in bulk
                 'Corn Flakes 300g': {'price': 1.20},  # per unit cost in bulk
@@ -379,7 +379,7 @@ om_material_groups = {
         'MATKL030': {
             'name': 'Glass Bottles',
             'availability': 0.6,
-            'has_contract_probability': 0.1,
+            'has_contract_probability': 0.9,
             'materials': {
                 'Clear Glass 500ml': {'price': 0.15},      # per unit (for 500ml capacity)
                 'Green Glass 750ml': {'price': 0.20},      # per unit (for 750ml capacity)
@@ -391,7 +391,7 @@ om_material_groups = {
         'MATKL031': {
             'name': 'Plastic Bottles',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.8,
             'materials': {
                 'PET Clear 500ml': {'price': 0.08},          # per unit (for 500ml capacity)
                 'HDPE White 1L': {'price': 0.10},            # per unit (for 1-liter capacity)
@@ -403,7 +403,7 @@ om_material_groups = {
         'MATKL032': {
             'name': 'Aluminum Cans',
             'availability': 0.6,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Aluminum Silver 330ml': {'price': 0.10},        # per unit (for 330ml capacity)
                 'Aluminum Gold 500ml': {'price': 0.12},          # per unit (for 500ml capacity)
@@ -427,7 +427,7 @@ om_material_groups = {
         'MATKL034': {
             'name': 'Sealing Materials',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.9,
             'materials': {
                 'Aluminum Foil Rolls': {'price': 0.20},  
                 'Polyethylene Seals': {'price': 0.05},   
@@ -553,8 +553,8 @@ proc_vendors = {
     "ChocoCharm Confections": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
     "SavorStreet": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
     "Culinary Crafters": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
-    "Brew Burst Beverages": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
-    "Nosh Nation": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
+    "Brew Burst Beverages": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
+    "Nosh Nation": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
     "Gastronomic Gather": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
     "Fresh Nosh": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
     "Basti's Bakery": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.1},

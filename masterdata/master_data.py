@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 import random
-import helpers
+import extras.helpers as helpers
 
 #castleLight
-import values_Castlelight as values
+# import values_Castlelight as values
 #sourcream
-#import values
+import masterdata.values as values
 
 def users(all_users=values.om_users):
     ADRP_json = {}
@@ -14,7 +14,7 @@ def users(all_users=values.om_users):
     USR21_json = {}
 
     for index, (k, v) in enumerate(all_users.items()):
-        person_number = f'SCPRS{index}'
+        person_number = f'PRS{index}'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
             "DATE_FROM": '00010101',
@@ -88,7 +88,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     LFB1_json = {}
 
     for index, (k, v) in enumerate (all_customers.items()):
-        customer_number = f'{values.mandt}CUT{index}'
+        customer_number = f'CUST{index}'
         KNA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "KUNNR": customer_number,
@@ -112,7 +112,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             }
     
     for index, (k, v) in enumerate(all_vendors.items()):
-        vendor_number = f'SCVND{index}'
+        vendor_number = f'VND{index}'
         LFA1_json[str(uuid.uuid4())] = {
             "ERNAM": random.choice(list(all_users.keys())),
             "LAND1": v['country'],
@@ -152,7 +152,7 @@ def materials(
     for index_0, (_, mat_grps) in enumerate(all_material_groups.items()):
         for index_1, (grp_code, v) in enumerate(mat_grps.items()):
             for index_2, (name, attributes) in enumerate(v['materials'].items()):
-                matnr = f'{values.mandt}MAT{index_0}{index_1}{index_2}'
+                matnr = f'MAT{index_0}{index_1}{index_2}'
                 material = name
                 price = attributes['price']
                 quantity = random.randint(500, 10_000)
@@ -195,9 +195,9 @@ def materials(
                         "MATNR": matnr,
                         "MMSTD": creation_time,
                         "NFMAT": matnr,
-                        "PLIFZ": random.randint(5, 10),
+                        "PLIFZ": random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
-                        "WEBAZ": random.randint(2, 10),
+                        "WEBAZ": random.randint(2, 6),
                         "WERKS": plnt
                     }
                 MBEW_json[str(uuid.uuid4())] = {

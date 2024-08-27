@@ -1,22 +1,22 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-import helpers
+import extras.helpers as helpers
 #Castlelight
-import values_Castlelight as values
+import masterdata.values_Castlelight as values
 
 #sourcream
-#import values
+# import values
 
 class SalesAndDistribution:
     def __init__(self, vbeln, params, start_date: datetime) -> None:
         self.vbeln = vbeln
         self.params = params
         self.objnr = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
-        self.likp_vbeln = f'{str(uuid.uuid4())[-17:]}' 
-        self.vbrk_vbeln = f'{str(uuid.uuid4())[-17:]}'
-        self.bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
-        self.mblnr = f'{str(uuid.uuid4())[-17:]}'
+        self.likp_vbeln = f'{str(uuid.uuid4())[-11:]}' 
+        self.vbrk_vbeln = f'{str(uuid.uuid4())[-11:]}'
+        self.bkpf_belnr = f'{str(uuid.uuid4())[-11:]}'
+        self.mblnr = f'{str(uuid.uuid4())[-11:]}'
         self.start_date = start_date
         self.mjahr = int(start_date.year)
 
@@ -41,7 +41,7 @@ class SalesAndDistribution:
         }
 
     def changes(self, objid, objclas, udate, utime, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
-        changenr = f'{str(uuid.uuid4())[-17:]}'
+        changenr = f'{str(uuid.uuid4())[-11:]}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
@@ -137,7 +137,7 @@ class SalesAndDistribution:
         }
 
         for i in range(len(self.params['matnrs'])):
-            temp_vbeln = f'{str(uuid.uuid4())[-17:]}'
+            temp_vbeln = f'{str(uuid.uuid4())[-11:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
                 "ABGRU": None, # 'D' HACK
                 "BRGEW": 99, # TODO add custom value
@@ -178,6 +178,7 @@ class SalesAndDistribution:
                 "VBELN": self.vbeln,
                 "WADAT": None, # TODO MaterialAvailabilityDate edit later on shipping,
             }
+
 
         self.record_flow( # HACK no quotation before
             erdat=erdat, 
@@ -232,7 +233,7 @@ class SalesAndDistribution:
             #new_val = 'Z0' if random.random() < 0.7 else 'Z1'
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', 
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -249,8 +250,29 @@ class SalesAndDistribution:
                 if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
                     self.tables['VBAP_json'][k]['ABGRU'] = new_val
 
+            if new_val == '01':  #ROOT CAUSE delivery changes if customer cancellation
+                newdate = helpers.add_random_days(4, 15, udate)
+                self.changes(
+                    objid=str(uuid.uuid4()), 
+                    objclas='VERKBELEG', 
+                    udate=udate, 
+                    utime = helpers.generate_random_time(),
+                    uname=usnam, 
+                    chngid='U', 
+                    fname='EDATU', 
+                    tabkey=f'{values.mandt}{self.vbeln}{i}{i}', 
+                    tabname='VBEP', 
+                    valold=udate,
+                    #valold='D', # HACK
+                    valnew=newdate
+                )
+
+                for k, v in self.tables['VBEP_json'].items():
+                    if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
+                        self.tables['VBEP_json'][k]["EDATU"] = newdate
+
     def approve_sales_order(self, udate, usnam, atime):
-        changenr = f'{str(uuid.uuid4())[-17:]}'
+        changenr = f'{str(uuid.uuid4())[-11:]}'
 
         self.tables['JCDS_json'][str(uuid.uuid4())] = {
             "CDTCODE": changenr, # TODO add custom value
@@ -297,6 +319,8 @@ class SalesAndDistribution:
             "WADAT": planned_delivery_date,
         }
 
+
+
         for i in range(len(self.params['matnrs'])):
             self.tables['LIPS_json'][str(uuid.uuid4())] = {
                 "ERDAT": erdat,
@@ -330,7 +354,7 @@ class SalesAndDistribution:
         new_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -350,7 +374,7 @@ class SalesAndDistribution:
         old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -369,7 +393,7 @@ class SalesAndDistribution:
     def pick_items(self, usnam, udate, atime):
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='LIEFERUNG', # CHANGED FROM str(uuid.uuid4()), 
             udate=udate, 
             utime =atime,
             uname=usnam, 
@@ -431,8 +455,12 @@ class SalesAndDistribution:
             #creation_date
             #late or early
             #self.params['delivery_date_deviation'][i]
-            date_dev = max(self.start_date + timedelta(days=5), cpudt+timedelta(days=delivery_date_deviation[i]))
-            print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            if delivery_date_deviation[i] != 0:
+                date_dev = max(self.start_date + timedelta(days=1), cpudt+timedelta(days=delivery_date_deviation[i]))
+                print(f'---- Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=1)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+            else:
+                date_dev = cpudt
+            #print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
             for k, v in self.tables['VBEP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
                     self.tables['VBEP_json'][k]["EDATU"] = date_dev
@@ -479,7 +507,7 @@ class SalesAndDistribution:
             "BELNR": self.bkpf_belnr,
             "BLART": 'D', # TODO add custom value
             "BLDAT": erdat, # FIXME use document creation date
-            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "BUKRS": self.params['company_code'],  # 'CC01', TODO make thie comapny code the same as used in KNB1
             "CPUDT": erdat,
             "CPUTM": atime,
             "GJAHR": self.mjahr,
@@ -496,7 +524,7 @@ class SalesAndDistribution:
                 "AUGGJ": None, # HACK this is considered an initial value. If we use Nan, Pandas will consider the whole column to be float adn add '.0' at the end of the values.
                 "BELNR": self.bkpf_belnr,
                 "BSCHL": '01',
-                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUKRS": self.params['company_code'], # 'cc01' TODO make thie comapny code the same as used in KNB1
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
@@ -532,7 +560,7 @@ class SalesAndDistribution:
         new_value='01' # HACK match with values.om_billing_blocks
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -556,7 +584,7 @@ class SalesAndDistribution:
 
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG',
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -576,7 +604,7 @@ class SalesAndDistribution:
         old_value='01' # HACK match with values.om_billing_blocks
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
@@ -599,7 +627,7 @@ class SalesAndDistribution:
 
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG', 
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -642,10 +670,43 @@ class SalesAndDistribution:
             chngid='U', 
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
-            tabname='KNA1', 
+            tabname='KNA1',     
             valold=old_value,
             valnew=None
         )
+
+    def set_customer_delivery_block(self, udate, usnam):
+        new_value='02' # HACK match with values.om_delivery_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            utime = helpers.generate_random_time(),
+            uname=usnam, 
+            chngid='U', 
+            fname='LIFSD', 
+            tabkey=f'{values.mandt}{self.params["kunnr"]}', 
+            tabname='KNA1', 
+            valold=None,
+            valnew=new_value
+        )
+
+    def release_customer_delivery_block(self, udate, usnam):
+        old_value='02' # HACK match with values.om_delivery_blocks
+        self.changes(
+            objid=str(uuid.uuid4()), 
+            objclas=str(uuid.uuid4()), 
+            udate=udate, 
+            utime = helpers.generate_random_time(),
+            uname=usnam, 
+            chngid='U', 
+            fname='LIFSD', 
+            tabkey=f'{values.mandt}{self.params["kunnr"]}', 
+            tabname='KNA1',     
+            valold=old_value,
+            valnew=None
+        )
+
 
     def delivery_confirmation(self, usnam, udate):
         self.changes(
@@ -667,14 +728,14 @@ class SalesAndDistribution:
                 self.tables['LIKP_json'][k]['POTIM'] = helpers.generate_random_time()
         
     def clear_debit_invoice(self, cpudt, usnam, cleared_date, atime):
-        cleared_bkpf_belnr = f'{str(uuid.uuid4())[-17:]}'
+        cleared_bkpf_belnr = f'{str(uuid.uuid4())[-11:]}'
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
             "AWKEY": self.vbrk_vbeln,
             "AWTYP": 'VBRK',
             "BELNR": cleared_bkpf_belnr,
             "BLART": 'D', # TODO add custom value
             "BLDAT": cpudt, # FIXME use document creation date
-            "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+            "BUKRS": self.params['company_code'], #'CC01', # TODO make thie comapny code the same as used in KNB1
             "CPUDT": cpudt,
             "CPUTM": atime,
             "GJAHR": self.mjahr,
@@ -691,7 +752,7 @@ class SalesAndDistribution:
                 "AUGBL": cleared_bkpf_belnr, # TODO add custom value
                 "AUGGJ": self.mjahr,
                 "BSCHL": '01',
-                "BUKRS": 'CC01', # TODO make thie comapny code the same as used in KNB1
+                "BUKRS": self.params['company_code'], #'CC01', # TODO make thie comapny code the same as used in KNB1
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "KOART": 'D',
@@ -718,13 +779,13 @@ class SalesAndDistribution:
         new_value = 'Z060'
         self.changes(
             objid=str(uuid.uuid4()), 
-            objclas=str(uuid.uuid4()), 
+            objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG'
             udate=udate, 
             utime = helpers.generate_random_time(),
             uname=usnam, 
             chngid='U', 
             fname='ZTERM', 
-            tabkey='000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
+            tabkey=f'{values.mandt}{self.vbeln}000000', #'000000000000000000000000', # HACK only need SUBSTR(14, 6) to be '000000'
             tabname='VBKD', 
             valold=old_value,
             valnew=new_value # TODO add custom value
@@ -741,7 +802,7 @@ class SalesAndDistribution:
             self.params['quantities'][i] = new_value
             self.changes(
                 objid=str(uuid.uuid4()), 
-                objclas=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG'
                 udate=udate, 
                 utime = helpers.generate_random_time(),
                 uname=usnam, 
@@ -762,3 +823,45 @@ class SalesAndDistribution:
                 if v['VBELN'] == self.vbeln:
                     self.tables['VBAK_json'][k]['NETWR'] = round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4)
 
+    def change_price(self, udate, usnam, line_numbers, line_prices):
+        for i, item_position in enumerate(line_numbers):
+            old_value = self.params['prices'][item_position]
+            new_value = line_prices[i]
+            self.params['prices'][i] = new_value
+            self.changes(
+                objid=str(uuid.uuid4()), 
+                objclas='VERKBELEG', # replaced unique ID str(uuid.uuid4()) with 'VERKBELEG'
+                udate=udate, 
+                utime = helpers.generate_random_time(),
+                uname=usnam, 
+                chngid='U', 
+                fname='NETPR', 
+                tabkey=f'{values.mandt}{self.vbeln}{item_position}',
+                tabname='VBAP', 
+                valold=old_value,
+                valnew=new_value 
+            )
+
+            for k, v in self.tables['VBAP_json'].items():
+                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
+                    self.tables['VBAP_json'][k]['NETPR'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+
+        for k, v in self.tables['VBAK_json'].items():
+                if v['VBELN'] == self.vbeln:
+                    self.tables['VBAK_json'][k]['NETWR'] = round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4)
+
+    # def change_delivery_date(self, udate, usnam):
+    #     self.changes(
+    #         objid=str(uuid.uuid4()), 
+    #         objclas=str(uuid.uuid4()), 
+    #         udate=erdat, 
+    #         utime = helpers.generate_random_time(),
+    #         uname=ernam, 
+    #         chngid='U', 
+    #         fname='LFDAT', 
+    #         tabkey=f'{values.mandt}{self.likp_vbeln}', 
+    #         tabname='LIKP', 
+    #         valold='B',
+    #         valnew='B'
+    #     )
