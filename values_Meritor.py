@@ -190,10 +190,10 @@ om_users = {
 }
 om_material_groups = {
     'Chassis Components': {
-        'MATKL001': {
+        'MATKL000': {
             'name': 'Frame Rails',
             'availability': 0.9,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.79,
             'materials': {
                 'Steel Frame Rails (per meter)': {'price': 100.00},
                 'Aluminum Frame Rails (per meter)': {'price': 150.00},
@@ -202,10 +202,10 @@ om_material_groups = {
                 'Reinforced Steel Frame Rails (per meter)': {'price': 120.00}
             }
         },
-        'MATKL002': {
+        'MATKL001': {
             'name': 'Crossmembers',
             'availability': 0.9,
-            'has_contract_probability': 0.4,
+            'has_contract_probability': 0.86,
             'materials': {
                 'Steel Crossmembers (each)': {'price': 50.00},
                 'Aluminum Crossmembers (each)': {'price': 80.00},
@@ -214,10 +214,10 @@ om_material_groups = {
                 'Galvanized Steel Crossmembers (each)': {'price': 55.00}
             }
         },
-        'MATKL003': {
+        'MATKL002': {
             'name': 'Suspension',
             'availability': 0.9,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.78,
             'materials': {
                 'Leaf Springs (per set)': {'price': 300.00},
                 'Air Springs (each)': {'price': 200.00},
@@ -226,10 +226,10 @@ om_material_groups = {
                 'Suspension Bushings (per set)': {'price': 50.00}
             }
         },
-        'MATKL004': {
+        'MATKL003': {
             'name': 'Steering',
             'availability': 0.9,
-            'has_contract_probability': 0.5,
+            'has_contract_probability': 0.68,
             'materials': {
                 'Steering Column Assembly (each)': {'price': 200.00},
                 'Steering Gear (each)': {'price': 300.00},
@@ -238,10 +238,10 @@ om_material_groups = {
                 'Power Steering Pump (each)': {'price': 150.00}
             }
         },
-        'MATKL005': {
+        'MATKL004': {
             'name': 'Brackets and Mounts',
             'availability': 0.9,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.68,
             'materials': {
                 'Steel Brackets (each)': {'price': 20.00},
                 'Aluminum Brackets (each)': {'price': 30.00},
@@ -267,7 +267,7 @@ om_material_groups = {
         'MATKL011': {
             'name': 'Transmission Assembly',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.76,
             'materials': {
                 'Transmission Housing (each)': {'price': 800.00},
                 'Transmission Gears (per set)': {'price': 400.00},
@@ -279,7 +279,7 @@ om_material_groups = {
         'MATKL012': {
             'name': 'Drivetrain Components',
             'availability': 0.6,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.85,
             'materials': {
                 'Driveshaft (each)': {'price': 200.00},
                 'Differential (each)': {'price': 500.00},
@@ -291,7 +291,7 @@ om_material_groups = {
         'MATKL013': {
             'name': 'Exhaust System',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.87,
             'materials': {
                 'Exhaust Manifold (each)': {'price': 150.00},
                 'Catalytic Converter (each)': {'price': 300.00},
@@ -303,7 +303,7 @@ om_material_groups = {
         'MATKL014': {
             'name': 'Fuel Injection',
             'availability': 0.6,
-            'has_contract_probability': 0.8,
+            'has_contract_probability': 0.89,
             'materials': {
                 'Fuel Injectors (each)': {'price': 150.00},
                 'Fuel Rail (each)': {'price': 100.00},
@@ -379,7 +379,7 @@ om_material_groups = {
         'MATKL030': {
             'name': 'Suspension System',
             'availability': 0.6,
-            'has_contract_probability': 0.1,
+            'has_contract_probability': 0.9,
             'materials': {
                 'Control Arms (each)': {'price': 100.00},
                 'Sway Bar (each)': {'price': 80.00},
@@ -391,7 +391,7 @@ om_material_groups = {
         'MATKL031': {
             'name': 'Cooling System',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Radiator (each)': {'price': 400.00},
                 'Cooling Fan (each)': {'price': 150.00},
@@ -403,7 +403,7 @@ om_material_groups = {
         'MATKL032': {
             'name': 'Air Intake System',
             'availability': 0.6,
-            'has_contract_probability': 0.7,
+            'has_contract_probability': 0.8,
             'materials': {
                 'Air Filter (each)': {'price': 20.00},
                 'Intake Manifold (each)': {'price': 150.00},
@@ -427,7 +427,7 @@ om_material_groups = {
         'MATKL034': {
             'name': 'Electrical System',
             'availability': 0.6,
-            'has_contract_probability': 0.6,
+            'has_contract_probability': 0.9,
             'materials': {
                 'Battery (each)': {'price': 100.00},
                 'Alternator (each)': {'price': 200.00},
@@ -490,7 +490,7 @@ proc_purchasing_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -504,7 +504,7 @@ proc_purchasing_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -553,8 +553,8 @@ proc_vendors = {
     "PowerPulse Componentss": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
     "TrailBlazer Truck Supplies": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
     "TurboTrek Auto Parts": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
-    "TransMission Tech": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
-    "BrakeCraft Industries": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.1},
+    "TransMission Tech": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
+    "BrakeCraft Industries": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
     "ClutchMaster Components": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
     "TruckTrek Inc.": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
     "Basti's Trucking Smarts": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.1},

@@ -490,7 +490,7 @@ proc_purchasing_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -504,7 +504,7 @@ proc_purchasing_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
