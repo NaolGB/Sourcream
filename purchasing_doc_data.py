@@ -245,7 +245,7 @@ class Purchasing:
                 'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
                 'EBELN': self.purchase_order_number,
                 'EBELP': i,
-                'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] else None,
+                'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None,
                 'KTMNG': self.params['quantities'][i],
                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # HACK

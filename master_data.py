@@ -195,9 +195,9 @@ def materials(
                         "MATNR": matnr,
                         "MMSTD": creation_time,
                         "NFMAT": matnr,
-                        "PLIFZ": random.randint(2, 7),
+                        "PLIFZ": random.randint(1, 2) if plnt in ('PL10','PL07','PL05') else random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
-                        "WEBAZ": random.randint(2, 6),
+                        "WEBAZ": random.randint(1, 2) if plnt in ('PL10','PL07','PL05') else random.randint(2, 6),
                         "WERKS": plnt
                     }
                 MBEW_json[str(uuid.uuid4())] = {
