@@ -425,8 +425,7 @@ class Inventory:
         )
     
     def create_production_order_header(self, cpudt, ernam, atime):
-        for i in range(len(self.params['matnrs'])): 
-            self.tables['AFKO_json'][str(uuid.uuid4())] = {
+        self.tables['AFKO_json'][str(uuid.uuid4())] = {
                 "MANDT":values.mandt,
                 "AUFNR":self.prod_order_number,
                 "GSTRS": cpudt, #ScheduledStartTime
@@ -438,7 +437,7 @@ class Inventory:
                 "GLTRI": cpudt + timedelta(days=random.randint(5,15)), #FinishTime
                 "GEUZI": atime,
             }
-            self.tables['AUFK_json'][str(uuid.uuid4())] = {
+        self.tables['AUFK_json'][str(uuid.uuid4())] = {
                 "MANDT": values.mandt,
                 "AUFNR": self.prod_order_number,
                 "ERNAM": ernam,
@@ -447,6 +446,7 @@ class Inventory:
                 "ERFZEIT": atime
             }
 
+        for i in range(len(self.params['matnrs'])): 
             self.tables['AFPO_json'][str(uuid.uuid4())] = {
                 "MANDT": values.mandt,
                 "AUFNR": self.prod_order_number,
