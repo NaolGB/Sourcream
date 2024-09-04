@@ -1,4 +1,4 @@
-mandt = 'ME1'
+mandt = 'ME'
 
 om_sales_orgs = {
     'EMEA': {

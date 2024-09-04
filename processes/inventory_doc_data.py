@@ -1,7 +1,8 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-import masterdata.values as values, extras.helpers as helpers
+from masterdata import values
+from extras import helpers
 
 class Inventory:
     def __init__(self, vbeln, params, start_date:datetime, index) -> None:
@@ -23,6 +24,7 @@ class Inventory:
         self.mblnr = f'{str(uuid.uuid4())[-11:]}'
         self.start_date = start_date
         self.mjahr = int(start_date.year)
+        self.prod_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
 
         self.tables = {
             'EBAN_json': {}, 
@@ -36,6 +38,17 @@ class Inventory:
             'RBKP_json': {},
             'RSEG_json': {},
             'EKET_json': {},
+            'AFKO_json': {},
+            'AFPO_json': {},
+            'VBAK_json': {},
+            'VBAP_json': {},
+            'AUFK_json': {},
+            'VBFA_json': {},
+            'LIKP_json': {},
+            'LIPS_json': {},
+            'VBKD_json': {},
+            'VBUK_json': {},
+            'VBEP_json': {}
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, utime, tcode='DEFAULT'):
@@ -66,6 +79,22 @@ class Inventory:
             "VALUE_OLD": valold,
         }
 
+    def record_flow(self, erdat, prev_vbeln, next_vbeln, prev_type, next_type):
+        for i in range(len(self.params['matnrs'])):
+            self.tables['VBFA_json'][str(uuid.uuid4())] = {
+                "MANDT": values.mandt,
+                "VBELV": prev_vbeln,
+                "POSNV": i,
+                "VBTYP_V": prev_type,
+                "VBELN": next_vbeln,
+                "POSNN": i,
+                "VBTYP_N": next_type,
+                "ERDAT": erdat,
+                "ERZET": helpers.generate_random_time(),
+                "MATNR": self.params['matnrs'][i]
+            }
+    
+    
     def create_purchase_order(self, aedat, ernam, utime):
         header_time = helpers.generate_random_time()
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
@@ -348,7 +377,7 @@ class Inventory:
             next_type='C'
         )
     
-    def post_goods_issue(self, cpudt, usnam, atime, delivery_date_deviation, all_units=values.om_units):
+    def post_goods_issue(self, cpudt, usnam, atime, all_units=values.om_units):
         for i in range(len(self.params['matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
@@ -386,23 +415,7 @@ class Inventory:
                 "WAERS": 'EUR',
                 "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
             }
-
-            # Change the confirmed delivery date of the item to influence late, early
-            #creation_date
-            #late or early
-            #self.params['delivery_date_deviation'][i]
-            if delivery_date_deviation[i] != 0:
-                date_dev = max(self.start_date + timedelta(days=1), cpudt+timedelta(days=delivery_date_deviation[i]))
-                print(f'---- Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=1)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
-            else:
-                date_dev = cpudt
-            #print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
-            for k, v in self.tables['VBEP_json'].items():
-                if (v['VBELN'] == self.vbeln) and (v['POSNR'] == i):
-                    self.tables['VBEP_json'][k]["EDATU"] = date_dev
-
-
-        
+     
         self.record_flow( 
             erdat=cpudt, 
             prev_vbeln=self.likp_vbeln, 
@@ -410,4 +423,124 @@ class Inventory:
             next_vbeln=self.mblnr, 
             next_type='R'
         )
-  
+    
+    def create_production_order_header(self, cpudt, ernam, atime):
+        for i in range(len(self.params['matnrs'])): 
+            self.tables['AFKO_json'][str(uuid.uuid4())] = {
+                "MANDT":values.mandt,
+                "AUFNR":self.prod_order_number,
+                "GSTRS": cpudt, #ScheduledStartTime
+                "GSUZS": atime,
+                "GLTRS": cpudt, #ScheduledFinishTime
+                "GLUZS": atime,
+                "GSTRI": cpudt, #StartTime
+                "GSUZI": atime,
+                "GLTRI": cpudt + timedelta(days=random.randint(5,15)), #FinishTime
+                "GEUZI": atime,
+            }
+            self.tables['AUFK_json'][str(uuid.uuid4())] = {
+                "MANDT": values.mandt,
+                "AUFNR": self.prod_order_number,
+                "ERNAM": ernam,
+                "AUTYP": '10',
+                "ERDAT": cpudt,
+                "ERFZEIT": atime
+            }
+
+            self.tables['AFPO_json'][str(uuid.uuid4())] = {
+                "MANDT": values.mandt,
+                "AUFNR": self.prod_order_number,
+                "POSNR": i,
+                "ETRMP": atime,
+                "PSMNG": random.randint(1,15),
+                "MEINS": self.unit,
+                "WEMNG": random.randint(1,15),
+                "DWERK": self.params['plant'],
+                "MATNR": self.params['matnrs'][i],
+                "XLOEK": None,
+                "ELIKZ": None,
+            }
+
+    def generate_delivery_document(
+            self, 
+            ernam, 
+            erdat,
+            planned_delivery_date,
+            picking_date,
+            delivery_date,
+            confirmation_date,
+            atime,
+            all_units=values.om_units,
+        ):
+        self.tables['LIKP_json'][str(uuid.uuid4())] = {
+            "BTGEW": 99, # TODO add custom value
+            "ERDAT": erdat,
+            "ERNAM": ernam,
+            "ERZET": atime,
+            "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+            "KODAT": picking_date,  #PickingDate
+            "KOUHR": atime,         #PickingDate
+            "KUNNR": self.params['kunnr'],
+            "LFART": 'D', # TODO add custom value
+            "LFDAT": delivery_date,
+            "MANDT": values.mandt,
+            "NTGEW": len(self.params['matnrs'])*99, # TODO add custom weight and assign accordingly to VBAP
+            "PODAT": confirmation_date,
+            "POTIM": atime,
+            "VBELN": self.likp_vbeln,
+            "VBTYP": 'J',
+            "VOLEH": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+            "VOLUM": 99, # TODO add custom value
+            "WADAT": planned_delivery_date,
+        }
+
+
+
+        for i in range(len(self.params['matnrs'])):
+            self.tables['LIPS_json'][str(uuid.uuid4())] = {
+                "ERDAT": erdat,
+                "ERNAM": ernam,
+                "ERZET": str(helpers.add_random_hours(1, atime)),
+                "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "LFIMG": self.params['quantities'][i],
+                "LGORT": 'D',#TODO add custom value
+                "MANDT": values.mandt,
+                "MATNR": self.params['matnrs'][i],
+                "NTGEW": 99, # TODO add custom value
+                "POSNR": i,
+                "VBELN": self.likp_vbeln,
+                "VGBEL": self.vbeln,
+                "VGPOS": i,
+                "VGTYP": 'C',
+                "VOLEH": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "VOLUM": 99, # TODO add custom value
+                "VRKME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "WERKS": self.params['plant']
+            }
+        self.record_flow( 
+            erdat=erdat, 
+            prev_vbeln=self.vbeln, 
+            prev_type='C', 
+            next_vbeln=self.likp_vbeln, 
+            next_type='J'
+        )
+    
+    # def begin_production_order(self, cpudt, usnam, atime):
+    #     for i in range(len(self.params['matnrs'])):
+
+    # def adjust_stock_history(self):
+    #     for i in range(len(self.params['matnrs'])):
+    #         self.tables['MBEWH_json'][str(uuid.uuid4())] = {
+    #             "BWKEY": 
+    #             "BWTAR": 
+    #             "LBKUM": 
+    #             "LFGJA": 
+    #             "LFMON": 
+    #             "MANDT": 
+    #             "MATNR": 
+    #             "PEINH": 
+    #             "SALK3": 
+    #             "STPRS": 
+    #             "VERPR": 
+    #             "VPRSV":
+    #         }

@@ -845,7 +845,7 @@ class SalesAndDistribution:
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['POSNR'] == item_position):
                     self.tables['VBAP_json'][k]['NETPR'] = new_value
-                    self.tables['VBAP_json'][k]['NETWR']: round(self.params['prices'][item_position]*self.params['quantities'][item_position], 4)
+                    self.tables['VBAP_json'][k]['NETWR']: round((self.params['prices'][item_position])*(self.params['quantities'][item_position]), 4) # type: ignore
 
         for k, v in self.tables['VBAK_json'].items():
                 if v['VBELN'] == self.vbeln:
