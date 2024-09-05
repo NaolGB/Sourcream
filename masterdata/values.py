@@ -587,10 +587,12 @@ shipping_conditions = {
     'ES': 'Express Shipping'
 }
 goods_movement_types = { # TODO check codes
-    'GoodsIssue': {'code': '601', 'is_reverse': None},
-    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X'},
-    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X'},
-    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X'},
+    'GoodsIssue': {'code': '601', 'is_reverse': None, 'consumptionpost':'G' , 'DebCredInd':'H'},
+    'ReverseGoodsIssue': {'code': '602', 'is_reverse': 'X', 'consumptionpost':'G' , 'DebCredInd':'S'},
+    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X', 'consumptionpost':'G','DebCredInd':'H'},
+    'GoodsReceipt':{'code':'101', 'is_reverse': None, 'consumptionpost': 'G','DebCredInd':'S'},
+    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X', 'consumptionpost':'G','DebCredInd':'H'},
+    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X', 'consumptionpost': 'G','DebCredInd':'H'},
 }
 dd07t_combinations = {
     'VBAK': [

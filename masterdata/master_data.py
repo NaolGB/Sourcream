@@ -179,6 +179,8 @@ def materials(
                     "MANDT": values.mandt,
                     "MATNR": matnr,
                     "MEINH": all_dimensions[random.choice(list(all_dimensions.keys()))]['MSSIE'],
+                    "UMREN": 1.0,
+                    "UMREZ": 1.0
                 }
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
@@ -232,7 +234,10 @@ def material_support(
         T006_json[str(uuid.uuid4())] = {
             "DIMID": v['DIMID'],
             "MANDT": values.mandt,
-            "MSEHI": v['MSEHI']
+            "MSEHI": v['MSEHI'],
+            "ZAEHL": 1,
+            "NENNR": 1,
+            "EXP10": 1
         }
     for _, v in all_dimensions.items():
         T006D_json[str(uuid.uuid4())] = {

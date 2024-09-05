@@ -100,6 +100,8 @@ def distribution(shipping_conditions=values.shipping_conditions, all_movt_types=
             "BWART": v['code'],
             "MANDT": values.mandt,
             "XSTBW": v['is_reverse'],
+            "KZVBU": v['consumptionpost'],
+            "SHKZG": v['DebCredInd']
         }
 
     return {'TVSBT_json': TVSBT_json, 'T156_json': T156_json}
