@@ -84,7 +84,7 @@ om_plants = {
     'PL17': {'country_key': 'US', 'country_name': 'United States', 'name': 'New York Plant', 'purchasing_orgs': ['NAM'], 'high_value': True},
     'PL18': {'country_key': 'ZA', 'country_name': 'South Africa', 'name': 'South Africa Plant', 'purchasing_orgs': ['EMEA'], 'high_value': False},	
 }
-om_valuation_areas = ['VA01']
+om_valuation_areas = ['PL01', 'PL02', 'PL03', 'PL04', 'PL05', 'PL06', 'PL07', 'PL08', 'PL09', 'PL10', 'PL11', 'PL12', 'PL13', 'PL14', 'PL15', 'PL16', 'PL17', 'PL18']
 om_company_codes = {
     'ID01': {'BUTXT': 'SourCream ID01', 'plants': ['PL01'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.6},
     'QA01': {'BUTXT': 'SourCream QA01', 'plants': ['PL02'], 'free_text_pr_probability': 0.9, 'incorrect_qty_prbobability': 0.6},

@@ -198,7 +198,7 @@ class Inventory:
 
             if self.params['delivery_status'][i] < 0:
                 if random.random() < 0.3: # If early, then there is a chance it is not in full (Still open) -- by Naol Basaye
-                    delivered_quanity -= delivered_quanity*random.random()
+                    delivered_quanity -= round(delivered_quanity*random.random(),0)
 
             
             self.post_goods_receipt(cpudt=cpudt, usnam=usnam, atime=atime, item_position=i, delivered_quanity=delivered_quanity)
@@ -252,7 +252,7 @@ class Inventory:
         }
 
         self.tables['MBEWH_json'][str(uuid.uuid4())] = {
-            "BWKEY": 'VA01',
+            "BWKEY": self.params['plant'],
             "BWTAR": None,
             "LBKUM": (random.randint(500, 10000)),
             "LFGJA": self.fy,

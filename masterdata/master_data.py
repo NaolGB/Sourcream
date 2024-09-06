@@ -202,18 +202,20 @@ def materials(
                         "WEBAZ": random.randint(2, 6),
                         "WERKS": plnt
                     }
-                MBEW_json[str(uuid.uuid4())] = {
-                    "BWKEY": random.choice(values.om_valuation_areas),
-                    "BWTAR": None,
-                    "LBKUM": quantity,
-                    "MANDT": values.mandt,
-                    "MATNR": matnr,
-                    "PEINH": 99, # TODO add custom value
-                    "SALK3": round(quantity*price, 4),
-                    "STPRS": price,
-                    "VERPR": price,
-                    "VPRSV": 'D', # TODO add custom value
-                }
+                
+                for plant in list(all_plants.keys()):
+                    MBEW_json[str(uuid.uuid4())] = {
+                        "BWKEY": plant,
+                        "BWTAR": None,
+                        "LBKUM": quantity,
+                        "MANDT": values.mandt,
+                        "MATNR": matnr,
+                        "PEINH": 99, # TODO add custom value
+                        "SALK3": round(quantity*price, 4),
+                        "STPRS": price,
+                        "VERPR": price,
+                        "VPRSV": 'D', # TODO add custom value
+                    }
 
     return {'MAKT_json': MAKT_json,'MARA_json': MARA_json,'MARM_json': MARM_json,'MARC_json': MARC_json,'MBEW_json': MBEW_json}
 
