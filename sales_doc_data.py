@@ -229,7 +229,7 @@ class SalesAndDistribution:
     def reject_sales_order(self, udate, usnam, all_rejection_reasons=values.om_sales_doc_rejection_reasons):
         for i  in range(len(self.params['matnrs'])):
             # new_val = all_rejection_reasons[random.choice(list(all_rejection_reasons.keys()))]['ABGRU']
-            new_val = 'Z0' if random.random() < 0.7 else random.choice(list(values.om_sales_doc_rejection_reasons.keys()))
+            new_val = '02' if random.random() < 0.7 else random.choice(list(values.om_sales_doc_rejection_reasons.keys()))
             #new_val = 'Z0' if random.random() < 0.7 else 'Z1'
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -351,7 +351,8 @@ class SalesAndDistribution:
         )
 
     def set_delivery_block(self, udate, usnam, all_delivery_blocs=values.om_delivery_blocks):
-        new_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        # new_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        new_value='01'
         self.changes(
             objid=str(uuid.uuid4()), 
             objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
@@ -371,7 +372,8 @@ class SalesAndDistribution:
                 self.tables['VBAK_json'][k]['LIFSK'] = new_value
 
     def release_delivery_block(self, udate, usnam, all_delivery_blocs=values.om_delivery_blocks):
-        old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        # old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
+        old_value='01'
         self.changes(
             objid=str(uuid.uuid4()), 
             objclas='VERKBELEG', # CHANGED FROM str(uuid.uuid4()), 
@@ -382,7 +384,7 @@ class SalesAndDistribution:
             fname='LIFSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold=old_value,
+            valold='Removed block',
             valnew=None
         )
 
@@ -457,7 +459,7 @@ class SalesAndDistribution:
             #self.params['delivery_date_deviation'][i]
             if delivery_date_deviation[i] != 0:
                 date_dev = max(self.start_date + timedelta(days=1), cpudt+timedelta(days=delivery_date_deviation[i]))
-                print(f'---- Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=1)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
+                # print(f'---- Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=1)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
             else:
                 date_dev = cpudt
             #print(f'Deviation from delivery date is {delivery_date_deviation[i]} days. Min Date is {self.start_date+ timedelta(days=5)} new date should be {cpudt+timedelta(days=delivery_date_deviation[i])} new scheduled date is {date_dev}')
@@ -612,7 +614,7 @@ class SalesAndDistribution:
             fname='FAKSK', 
             tabkey=f'{values.mandt}{self.vbeln}', 
             tabname='VBAK', 
-            valold=old_value,
+            valold='Removed Block',
             valnew=None
         )
 
@@ -635,7 +637,7 @@ class SalesAndDistribution:
                 fname='FAKSP', 
                 tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
                 tabname='VBAP', 
-                valold=old_value,
+                valold='Removed Block',
                 valnew=None
             )
 
@@ -671,7 +673,7 @@ class SalesAndDistribution:
             fname='FAKSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1',     
-            valold=old_value,
+            valold='Removed Block',
             valnew=None
         )
 
@@ -703,7 +705,7 @@ class SalesAndDistribution:
             fname='LIFSD', 
             tabkey=f'{values.mandt}{self.params["kunnr"]}', 
             tabname='KNA1',     
-            valold=old_value,
+            valold='Removed Block',
             valnew=None
         )
 

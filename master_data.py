@@ -98,7 +98,9 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             "PSTLZ": 'PSTC', # TODO add postal code
             "REGIO": v['region'],
             "STRAS": 'ADD1', # TODO add address liner
-            "VBUND": None
+            "VBUND": None,
+            "LIFSD": None,
+            "FAKSD": None
         }
         for bukrs in list(all_company_codes.keys()):
             KNB1_json[str(uuid.uuid4())] = {

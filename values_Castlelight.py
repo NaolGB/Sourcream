@@ -147,7 +147,7 @@ om_billing_blocks = {
     },
     '02': {
         'FAKSP': '02',
-        'VTEXT': 'Customer'
+        'VTEXT': 'Customer Block'
     }
 }
 om_delivery_blocks = {
@@ -157,7 +157,7 @@ om_delivery_blocks = {
     },
     '02': {
         'LIFSP': '02',
-        'VTEXT': 'Customer'
+        'VTEXT': 'Customer Block'
     }
 }
 
@@ -202,24 +202,32 @@ om_sales_doc_item_categories = {
     }
 }
 om_sales_doc_rejection_reasons = {
-    'Z0': {
-        'ABGRU': 'Z0',
-        'BEZEI': 'Incorrect Sales Document Entries'
+    # 'Z0': {
+    #     'ABGRU': 'Z0',
+    #     'BEZEI': 'Incorrect Sales Document Entries'
+    # },
+    # 'Z1': {
+    #     'ABGRU': 'Z1',
+    #     'BEZEI': 'Invalid Sales Order'
+    # },
+    '10': {
+        'ABGRU': '10',
+        'BEZEI': 'Unreasonable request'
     },
-    'Z1': {
-        'ABGRU': 'Z1',
-        'BEZEI': 'Invalid Sales Order'
+    '11': {
+        'ABGRU': '11',
+        'BEZEI': 'Cust.to receive replacement'
     },
-    '00': {
-        'ABGRU': '00',
+    '03': {
+        'ABGRU': '03',
         'BEZEI': 'Too expensive'
     },
     '01': {
         'ABGRU': '01',
         'BEZEI': 'Delivery date too late'
     },
-    'Z4': {
-        'ABGRU': 'Z4',
+    '02': {
+        'ABGRU': '02',
         'BEZEI': 'Poor quality'
     }
 }
