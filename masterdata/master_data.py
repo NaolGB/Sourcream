@@ -188,7 +188,7 @@ def materials(
                         "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value
-                        "DISMM": 'D', # TODO add custom value
+                        "DISMM": 'PD', # TODO add custom value
                         "DISPO": 'D', # TODO add custom value
                         "DZEIT": 99, # TODO add custom value
                         "EISBE": 99, # TODO add custom value
@@ -281,3 +281,39 @@ def routes(all_routes=values.om_routes):
         }
     
     return {'TVRO_json': TVRO_json}
+
+def currencyexchanges():
+    TCURR_json = {}
+    TCURF_json = {}
+    TCURX_json = {}
+
+    validityperiods = ['79759898','79769898']  # 20240101 and 20230101
+
+    for i in validityperiods:
+        TCURR_json[str(uuid.uuid4())] = {
+            "FCURR": 'EUR',
+            "FFACT": 1,
+            "GDATU": i,
+            "KURST": 'EURX',
+            "MANDT": values.mandt,
+            "TCURR": 'EUR',
+            "TFACT": 1,
+            "UKURS": 1
+        }
+
+        TCURF_json[str(uuid.uuid4())] = {
+        "FCURR":'EUR',
+        "FFACT": 1,
+        "GDATU": i,
+        "KURST": 'EURX',
+        "MANDT": values.mandt,
+        "TCURR": 'EUR',
+        "TFACT": 1,
+        }
+    
+    TCURX_json[str(uuid.uuid4())] = {
+	"CURRDEC": 2,
+	"CURRKEY": 'EUR'
+    }
+
+    return {'TCURR_json': TCURR_json, 'TCURF_json': TCURF_json, 'TCURX_json': TCURX_json}
