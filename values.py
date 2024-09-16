@@ -17,7 +17,7 @@ om_sales_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -31,7 +31,7 @@ om_sales_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',

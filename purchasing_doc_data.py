@@ -127,8 +127,8 @@ class Purchasing:
                 'MATNR': self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'NETPR': self.params['prices'][i],
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2),
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
                 "TXZ01": self.params['matnrs'][i],
@@ -136,7 +136,7 @@ class Purchasing:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -238,6 +238,7 @@ class Purchasing:
             )
         for i in range(len(self.params['matnrs'])):
             randnom = random.random()
+            priceifnocontract = self.params['prices'][i] * (random.randint() + 1)
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
@@ -257,8 +258,8 @@ class Purchasing:
                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else priceifnocontract,
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(priceifnocontract * self.params['quantities'][i], 2) ,
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
@@ -266,7 +267,7 @@ class Purchasing:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 

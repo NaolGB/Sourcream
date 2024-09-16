@@ -17,7 +17,7 @@ om_sales_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -31,7 +31,7 @@ om_sales_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -257,7 +257,7 @@ om_material_groups = {
             'availability': 0.6,
             'has_contract_probability': 0.8,
             'materials': {
-                'Engine Block (each)': {'price': 1000.00},
+                'Engine Block (each)': {'price': 950.00},
                 'Cylinder Heads (each)': {'price': 500.00},
                 'Pistons (per set)': {'price': 300.00},
                 'Crankshaft (each)': {'price': 700.00},
@@ -319,8 +319,8 @@ om_material_groups = {
             'availability': 0.2,
             'has_contract_probability': 0.2,
             'materials': {
-                'Cab Shell (each)': {'price': 5000.00},
-                'Doors (each)': {'price': 1000.00},
+                'Cab Shell (each)': {'price': 2500.00},
+                'Doors (each)': {'price': 850.00},
                 'Windows (each)': {'price': 200.00},
                 'Roof Panel (each)': {'price': 300.00},
                 'Floor Panel (each)': {'price': 400.00}
