@@ -184,7 +184,7 @@ def materials(
                 }
                 for plnt in random.sample(list(all_plants.keys()), 5):
                     MARC_json[str(uuid.uuid4())] = {
-                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 12, 1), end_date=datetime(2026, 1, 1)), # HACK after all SO and procurement have passed
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2027, 12, 1), end_date=datetime(2030, 1, 1)), # HACK after all SO and procurement have passed
                         "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value
@@ -214,7 +214,7 @@ def materials(
                         "SALK3": round(quantity*price, 4),
                         "STPRS": price,
                         "VERPR": price,
-                        "VPRSV": 'D', # TODO add custom value
+                        "VPRSV": 'V', # TODO add custom value
                     }
 
     return {'MAKT_json': MAKT_json,'MARA_json': MARA_json,'MARM_json': MARM_json,'MARC_json': MARC_json,'MBEW_json': MBEW_json}

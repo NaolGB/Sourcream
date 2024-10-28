@@ -17,7 +17,7 @@ om_sales_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -31,7 +31,7 @@ om_sales_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -438,6 +438,20 @@ om_material_groups = {
 
         }
     },
+    'Cars': {
+        'MATKL040': {
+            'name': 'Suspension System',
+            'availability': 1,
+            'has_contract_probability': 1,
+            'materials': {
+                'Meritor Ascentra': {'price': 50000.00},
+                'Meritor Trailhawk': {'price': 70000.00},
+                'Meritor Voltura': {'price': 80000.00},
+                'Meritor Enclave GX': {'price': 60000.00},
+                'Meritor Elara': {'price': 40000.00}
+            }
+        }
+    }
 }
 om_customers = {
     "DAF Trucks": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
@@ -490,7 +504,7 @@ proc_purchasing_orgs = {
     },
     'NAM': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -609,4 +623,410 @@ release_indicators = {
         'FRGKZ': 'X',
         'FKZTX': 'Blocked'
     },
+}
+
+om_material_groups2 = {
+    {
+    "Meritor Ascentra": {
+        "price": 50000,
+        "materials": {
+        "Chassis Components": {
+            "Frame Rails": {
+            "type": "Aluminum Frame Rails",
+            "quantity": 5,
+            "unit": "meter",
+            "price": 750.00
+            },
+            "Crossmembers": {
+            "type": "Aluminum Crossmembers",
+            "quantity": 4,
+            "unit": "each",
+            "price": 320.00
+            },
+            "Suspension": {
+            "type": "Shock Absorbers",
+            "quantity": 4,
+            "unit": "each",
+            "price": 600.00
+            },
+            "Steering": {
+            "type": "Steering Column Assembly",
+            "quantity": 1,
+            "unit": "each",
+            "price": 200.00
+            },
+            "Brackets and Mounts": {
+            "type": "Reinforced Steel Mounts",
+            "quantity": 4,
+            "unit": "each",
+            "price": 140.00
+            }
+        },
+        "Powertrain Components": {
+            "Engine Assembly": {
+            "type": "Engine Block",
+            "quantity": 1,
+            "unit": "each",
+            "price": 1000.00
+            },
+            "Cylinder Heads": {
+            "type": "Cylinder Heads",
+            "quantity": 1,
+            "unit": "each",
+            "price": 500.00
+            },
+            "Transmission Assembly": {
+            "type": "Transmission Housing",
+            "quantity": 1,
+            "unit": "each",
+            "price": 800.00
+            },
+            "Drivetrain Components": {
+            "type": "CV Joints",
+            "quantity": 1,
+            "unit": "set",
+            "price": 150.00
+            }
+        },
+        "Body Components": {
+            "Cab Structure": {
+            "type": "Cab Shell",
+            "quantity": 1,
+            "unit": "each",
+            "price": 5000.00
+            },
+            "Doors": {
+            "quantity": 4,
+            "unit": "each",
+            "price": 4000.00
+            },
+            "Windows": {
+            "quantity": 6,
+            "unit": "each",
+            "price": 1200.00
+            },
+            "Interior Components": {
+            "type": "Seats",
+            "quantity": 4,
+            "unit": "each",
+            "price": 2000.00
+            },
+            "Carpeting": {
+            "type": "Carpeting",
+            "quantity": 10,
+            "unit": "square meter",
+            "price": 500.00
+            }
+        },
+        "Auxiliary Components": {
+            "Suspension System": {
+            "type": "Control Arms",
+            "quantity": 2,
+            "unit": "each",
+            "price": 200.00
+            },
+            "Cooling System": {
+            "type": "Radiator",
+            "quantity": 1,
+            "unit": "each",
+            "price": 400.00
+            },
+            "Brake System": {
+            "type": "Brake Pads",
+            "quantity": 4,
+            "unit": "set",
+            "price": 200.00
+            },
+            "Electrical System": {
+            "type": "Battery",
+            "quantity": 1,
+            "unit": "each",
+            "price": 100.00
+            }
+        }
+        }
+    },
+    "Meritor Trailhawk": {
+        "price": 70000,
+        "materials": {
+        "Chassis Components": {
+            "Frame Rails": {
+            "type": "Reinforced Steel Frame Rails",
+            "quantity": 5,
+            "unit": "meter",
+            "price": 600.00
+            },
+            "Crossmembers": {
+            "type": "Reinforced Steel Crossmembers",
+            "quantity": 6,
+            "unit": "each",
+            "price": 420.00
+            },
+            "Suspension": {
+            "type": "Leaf Springs",
+            "quantity": 1,
+            "unit": "set",
+            "price": 300.00
+            },
+            "Steering": {
+            "type": "Power Steering Pump",
+            "quantity": 1,
+            "unit": "each",
+            "price": 150.00
+            },
+            "Brackets and Mounts": {
+            "type": "Steel Brackets",
+            "quantity": 8,
+            "unit": "each",
+            "price": 160.00
+            }
+        },
+        "Powertrain Components": {
+            "Engine Assembly": {
+            "type": "Crankshaft",
+            "quantity": 1,
+            "unit": "each",
+            "price": 700.00
+            },
+            "Cylinder Heads": {
+            "type": "Cylinder Heads",
+            "quantity": 1,
+            "unit": "each",
+            "price": 500.00
+            },
+            "Transmission Assembly": {
+            "type": "Transmission Gears",
+            "quantity": 1,
+            "unit": "set",
+            "price": 400.00
+            },
+            "Drivetrain Components": {
+            "type": "Differential",
+            "quantity": 1,
+            "unit": "each",
+            "price": 500.00
+            }
+        },
+        "Body Components": {
+            "Cab Structure": {
+            "type": "Cab Shell",
+            "quantity": 1,
+            "unit": "each",
+            "price": 5000.00
+            },
+            "Roof Panel": {
+            "quantity": 1,
+            "unit": "each",
+            "price": 300.00
+            },
+            "Floor Panel": {
+            "quantity": 1,
+            "unit": "each",
+            "price": 400.00
+            },
+            "Cargo Area": {
+            "type": "Cargo Box",
+            "quantity": 1,
+            "unit": "each",
+            "price": 800.00
+            }
+        },
+        "Auxiliary Components": {
+            "Suspension System": {
+            "type": "Bushings",
+            "quantity": 1,
+            "unit": "set",
+            "price": 50.00
+            },
+            "Cooling System": {
+            "type": "Cooling Fan",
+            "quantity": 1,
+            "unit": "each",
+            "price": 150.00
+            },
+            "Air Intake System": {
+            "type": "Turbocharger",
+            "quantity": 1,
+            "unit": "each",
+            "price": 500.00
+            },
+            "Electrical System": {
+            "type": "Alternator",
+            "quantity": 1,
+            "unit": "each",
+            "price": 200.00
+            }
+        }
+        }
+    },
+    "Meritor Voltura": {
+        "price": 80000,
+        "materials": {
+        "Chassis Components": {
+            "Frame Rails": {
+            "type": "Composite Frame Rails",
+            "quantity": 5,
+            "unit": "meter",
+            "price": 1000.00
+            },
+            "Crossmembers": {
+            "type": "Composite Crossmembers",
+            "quantity": 4,
+            "unit": "each",
+            "price": 240.00
+            },
+            "Suspension": {
+            "type": "Air Springs",
+            "quantity": 4,
+            "unit": "each",
+            "price": 800.00
+            },
+            "Steering": {
+            "type": "Tie Rods",
+            "quantity": 1,
+            "unit": "set",
+            "price": 100.00
+            },
+            "Brackets and Mounts": {
+            "type": "Aluminum Brackets",
+            "quantity": 4,
+            "unit": "each",
+            "price": 120.00
+            }
+        },
+        "Powertrain Components": {
+            "Engine Assembly": {
+            "type": "Pistons",
+            "quantity": 1,
+            "unit": "set",
+            "price": 300.00
+            },
+            "Transmission Assembly": {
+            "type": "Clutch Kit",
+            "quantity": 1,
+            "unit": "set",
+            "price": 300.00
+            },
+            "Drivetrain Components": {
+            "type": "Axles",
+            "quantity": 1,
+            "unit": "set",
+            "price": 600.00
+            },
+            "Exhaust System": {
+            "type": "Catalytic Converter",
+            "quantity": 1,
+            "unit": "each",
+            "price": 300.00
+            }
+        },
+        "Body Components": {
+            "Cab Structure": {
+            "type": "Doors",
+            "quantity": 4,
+            "unit": "each",
+            "price": 4000.00
+            },
+            "Exterior Panels": {
+            "type": "Fenders",
+            "quantity": 2,
+            "unit": "each",
+            "price": 600.00
+            },
+            "Lights": {
+            "type": "Headlights",
+            "quantity": 2,
+            "unit": "each",
+            "price": 300.00
+            },
+            "Paint and Coating": {
+            "type": "Automotive Paint",
+            "quantity": 2,
+            "unit": "liter",
+            "price": 500.00
+            }
+        },
+        "Auxiliary Components": {
+            "Suspension System": {
+            "type": "Shock Absorbers",
+            "quantity": 4,
+            "unit": "each",
+            "price": 600.00
+            },
+            "Battery": {
+            "type": "Lithium-Ion Battery Pack",
+            "quantity": 1,
+            "unit": "each",
+            "price": 4000.00
+            },
+            "Heating, Ventilation, and Air Conditioning": {
+            "type": "HVAC System",
+            "quantity": 1,
+            "unit": "each",
+            "price": 2000.00
+            }
+        }
+        }
+    },
+    "Meritor Enclave GX": {
+        "price": 60000,
+        "materials": {
+        "Chassis Components": {
+            "Frame Rails": {
+            "type": "Steel Frame Rails",
+            "quantity": 5,
+            "unit": "meter",
+            "price": 550.00
+            },
+            "Crossmembers": {
+            "type": "Steel Crossmembers",
+            "quantity": 6,
+            "unit": "each",
+            "price": 500.00
+            },
+            "Brackets and Mounts": {
+            "type": "Steel Mounts",
+            "quantity": 4,
+            "unit": "each",
+            "price": 100.00
+            }
+        },
+        "Powertrain Components": {
+            "Engine Assembly": {
+            "type": "V8 Engine",
+            "quantity": 1,
+            "unit": "each",
+            "price": 10000.00
+            }
+        }
+        }
+    },
+    "Meritor Elara": {
+        "price": 40000,
+        "materials": {
+        "Chassis Components": {
+            "Frame Rails": {
+            "type": "Recycled Steel Frame Rails",
+            "quantity": 5,
+            "unit": "meter",
+            "price": 300.00
+            },
+            "Crossmembers": {
+            "type": "Steel Crossmembers",
+            "quantity": 4,
+            "unit": "each",
+            "price": 280.00
+            }
+        },
+        "Body Components": {
+            "Exterior Panels": {
+            "type": "Plastic Body Panels",
+            "quantity": 4,
+            "unit": "each",
+            "price": 400.00
+            }
+        }
+        }
+    }
+    }
 }
