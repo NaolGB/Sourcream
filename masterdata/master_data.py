@@ -148,6 +148,13 @@ def materials(
     MARM_json = {}
     MARC_json = {}
     MBEW_json = {}
+    MAST_json = {}
+    STKO_json = {}
+    STAS_json = {}
+    STPO_json = {}
+    T460A_json = {}
+    T415S_json = {}
+    T418_json = {}
 
     for index_0, (_, mat_grps) in enumerate(all_material_groups.items()):
         for index_1, (grp_code, v) in enumerate(mat_grps.items()):
@@ -200,7 +207,17 @@ def materials(
                         "PLIFZ": random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
                         "WEBAZ": random.randint(2, 6),
-                        "WERKS": plnt
+                        "WERKS": plnt,
+                        "SOBSL": '80'
+                    }
+
+                    MAST_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "MATNR": matnr,
+                        "WERKS": plnt,
+                        "STLAN":'1',
+                        "STLNR":'01',
+                        "STLAL":'01'
                     }
                 
                 for plant in list(all_plants.keys()):
@@ -217,7 +234,80 @@ def materials(
                         "VPRSV": 'V', # TODO add custom value
                     }
 
-    return {'MAKT_json': MAKT_json,'MARA_json': MARA_json,'MARM_json': MARM_json,'MARC_json': MARC_json,'MBEW_json': MBEW_json}
+                    #Adding BOM tables 
+
+    
+                    STKO_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "STLTY":'M',
+                        "STLNR":'01',
+                        "STLAL":'01',
+                        "STKOZ": random.randint(1,5),
+                        "WRKAN": plant,
+                        "STLST": '01'
+                    }
+
+                    STAS_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "STLTY":'M',
+                        "STLNR":'01',
+                        "STLAL":'01',
+                        "STLKN":random.randint(1,5),
+                        "STASZ":random.randint(1,5),
+                    }
+    
+                    STPO_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "STLTY":'M',
+                        "STLNR":'01',
+                        "STLKN": random.randint(1,5),
+                        "STPOZ": random.randint(1,5),
+                        "IDNRK":material,
+                        "WRKAN":plant,
+                        "POSTP" : 'L'
+                    }
+    
+                    T460A_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "WRK02":plant,
+                        "WERKS":plant,
+                        "SOBSL":'80',
+                    }
+
+                    T415S_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "KZBDP": 'X',
+                        "STLST": '01'
+                    }
+    
+                    T418_json[str(uuid.uuid4())] = {
+                        "MANDT": values.mandt,
+                        "POSTP":'L',
+                        "MATIN":'+',
+                        "KZBSF":'X',
+                    }
+
+
+    return {
+        'MAKT_json': MAKT_json,
+        'MARA_json': MARA_json,
+        'MARM_json': MARM_json,
+        'MARC_json': MARC_json,
+        'MBEW_json': MBEW_json,
+        'MAST_json' : MAST_json,
+        'STKO_json' : STKO_json,
+        'STAS_json' : STAS_json,
+        'STPO_json' : STPO_json,
+        'T460A_json': T460A_json,
+        'T415S_json': T415S_json,
+        'T418_json' : T418_json,
+    }
+
+
+
+
+
+
 
 def material_support(
         all_units=values.om_units, 

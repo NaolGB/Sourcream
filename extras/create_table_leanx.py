@@ -49,7 +49,7 @@ required_table_columns = {
     'LIPS' : ['POSNR', 'VBELN', 'VGPOS', 'VGTYP', 'MANDT', 'VGBEL', 'LFIMG', 'VRKME', 'NTGEW', 'GEWEI', 'VOLUM', 'VOLEH', 'LGORT', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET' ],
     'MAKT' : ['MANDT', 'MATNR', 'SPRAS', 'MAKTX'],
     'MARA' : ['MANDT', 'MATNR', 'ERNAM', 'ERSDA', 'MATKL', 'MBRSH', 'MEINS', 'MTART', 'PRDHA'],
-    'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS'],
+    'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS','SOBSL'],
     'MARM' : ['MANDT', 'MATNR', 'MEINH','UMREN','UMREZ'], 
     'MBEW' : ['BWKEY', 'BWTAR', 'LBKUM', 'LFGJA', 'LFMON', 'MANDT', 'MATNR', 'PEINH', 'SALK3', 'STPRS', 'VERPR', 'VPRSV'],
     'MBEWH': ['BWKEY', 'BWTAR', 'LBKUM', 'LFGJA', 'LFMON', 'MANDT', 'MATNR', 'PEINH', 'SALK3', 'STPRS', 'VERPR', 'VPRSV'],
@@ -92,7 +92,14 @@ required_table_columns = {
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
     'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP'],
     'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS'],
-    'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
+    'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN'],
+    'MAST' : ['MANDT', 'MATNR', 'WERKS', 'STLAN', 'STLNR', 'STLAL'],
+    'STKO' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STKOZ', 'WRKAN', 'STLST'],
+    'STAS' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STLKN', 'STASZ'],
+    'STPO' : ['MANDT', 'STLTY', 'STLNR', 'STLKN', 'STPOZ', 'IDNRK', 'WRKAN', 'POSTP'],
+    'T460A' : ['MANDT', 'WRK02', 'WERKS', 'SOBSL'],
+    'T415S' : ['KZBDP', 'STLST', 'MANDT'],
+    'T418' : ['MANDT', 'POSTP', 'MATIN', 'KZBSF']
 }
 
 def fetch_table(table_name: str):
