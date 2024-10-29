@@ -5,11 +5,11 @@ import helpers
 
 #castleLight
 # import values_Castlelight as values
-#sourcream
-# import values
+#Hotel Chocolat
+import values
 
 # Meritor
-import values_Meritor as values
+# import values_Meritor as values
 
 def users(all_users=values.om_users):
     ADRP_json = {}
@@ -20,7 +20,7 @@ def users(all_users=values.om_users):
         person_number = f'PRS{index}'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
-            "DATE_FROM": '00010101',
+            "DATE_FROM": '20010101',
             "NAME_FIRST": k, # TODO split bname
             "NAME_LAST": k, # TODO split bname
             "NATION": v['nation'],
@@ -277,3 +277,39 @@ def routes(all_routes=values.om_routes):
         }
     
     return {'TVRO_json': TVRO_json}
+
+def currencyexchanges():
+    TCURR_json = {}
+    TCURF_json = {}
+    TCURX_json = {}
+
+    validityperiods = ['79759898','79769898']  # 20240101 and 20230101
+
+    for i in validityperiods:
+        TCURR_json[str(uuid.uuid4())] = {
+            "FCURR": 'EUR',
+            "FFACT": 1,
+            "GDATU": i,
+            "KURST": 'EURX',
+            "MANDT": values.mandt,
+            "TCURR": 'EUR',
+            "TFACT": 1,
+            "UKURS": 1
+        }
+
+        TCURF_json[str(uuid.uuid4())] = {
+        "FCURR":'EUR',
+        "FFACT": 1,
+        "GDATU": i,
+        "KURST": 'EURX',
+        "MANDT": values.mandt,
+        "TCURR": 'EUR',
+        "TFACT": 1,
+        }
+    
+    TCURX_json[str(uuid.uuid4())] = {
+	"CURRDEC": 2,
+	"CURRKEY": 'EUR'
+    }
+
+    return {'TCURR_json': TCURR_json, 'TCURF_json': TCURF_json, 'TCURX_json': TCURX_json}

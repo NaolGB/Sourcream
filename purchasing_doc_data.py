@@ -3,9 +3,9 @@ import random
 from datetime import datetime, timedelta
 import helpers
 # Meritor
-import values_Meritor as values
-# Sourcream
-# import values 
+# import values_Meritor as values
+# Hotel Chocolat
+import values 
 
 class Purchasing:
     def __init__(self, params, start_date, index) -> None:
@@ -238,7 +238,7 @@ class Purchasing:
             )
         for i in range(len(self.params['matnrs'])):
             randnom = random.random()
-            priceifnocontract = self.params['prices'][i] * (random.randint() + 1)
+            priceifnocontract = self.params['prices'][i] * (random.uniform(1.1, 2.7))
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
