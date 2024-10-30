@@ -518,3 +518,56 @@ class Purchasing:
                 if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == item_position):
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
 
+
+#     def PostVendorAccountDebitItem(self, ernam, cupdt):
+#         self.tables['BSEG_json'][str(uuid.uuid4())] = {
+#             'AUGBL' : '1' ,
+#             'AUGDT' : '1' ,
+#             'AUGGJ' : '1' ,
+#             'BUKRS' : '1' ,
+#             'MANDT' : '1' ,
+#             'BELNR' : '1' ,
+#             'BUZEI' : '1' ,
+#             'GJAHR' : '1' ,
+#             'BSCHL' : '1' ,
+#             'LIFNR' : '1' ,
+#             'MATNR' : '1' ,
+#             'SGTXT' : '1' ,
+#             'SKFBT' : '1' ,
+#             'WRBTR' : '1' ,
+#             'WSKTO' : '1' ,
+#             'ZBD1P' : '1' ,
+#             'ZBD1T' : '1' ,
+#             'ZBD2P' : '1' ,
+#             'ZBD2T' : '1' ,
+#             'ZBD3T' : '1' ,
+#             'ZFBDT' : '1' ,
+#             'ZLSCH' : '1' ,
+#             'ZTERM' : '1' ,
+#             'ZLSPR' : '1' ,
+#             'KUNNR' : '1' ,
+#             'MANSP' : '1' ,
+#             'MANST' : '1' ,
+#             'KOART' : '1' ,
+#             'SHKZG' : '1' ,
+#         }
+
+#         self.tables['BKPF_json'][str(uuid.uuid4())] = {
+#             'AWKEY' :  ,
+#             'XREVERSAL' :  ,
+#             'XBLNR' :  ,
+#             'WAERS' :  ,
+#             'BLDAT' :  ,
+#             'BLART' :  ,
+#             'AWTYP' :  ,
+#             'USNAM' :  ,
+#             'MANDT' :  ,
+#             'GJAHR' :  ,
+#             'CPUTM' :  ,
+#             'CPUDT' :  ,
+#             'BUKRS' :  ,
+#             'BELNR' :  ,
+#         }
+
+# T052
+# T003T
