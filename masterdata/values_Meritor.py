@@ -190,7 +190,7 @@ om_users = {
 }
 om_material_groups = {
     'Chassis Components': {
-        'MATKL001': {
+        'MATKL000': {
             'name': 'Frame Rails',
             'availability': 0.9,
             'has_contract_probability': 0.7,
@@ -202,7 +202,7 @@ om_material_groups = {
                 'Reinforced Steel Frame Rails (per meter)': {'price': 120.00}
             }
         },
-        'MATKL002': {
+        'MATKL001': {
             'name': 'Crossmembers',
             'availability': 0.9,
             'has_contract_probability': 0.4,
@@ -214,7 +214,7 @@ om_material_groups = {
                 'Galvanized Steel Crossmembers (each)': {'price': 55.00}
             }
         },
-        'MATKL003': {
+        'MATKL002': {
             'name': 'Suspension',
             'availability': 0.9,
             'has_contract_probability': 0.7,
@@ -226,7 +226,7 @@ om_material_groups = {
                 'Suspension Bushings (per set)': {'price': 50.00}
             }
         },
-        'MATKL004': {
+        'MATKL003': {
             'name': 'Steering',
             'availability': 0.9,
             'has_contract_probability': 0.5,
@@ -238,7 +238,7 @@ om_material_groups = {
                 'Power Steering Pump (each)': {'price': 150.00}
             }
         },
-        'MATKL005': {
+        'MATKL004': {
             'name': 'Brackets and Mounts',
             'availability': 0.9,
             'has_contract_probability': 0.6,
