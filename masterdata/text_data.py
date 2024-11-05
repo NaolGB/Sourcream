@@ -3,7 +3,7 @@ import uuid
 #Castlelight
 # import values_Castlelight as values
 #sourcream
-from masterdata import values
+from masterdata import values_Meritor as values
 
 def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
     DD07T_json = {}  

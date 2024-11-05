@@ -6,7 +6,7 @@ from extras import helpers
 #castleLight
 # import values_Castlelight as values
 #sourcream
-import masterdata.values as values
+import masterdata.values_Meritor as values
 
 def users(all_users=values.om_users):
     ADRP_json = {}
@@ -189,7 +189,8 @@ def materials(
                     "UMREN": 1.0,
                     "UMREZ": 1.0
                 }
-                for plnt in random.sample(list(all_plants.keys()), 5):
+                #for plnt in random.sample(list(all_plants.keys()), 5):
+                for plant in list(all_plants.keys()):
                     MARC_json[str(uuid.uuid4())] = {
                         "AUSDT": helpers.generate_random_date(start_date=datetime(2027, 12, 1), end_date=datetime(2030, 1, 1)), # HACK after all SO and procurement have passed
                         "BESKZ": 'X',
@@ -207,20 +208,20 @@ def materials(
                         "PLIFZ": random.randint(2, 7),
                         "STRGR": 'D', # TODO add custom value
                         "WEBAZ": random.randint(2, 6),
-                        "WERKS": plnt,
+                        "WERKS": plant,
                         "SOBSL": '80'
                     }
 
                     MAST_json[str(uuid.uuid4())] = {
                         "MANDT": values.mandt,
                         "MATNR": matnr,
-                        "WERKS": plnt,
+                        "WERKS": plant,
                         "STLAN":'1',
                         "STLNR":'01',
                         "STLAL":'01'
                     }
                 
-                for plant in list(all_plants.keys()):
+                #for plant in list(all_plants.keys()):
                     MBEW_json[str(uuid.uuid4())] = {
                         "BWKEY": plant,
                         "BWTAR": None,
@@ -237,55 +238,55 @@ def materials(
                     #Adding BOM tables 
 
     
-                    STKO_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "STLTY":'M', # BOM category
-                        "STLNR":'01', # Bill of material
-                        "STLAL":'01', # Alternative BOM
-                        "STKOZ": random.randint(1,5),
-                        "WRKAN": plant, # Plant where BOM or alternative/variant created
-                        "STLST": '01'  # BOM status
-                    }
+                    # STKO_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "STLTY":'M', # BOM category
+                    #     "STLNR":'01', # Bill of material
+                    #     "STLAL":'01', # Alternative BOM
+                    #     "STKOZ": random.randint(1,5),
+                    #     "WRKAN": plant, # Plant where BOM or alternative/variant created
+                    #     "STLST": '01'  # BOM status
+                    # }
 
-                    STAS_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "STLTY":'M', # BOM category
-                        "STLNR":'01', # Bill of material
-                        "STLAL":'01', # Alternative BOM
-                        "STLKN":random.randint(1,5),
-                        "STASZ":random.randint(1,5),
-                    }
+                    # STAS_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "STLTY":'M', # BOM category
+                    #     "STLNR":'01', # Bill of material
+                    #     "STLAL":'01', # Alternative BOM
+                    #     "STLKN":random.randint(1,5),
+                    #     "STASZ":random.randint(1,5),
+                    # }
     
-                    STPO_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "STLTY":'M', # 	BOM category
-                        "STLNR":'01', #  Bill of material
-                        "STLKN": random.randint(1,5),
-                        "STPOZ": random.randint(1,5),
-                        "IDNRK":material,
-                        "WRKAN":plant,
-                        "POSTP" : 'L'
-                    }
+                    # STPO_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "STLTY":'M', # 	BOM category
+                    #     "STLNR":'01', #  Bill of material
+                    #     "STLKN": random.randint(1,5),
+                    #     "STPOZ": random.randint(1,5),
+                    #     "IDNRK":material,
+                    #     "WRKAN":plant,
+                    #     "POSTP" : 'L'
+                    # }
     
-                    T460A_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "WRK02":plant,
-                        "WERKS":plant,
-                        "SOBSL":'80',
-                    }
+                    # T460A_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "WRK02":plant,
+                    #     "WERKS":plant,
+                    #     "SOBSL":'80',
+                    # }
 
-                    T415S_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "KZBDP": 'X',
-                        "STLST": '01'
-                    }
-    
-                    T418_json[str(uuid.uuid4())] = {
-                        "MANDT": values.mandt,
-                        "POSTP":'L',
-                        "MATIN":'+',
-                        "KZBSF":'X',
-                    }
+                    # T415S_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "KZBDP": 'X',
+                    #     "STLST": '01'
+                    # }
+
+                    # T418_json[str(uuid.uuid4())] = {
+                    #     "MANDT": values.mandt,
+                    #     "POSTP":'L',
+                    #     "MATIN":'+',
+                    #     "KZBSF":'X',
+                    # }
 
 
     return {
@@ -295,12 +296,12 @@ def materials(
         'MARC_json': MARC_json,
         'MBEW_json': MBEW_json,
         'MAST_json' : MAST_json,
-        'STKO_json' : STKO_json,
-        'STAS_json' : STAS_json,
-        'STPO_json' : STPO_json,
-        'T460A_json': T460A_json,
-        'T415S_json': T415S_json,
-        'T418_json' : T418_json,
+        # 'STKO_json' : STKO_json,
+        # 'STAS_json' : STAS_json,
+        # 'STPO_json' : STPO_json,
+        # 'T460A_json': T460A_json,
+        # 'T415S_json': T415S_json,
+        # 'T418_json' : T418_json,
     }
 
 

@@ -1,7 +1,7 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-from masterdata import values
+from masterdata import values_Meritor as values
 from extras import helpers
 
 class Inventory:
@@ -313,7 +313,7 @@ class Inventory:
             "KKBER": 'D', # TODO add custom value
             "KUNNR": self.params['kunnr'],
             "MANDT": values.mandt,
-            "NETWR": round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4),
+            "NETWR": round(sum([self.params['om_prices'][i]*self.params['om_quantities'][i] for i in range(len(self.params['om_matnrs']))]), 4),
             "OBJNR": self.objnr,
             "VBELN": self.vbeln,
             "VBTYP": 'C',
@@ -353,13 +353,13 @@ class Inventory:
                 "ERZET": str(helpers.add_random_hours(1, atime)),
                 "FKREL": 'A',
                 "GEWEI": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "KDMAT": self.params['matnrs'][i],
+                "KDMAT": self.params['om_matnrs'][i],
                 "KPEIN": 1,
-                "KWMENG": self.params['quantities'][i],
+                "KWMENG": self.params['om_quantities'][i],
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
-                "NETPR": self.params['prices'][i],
-                "NETWR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                "MATNR": self.params['om_matnrs'][i],
+                "NETPR": self.params['om_prices'][i],
+                "NETWR": round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
                 "NTGEW": 99, # TODO add custom value
                 "OBJNR": self.objnr,
                 "POSNR": i,
@@ -375,7 +375,7 @@ class Inventory:
                 'FAKSP': None
             }
             self.tables['VBEP_json'][temp_vbeln] = {
-                "BMENG": self.params['quantities'][i], # HACK all qauntities are the same as their confirmed queantities
+                "BMENG": self.params['om_quantities'][i], # HACK all qauntities are the same as their confirmed queantities
                 "EDATU": erdat,
                 "ETENR": i,
                 "MANDT": values.mandt,
@@ -405,14 +405,14 @@ class Inventory:
                 "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "KDAUF": self.vbeln,
                 "KDPOS": i,
-                "LBKUM": round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                "LBKUM": round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
                 "LGORT": 'D', # TODO add custom value
                 "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": self.params['om_matnrs'][i],
                 "MBLNR": self.mblnr,
                 "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "MENGE": self.params['quantities'][i],
+                "MENGE": self.params['om_quantities'][i],
                 "MJAHR": self.mjahr,
                 "SHKZG": 'H', # Credit
                 "SJAHR": self.mjahr,
@@ -430,10 +430,10 @@ class Inventory:
                 "BUZEI": i,
                 "GJAHR": self.mjahr,
                 "MANDT": values.mandt,
-                "MENGE": self.params['quantities'][i],
+                "MENGE": self.params['om_quantities'][i],
                 "VGABE": 1, # Good Receipt
                 "WAERS": 'EUR',
-                "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                "WRBTR": round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
             }
 
             self.tables['MBEWH_json'][str(uuid.uuid4())] = {
@@ -443,11 +443,11 @@ class Inventory:
                 "LFGJA": self.fy,
                 "LFMON": cpudt.strftime('%m'),
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": self.params['om_matnrs'][i],
                 "PEINH": 1,
                 "SALK3": 99, #TO DO add custom value
-                "STPRS": self.params['prices'][i],
-                "VERPR": self.params['prices'][i],
+                "STPRS": self.params['om_prices'][i],
+                "VERPR": self.params['om_prices'][i],
                 "VPRSV": 'V', # TODO add custom value
             }
      
@@ -459,7 +459,7 @@ class Inventory:
             next_type='R'
         )
     
-    def create_production_order_header(self, cpudt, ernam, atime, all_units=values.om_units):
+    def create_production_order_header(self, cpudt, ernam, atime, all_units=values.om_units):  # cover header / items / start / finish
         self.tables['AFKO_json'][str(uuid.uuid4())] = {
                 "MANDT":values.mandt,
                 "AUFNR":self.prod_order_number,
@@ -481,17 +481,17 @@ class Inventory:
                 "ERFZEIT": atime
             }
 
-        for i in range(len(self.params['matnrs'])): 
+        for i in range(len(self.params['bom_matnrs'])): 
             self.tables['AFPO_json'][str(uuid.uuid4())] = {
                 "MANDT": values.mandt,
                 "AUFNR": self.prod_order_number,
                 "POSNR": i,
                 "ETRMP": atime,
-                "PSMNG": self.params['quantities'][i],
+                "PSMNG": self.params['bom_quantities'][i],
                 "MEINS": self.unit,
-                "WEMNG": self.params['quantities'][i],
+                "WEMNG": self.params['bom_quantities'][i],
                 "DWERK": self.params['plant'],
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": self.params['bom_matnrs'][i],
                 "XLOEK": None,
                 "ELIKZ": None,
             }
@@ -503,11 +503,11 @@ class Inventory:
                 "LFGJA": self.fy,
                 "LFMON": cpudt.strftime('%m'),
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": self.params['bom_matnrs'][i],
                 "PEINH": 1,
                 "SALK3": 99, #TO DO add custom value
-                "STPRS": self.params['prices'][i],
-                "VERPR": self.params['prices'][i],
+                "STPRS": self.params['bom_prices'][i],
+                "VERPR": self.params['bom_prices'][i],
                 "VPRSV": 'V', # TODO add custom value
             }
 
@@ -519,14 +519,14 @@ class Inventory:
                 "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "KDAUF": self.vbeln,
                 "KDPOS": i,
-                "LBKUM": round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                "LBKUM": round(self.params['bom_prices'][i]*self.params['bom_quantities'][i], 4),
                 "LGORT": 'D', # TODO add custom value
                 "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
-                "MATNR": self.params['matnrs'][i],
+                "MATNR": self.params['bom_matnrs'][i],
                 "MBLNR": self.mblnr,
                 "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                "MENGE": self.params['quantities'][i],
+                "MENGE": self.params['bom_quantities'][i],
                 "MJAHR": self.mjahr,
                 "SHKZG": 'S', # Credit
                 "SJAHR": self.mjahr,

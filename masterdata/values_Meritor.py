@@ -13,6 +13,13 @@ om_sales_orgs = {
             'UK01': 'London, Holborn',
             'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
             'GR01': 'Munich, Theresienstr',
+        },
+        'Automation_rate': {
+            '10': 0.8,
+            '20': 0.6,
+            '30': 0.7,
+            '40': 0.5,
+            '50': 0.4
         }
     },
     'NAM': {
@@ -27,6 +34,13 @@ om_sales_orgs = {
             'US01': 'New York, One World Trade Center',
             'US02': 'Raleigh, 223 S. West',
             'US03': 'San Francisco, 28 2nd',
+        },
+        'Automation_rate': {
+            '10': 1,
+            '20': 0.8,
+            '30': 0.9,
+            '40': 0.7,
+            '50': 0.6
         }
     },
     'JAPC': {
@@ -40,6 +54,13 @@ om_sales_orgs = {
         'sales_offices': {
             'JP01': 'Tokyo, Marunouchi Kitaguchi',
             'IN01': 'Bengaluru, The Pavilion 62/63',
+        },
+        'Automation_rate': {
+            '10': 0.6,
+            '20': 0.4,
+            '30': 0.5,
+            '40': 0.3,
+            '50': 0.25
         }
     },
 }
@@ -86,14 +107,14 @@ om_company_codes = {
 }
 om_sales_doc_types = {
     'ZOR': 'Standard order',
-    'BV': 'Cash Sale',
+    #'BV': 'Cash Sale',
     'ZDLR': 'Dealer Sales',
     'ZDIR': 'Direct Sales',
-    'ZDOM': 'Domestic Sales',
-    'SO': 'Rush Order',
+    #'ZDOM': 'Domestic Sales',
+    #'SO': 'Rush Order',
     'ZDIS': 'Distributor Sales',
     'ZEXP': 'Export Sales',
-    'ZSCR': 'Scrap Sales',
+    #'ZSCR': 'Scrap Sales',
 }
 om_status = {
     'apprive_sales_order': {
@@ -518,7 +539,7 @@ proc_purchasing_orgs = {
     },
     'JAPC': {
         'distribution_channels': {
-            '10': ' Direct Sales',
+            '10': 'Direct Sales',
             '20': 'Dealers Sales',
             '30': 'Distributor Sales',
             '40': 'Stock Transfer',
@@ -580,10 +601,12 @@ shipping_conditions = {
     'ES': 'Express Shipping'
 }
 goods_movement_types = { # TODO check codes
-    'GoodsIssue': {'code': '601', 'is_reverse': None},
-    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X'},
-    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X'},
-    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X'},
+    'GoodsIssue': {'code': '601', 'is_reverse': None, 'consumptionpost':'G' , 'DebCredInd':'H'},
+    'ReverseGoodsIssue': {'code': '602', 'is_reverse': 'X', 'consumptionpost':'G' , 'DebCredInd':'S'},
+    'ReverseGoodsReceipt': {'code': '102', 'is_reverse': 'X', 'consumptionpost':'G','DebCredInd':'H'},
+    'GoodsReceipt':{'code':'101', 'is_reverse': None, 'consumptionpost': 'G','DebCredInd':'S'},
+    'ReturnGoodsReceipt': {'code': '651', 'is_reverse': 'X', 'consumptionpost':'G','DebCredInd':'H'},
+    'ReturnDeliveryToVendor': {'code': '122', 'is_reverse': 'X', 'consumptionpost': 'G','DebCredInd':'H'},
 }
 dd07t_combinations = {
     'VBAK': [
@@ -626,7 +649,7 @@ release_indicators = {
 }
 
 om_material_bom = {
-    "Meritor Ascentra": {
+    "MAT400": {
         "materials": {
             "MAT001": 5,
             "MAT011": 4,
@@ -648,7 +671,7 @@ om_material_bom = {
             "MAT340": 1
         }
     },
-    "Meritor Trailhawk": {
+    "MAT401": {
         "materials": {
             "MAT004": 5,
             "MAT013": 6,
@@ -668,7 +691,7 @@ om_material_bom = {
             "MAT341": 1
         }
     },
-    "Meritor Voltura": {
+    "MAT402": {
         "materials": {
             "MAT003": 5,
             "MAT012": 4,
@@ -688,7 +711,7 @@ om_material_bom = {
             "MAT999": 1
         }
     },
-    "Meritor Enclave GX": {
+    "MAT403": {
         "materials": {
             "MAT000": 5,
             "MAT010": 6,
@@ -696,7 +719,7 @@ om_material_bom = {
             "MAT100": 1
         }
     },
-    "Meritor Elara": {
+    "MAT404": {
         "materials": {
             "MAT000": 5,
             "MAT010": 4,
