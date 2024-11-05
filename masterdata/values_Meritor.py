@@ -625,464 +625,82 @@ release_indicators = {
     },
 }
 
-om_material_groups2 = {
-    {
+om_material_bom = {
     "Meritor Ascentra": {
-        "price": 50000,
         "materials": {
-        "Chassis Components": {
-            "Frame Rails": {
-            "type": "Aluminum Frame Rails",
-            "quantity": 5,
-            "unit": "meter",
-            "price": 750.0,
-            "MATNR": "MAT001"
-            },
-            "Crossmembers": {
-            "type": "Aluminum Crossmembers",
-            "quantity": 4,
-            "unit": "each",
-            "price": 320.0,
-            "MATNR": "MAT011"
-            },
-            "Suspension": {
-            "type": "Shock Absorbers",
-            "quantity": 4,
-            "unit": "each",
-            "price": 600.0,
-            "MATNR": "MAT022"
-            },
-            "Steering": {
-            "type": "Steering Column Assembly",
-            "quantity": 1,
-            "unit": "each",
-            "price": 200.0,
-            "MATNR": "MAT030"
-            },
-            "Brackets and Mounts": {
-            "type": "Reinforced Steel Mounts",
-            "quantity": 4,
-            "unit": "each",
-            "price": 140.0,
-            "MATNR": "MAT044"
-            }
-        },
-        "Powertrain Components": {
-            "Engine Assembly": {
-            "type": "Engine Block",
-            "quantity": 1,
-            "unit": "each",
-            "price": 1000.0,
-            "MATNR": "MAT100"
-            },
-            "Cylinder Heads": {
-            "type": "Cylinder Heads",
-            "quantity": 1,
-            "unit": "each",
-            "price": 500.0,
-            "MATNR": "MAT101"
-            },
-            "Transmission Assembly": {
-            "type": "Transmission Housing",
-            "quantity": 1,
-            "unit": "each",
-            "price": 800.0,
-            "MATNR": "MAT110"
-            },
-            "Drivetrain Components": {
-            "type": "CV Joints",
-            "quantity": 1,
-            "unit": "set",
-            "price": 150.0,
-            "MATNR": "MAT124"
-            }
-        },
-        "Body Components": {
-            "Cab Structure": {
-            "type": "Cab Shell",
-            "quantity": 1,
-            "unit": "each",
-            "price": 5000.0,
-            "MATNR": "MAT200"
-            },
-            "Doors": {
-            "quantity": 4,
-            "unit": "each",
-            "price": 4000.0,
-            "MATNR": 'MAT201'
-            },
-            "Windows": {
-            "quantity": 6,
-            "unit": "each",
-            "price": 1200.0,
-            "MATNR": 'MAT202'
-            },
-            "Interior Components": {
-            "type": "Seats",
-            "quantity": 4,
-            "unit": "each",
-            "price": 2000.0,
-            "MATNR": "MAT210"
-            },
-            "Carpeting": {
-            "type": "Carpeting",
-            "quantity": 10,
-            "unit": "square meter",
-            "price": 500.0,
-            "MATNR": "MAT213"
-            }
-        },
-        "Auxiliary Components": {
-            "Suspension System": {
-            "type": "Control Arms",
-            "quantity": 2,
-            "unit": "each",
-            "price": 200.0,
-            "MATNR": "MAT300"
-            },
-            "Cooling System": {
-            "type": "Radiator",
-            "quantity": 1,
-            "unit": "each",
-            "price": 400.0,
-            "MATNR": "MAT310"
-            },
-            "Brake System": {
-            "type": "Brake Pads",
-            "quantity": 4,
-            "unit": "set",
-            "price": 200.0,
-            "MATNR": "MAT331"
-            },
-            "Electrical System": {
-            "type": "Battery",
-            "quantity": 1,
-            "unit": "each",
-            "price": 100.0,
-            "MATNR": "MAT340"
-            }
-        }
+            "MAT001": 5,
+            "MAT011": 4,
+            "MAT022": 4,
+            "MAT030": 1,
+            "MAT044": 4,
+            "MAT100": 1,
+            "MAT101": 1,
+            "MAT110": 1,
+            "MAT124": 1,
+            "MAT200": 1,
+            "MAT201": 4,
+            "MAT202": 6,
+            "MAT210": 4,
+            "MAT213": 10,
+            "MAT300": 2,
+            "MAT310": 1,
+            "MAT331": 4,
+            "MAT340": 1
         }
     },
     "Meritor Trailhawk": {
-        "price": 70000,
         "materials": {
-        "Chassis Components": {
-            "Frame Rails": {
-            "type": "Reinforced Steel Frame Rails",
-            "quantity": 5,
-            "unit": "meter",
-            "price": 600.00,
-            "MATNR": "MAT004"
-            },
-            "Crossmembers": {
-            "type": "Reinforced Steel Crossmembers",
-            "quantity": 6,
-            "unit": "each",
-            "price": 420.00,
-            "MATNR": "MAT013"
-            },
-            "Suspension": {
-            "type": "Leaf Springs",
-            "quantity": 1,
-            "unit": "set",
-            "price": 300.00,
-            "MATNR": "MAT020"
-            },
-            "Steering": {
-            "type": "Power Steering Pump",
-            "quantity": 1,
-            "unit": "each",
-            "price": 150.00,
-            "MATNR": "MAT034"
-            },
-            "Brackets and Mounts": {
-            "type": "Steel Brackets",
-            "quantity": 8,
-            "unit": "each",
-            "price": 160.00,
-            "MATNR": "MAT040"
-            }
-        },
-        "Powertrain Components": {
-            "Engine Assembly": {
-            "type": "Crankshaft",
-            "quantity": 1,
-            "unit": "each",
-            "price": 700.00,
-            "MATNR": "MAT103"
-            },
-            "Cylinder Heads": {
-            "type": "Cylinder Heads",
-            "quantity": 1,
-            "unit": "each",
-            "price": 500.00,
-            "MATNR": "MAT101"
-            },
-            "Transmission Assembly": {
-            "type": "Transmission Gears",
-            "quantity": 1,
-            "unit": "set",
-            "price": 400.00,
-            "MATNR": "MAT101"
-            },
-            "Drivetrain Components": {
-            "type": "Differential",
-            "quantity": 1,
-            "unit": "each",
-            "price": 500.00,
-            "MATNR": "MAT121"
-            }
-        },
-        "Body Components": {
-            "Cab Structure": {
-            "type": "Cab Shell",
-            "quantity": 1,
-            "unit": "each",
-            "price": 5000.00,
-            "MATNR": "MAT200"
-            },
-            "Roof Panel": {
-            "quantity": 1,
-            "unit": "each",
-            "price": 300.00,
-            "MATNR": "MAT203"
-            },
-            "Floor Panel": {
-            "quantity": 1,
-            "unit": "each",
-            "price": 400.00,
-            "MATNR": "MAT204"
-            },
-            "Cargo Area": {
-            "type": "Cargo Box",
-            "quantity": 1,
-            "unit": "each",
-            "price": 800.00,
-            "MATNR": "MAT221"
-            }
-        },
-        "Auxiliary Components": {
-            "Suspension System": {
-            "type": "Bushings",
-            "quantity": 1,
-            "unit": "set",
-            "price": 50.00,
-            "MATNR": "MAT304"
-            },
-            "Cooling System": {
-            "type": "Cooling Fan",
-            "quantity": 1,
-            "unit": "each",
-            "price": 150.00,
-            "MATNR": "MAT311"
-            },
-            "Air Intake System": {
-            "type": "Turbocharger",
-            "quantity": 1,
-            "unit": "each",
-            "price": 500.00,
-            "MATNR": "MAT322"
-            },
-            "Electrical System": {
-            "type": "Alternator",
-            "quantity": 1,
-            "unit": "each",
-            "price": 200.00,
-            "MATNR": "MAT341"
-            }
-        }
+            "MAT004": 5,
+            "MAT013": 6,
+            "MAT020": 1,
+            "MAT034": 1,
+            "MAT040": 8,
+            "MAT103": 1,
+            "MAT101": 1,
+            "MAT121": 1,
+            "MAT200": 1,
+            "MAT203": 1,
+            "MAT204": 1,
+            "MAT221": 1,
+            "MAT304": 1,
+            "MAT311": 1,
+            "MAT322": 1,
+            "MAT341": 1
         }
     },
     "Meritor Voltura": {
-        "price": 80000,
         "materials": {
-        "Chassis Components": {
-            "Frame Rails": {
-            "type": "Composite Frame Rails",
-            "quantity": 5,
-            "unit": "meter",
-            "price": 1000.00,
-            "MATNR": "MAT003"
-            },
-            "Crossmembers": {
-            "type": "Composite Crossmembers",
-            "quantity": 4,
-            "unit": "each",
-            "price": 240.00,
-            "MATNR": "MAT012"
-            },
-            "Suspension": {
-            "type": "Air Springs",
-            "quantity": 4,
-            "unit": "each",
-            "price": 800.00,
-            "MATNR": "MAT021"
-            },
-            "Steering": {
-            "type": "Tie Rods",
-            "quantity": 1,
-            "unit": "set",
-            "price": 100.00,
-            "MATNR": "MAT032"
-            },
-            "Brackets and Mounts": {
-            "type": "Aluminum Brackets",
-            "quantity": 4,
-            "unit": "each",
-            "price": 120.00,
-            "MATNR": "MAT041"
-            }
-        },
-        "Powertrain Components": {
-            "Engine Assembly": {
-            "type": "Pistons",
-            "quantity": 1,
-            "unit": "set",
-            "price": 300.00,
-            "MATNR": "MAT102"
-            },
-            "Transmission Assembly": {
-            "type": "Clutch Kit",
-            "quantity": 1,
-            "unit": "set",
-            "price": 300.00,
-            "MATNR": "MAT112"
-            },
-            "Drivetrain Components": {
-            "type": "Axles",
-            "quantity": 1,
-            "unit": "set",
-            "price": 600.00,
-            "MATNR": "MAT122"
-            },
-            "Exhaust System": {
-            "type": "Catalytic Converter",
-            "quantity": 1,
-            "unit": "each",
-            "price": 300.00,
-            "MATNR": "MAT131"
-            }
-        },
-        "Body Components": {
-            "Cab Structure": {
-            "type": "Doors",
-            "quantity": 4,
-            "unit": "each",
-            "price": 4000.00,
-            "MATNR": "MAT201"
-            },
-            "Exterior Panels": {
-            "type": "Fenders",
-            "quantity": 2,
-            "unit": "each",
-            "price": 600.00,
-            "MATNR": "MAT230"
-            },
-            "Lights": {
-            "type": "Headlights",
-            "quantity": 2,
-            "unit": "each",
-            "price": 300.00,
-            "MATNR": "MAT240"
-            },
-            "Paint and Coating": {  # not in mat list above
-            "type": "Automotive Paint",
-            "quantity": 2,
-            "unit": "liter",
-            "price": 500.00,
-            }
-        },
-        "Auxiliary Components": {
-            "Suspension System": {
-            "type": "Shock Absorbers",
-            "quantity": 4,
-            "unit": "each",
-            "price": 600.00,
-            "MATNR": "MAT022"
-            },
-            "Battery": {
-            "type": "Lithium-Ion Battery Pack",
-            "quantity": 1,
-            "unit": "each",
-            "price": 4000.00,
-            "MATNR": "MAT340"
-            },
-            "Heating, Ventilation, and Air Conditioning": {  # not in list above
-            "type": "HVAC System",
-            "quantity": 1,
-            "unit": "each",
-            "price": 2000.00
-            }
-        }
+            "MAT003": 5,
+            "MAT012": 4,
+            "MAT021": 4,
+            "MAT032": 1,
+            "MAT041": 4,
+            "MAT102": 1,
+            "MAT112": 1,
+            "MAT122": 1,
+            "MAT131": 1,
+            "MAT201": 4,
+            "MAT230": 2,
+            "MAT240": 2,
+            "MAT999": 2,
+            "MAT022": 4,
+            "MAT340": 1,
+            "MAT999": 1
         }
     },
     "Meritor Enclave GX": {
-        "price": 60000,
         "materials": {
-        "Chassis Components": {
-            "Frame Rails": {
-            "type": "Steel Frame Rails",
-            "quantity": 5,
-            "unit": "meter",
-            "price": 550.00, 
-            "MATNR": "MAT000"
-            },
-            "Crossmembers": {
-            "type": "Steel Crossmembers",
-            "quantity": 6,
-            "unit": "each",
-            "price": 500.00,
-            "MATNR": "MAT010"
-            },
-            "Brackets and Mounts": {
-            "type": "Steel Mounts",
-            "quantity": 4,
-            "unit": "each",
-            "price": 100.00,
-            "MATNR": "MAT044"
-            }
-        },
-        "Powertrain Components": {
-            "Engine Assembly": {
-            "type": "V8 Engine",
-            "quantity": 1,
-            "unit": "each",
-            "price": 10000.00,
-            "MATNR": "MAT100"
-            }
-        }
+            "MAT000": 5,
+            "MAT010": 6,
+            "MAT044": 4,
+            "MAT100": 1
         }
     },
     "Meritor Elara": {
-        "price": 40000,
         "materials": {
-        "Chassis Components": {
-            "Frame Rails": {
-            "type": "Recycled Steel Frame Rails",
-            "quantity": 5,
-            "unit": "meter",
-            "price": 300.00,
-            "MATNR": "MAT000"
-            },
-            "Crossmembers": {
-            "type": "Steel Crossmembers",
-            "quantity": 4,
-            "unit": "each",
-            "price": 280.00,
-            "MATNR": "MAT010"
-            }
-        },
-        "Body Components": {
-            "Exterior Panels": {
-            "type": "Plastic Body Panels",
-            "quantity": 4,
-            "unit": "each",
-            "price": 400.00,
-            "MATNR": "MAT231"
-            }
+            "MAT000": 5,
+            "MAT010": 4,
+            "MAT231": 4
         }
-        }
-    }
     }
 }

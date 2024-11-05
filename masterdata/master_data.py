@@ -239,27 +239,27 @@ def materials(
     
                     STKO_json[str(uuid.uuid4())] = {
                         "MANDT": values.mandt,
-                        "STLTY":'M',
-                        "STLNR":'01',
-                        "STLAL":'01',
+                        "STLTY":'M', # BOM category
+                        "STLNR":'01', # Bill of material
+                        "STLAL":'01', # Alternative BOM
                         "STKOZ": random.randint(1,5),
-                        "WRKAN": plant,
-                        "STLST": '01'
+                        "WRKAN": plant, # Plant where BOM or alternative/variant created
+                        "STLST": '01'  # BOM status
                     }
 
                     STAS_json[str(uuid.uuid4())] = {
                         "MANDT": values.mandt,
-                        "STLTY":'M',
-                        "STLNR":'01',
-                        "STLAL":'01',
+                        "STLTY":'M', # BOM category
+                        "STLNR":'01', # Bill of material
+                        "STLAL":'01', # Alternative BOM
                         "STLKN":random.randint(1,5),
                         "STASZ":random.randint(1,5),
                     }
     
                     STPO_json[str(uuid.uuid4())] = {
                         "MANDT": values.mandt,
-                        "STLTY":'M',
-                        "STLNR":'01',
+                        "STLTY":'M', # 	BOM category
+                        "STLNR":'01', #  Bill of material
                         "STLKN": random.randint(1,5),
                         "STPOZ": random.randint(1,5),
                         "IDNRK":material,
