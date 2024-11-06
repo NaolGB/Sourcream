@@ -17,7 +17,7 @@ class Inventory:
         self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
         self.vbeln = vbeln
-        self.objnr = f'{str(uuid.uuid4())[-17:]}' # HACK to avoid overflow when multiple ids being cancatenated
+        self.objnr = f'{str(uuid.uuid4())[-5:]}' # HACK to avoid overflow when multiple ids being cancatenated
         self.likp_vbeln = f'{str(uuid.uuid4())[-11:]}' 
         self.vbrk_vbeln = f'{str(uuid.uuid4())[-11:]}'
         self.bkpf_belnr = f'{str(uuid.uuid4())[-11:]}'
@@ -141,6 +141,7 @@ class Inventory:
             )
         for i in range(len(self.params['matnrs'])):
             randnom = random.random()
+            priceifnocontract = self.params['prices'][i] * (random.uniform(1.1, 2.7))
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
@@ -152,7 +153,7 @@ class Inventory:
                 'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
                 'EBELN': self.purchase_order_number,
                 'EBELP': i,
-                'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] else None,
+                'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None,
                 'KTMNG': self.params['quantities'][i],
                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # HACK
@@ -160,8 +161,8 @@ class Inventory:
                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else priceifnocontract,
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(priceifnocontract * self.params['quantities'][i], 2) ,
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
@@ -169,7 +170,7 @@ class Inventory:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -343,7 +344,7 @@ class Inventory:
             "CMGST": None, # Credit Block
         }
 
-        for i in range(len(self.params['matnrs'])):
+        for i in range(len(self.params['om_matnrs'])):
             temp_vbeln = f'{str(uuid.uuid4())[-11:]}'
             self.tables['VBAP_json'][temp_vbeln] = {
                 "ABGRU": None, # 'D' HACK
@@ -396,7 +397,7 @@ class Inventory:
         )
     
     def post_goods_issue(self, cpudt, usnam, atime, all_units=values.om_units):
-        for i in range(len(self.params['matnrs'])): 
+        for i in range(len(self.params['om_matnrs'])): 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '601',
                 "BWTAR": None,

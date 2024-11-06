@@ -29,6 +29,7 @@ required_table_columns = {
     'ADRP' : ['CLIENT', 'DATE_FROM', 'NAME_FIRST', 'NAME_LAST', 'NATION', 'PERSNUMBER'],
     'AFKO' : ['AUFNR', 'GEUZI', 'GLTRI', 'GLTRS', 'GLUZS', 'GSTRI', 'GSTRS', 'GSUZI', 'GSUZS', 'MANDT'],
     'AFPO' : ['AUFNR', 'DWERK', 'ELIKZ', 'ETRMP', 'MANDT', 'MATNR', 'MEINS', 'POSNR', 'PSMNG', 'WEMNG', 'XLOEK'],
+    'AUFK' : ['MANDT', 'AUFNR', 'ERNAM', 'AUTYP', 'ERDAT', 'ERFZEIT'],
     'BKPF' : ['BELNR', 'BUKRS', 'GJAHR', 'MANDT', 'AWKEY', 'AWTYP', 'BLART', 'BLDAT', 'CPUDT', 'CPUTM', 'USNAM', 'WAERS', 'XREVERSAL', 'XBLNR'],
 	'BSEG' : ['MANDT', 'BUKRS', 'AUGBL', 'AUGGJ', 'AUGDT', 'KOART', 'BUZEI', 'GJAHR', 'SHKZG', 'BELNR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'WRBTR', 'WSKTO', 'SKFBT', 'ZTERM', 'ZFBDT', 'LIFNR', 'MATNR', 'BSCHL', 'ZLSPR', 'KUNNR', 'MANSP', 'MANST'],
     'CDHDR' : ['UDATE', 'UTIME', 'USERNAME', 'OBJECTID', 'OBJECTCLAS', 'MANDANT', 'CHANGENR', 'TCODE'],
@@ -51,12 +52,16 @@ required_table_columns = {
     'MARA' : ['MANDT', 'MATNR', 'ERNAM', 'ERSDA', 'MATKL', 'MBRSH', 'MEINS', 'MTART', 'PRDHA'],
     'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS','SOBSL'],
     'MARM' : ['MANDT', 'MATNR', 'MEINH','UMREN','UMREZ'], 
+    'MAST' : ['MANDT', 'MATNR', 'WERKS', 'STLAN', 'STLNR', 'STLAL'],
     'MBEW' : ['BWKEY', 'BWTAR', 'LBKUM', 'LFGJA', 'LFMON', 'MANDT', 'MATNR', 'PEINH', 'SALK3', 'STPRS', 'VERPR', 'VPRSV'],
     'MBEWH': ['BWKEY', 'BWTAR', 'LBKUM', 'LFGJA', 'LFMON', 'MANDT', 'MATNR', 'PEINH', 'SALK3', 'STPRS', 'VERPR', 'VPRSV'],
     'MSEG' : ['ERFME', 'MEINS', 'LGORT', 'LBKUM', 'MANDT', 'MBLNR', 'ZEILE', 'USNAM_MKPF', 'MENGE', 'EBELP', 'LFBJA', 'SMBLP', 'LIFNR', 'MATNR', 'WERKS', 'MJAHR', 'CPUDT_MKPF', 'CPUTM_MKPF', 'EBELN', 'LFBNR', 'SJAHR', 'BWART', 'SHKZG', 'SMBLN', 'VBELP_IM', 'KDPOS', 'VBELN_IM', 'KDAUF','BWTAR','WAERS'],
     'NAST' : ['TCODE', 'ERUHR', 'MANDT', 'USNAM', 'ERDAT', 'DATVR', 'UHRVR', 'KSCHL', 'PARVW', 'KAPPL', 'PARNR', 'AENDE', 'OBJKY', 'SPRAS'],
     'RBKP' : ['GJAHR', 'BELNR', 'MANDT', 'BUKRS', 'ZTERM', 'ZLSPR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'USNAM', 'BLDAT', 'ZFBDT', 'LIFNR', 'CPUDT', 'CPUTM', 'VGART', 'WAERS', 'STJAH', 'STBLG' ],
     'RSEG' : ['MENGE', 'BSTME', 'WRBTR', 'MANDT', 'BELNR', 'BUZEI', 'GJAHR', 'EBELP', 'LFPOS', 'MATNR', 'WERKS', 'BUKRS', 'LIFNR', 'EBELN', 'LFGJA', 'LFBNR'],
+    'STAS' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STLKN', 'STASZ'],
+    'STKO' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STKOZ', 'WRKAN', 'STLST'],
+    'STPO' : ['MANDT', 'STLTY', 'STLNR', 'STLKN', 'STPOZ', 'IDNRK', 'WRKAN', 'POSTP'],
     'T001' : ['BUKRS', 'BUTXT', 'MANDT', 'WAERS'],
     'T001K' : ['BUKRS', 'BWKEY', 'MANDT'],
     'T001W' : ['BWKEY', 'LAND1', 'MANDT', 'NAME1', 'WERKS'],
@@ -70,6 +75,12 @@ required_table_columns = {
     'T156' : ['BWART', 'MANDT', 'XSTBW', 'KZVBU', 'SHKZG'],
     'T161T' :  ['BATXT', 'BSART', 'BSTYP', 'MANDT', 'SPRAS'],
     'T161U' : ['FKZTX', 'FRGKZ', 'MANDT', 'SPRAS'],
+    'T460A' : ['MANDT', 'WRK02', 'WERKS', 'SOBSL'],
+    'T415S' : ['KZBDP', 'STLST', 'MANDT'],
+    'T418' : ['MANDT', 'POSTP', 'MATIN', 'KZBSF'],
+    'TCURF' : ['FCURR', 'FFACT', 'GDATU', 'KURST', 'MANDT', 'TCURR', 'TFACT'],
+    'TCURR' : ['FCURR', 'FFACT', 'GDATU', 'KURST', 'MANDT', 'TCURR', 'TFACT', 'UKURS'],
+    'TCURX' : ['CURRDEC', 'CURRKEY'],
     'TJ02T' : ['ISTAT', 'SPRAS'],
     'TVAGT' : ['ABGRU', 'BEZEI', 'MANDT', 'SPRAS'],
     'TVAK' : ['AUART', 'KLIMP', 'MANDT'],
@@ -93,13 +104,8 @@ required_table_columns = {
     'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP'],
     'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN'],
-    'MAST' : ['MANDT', 'MATNR', 'WERKS', 'STLAN', 'STLNR', 'STLAL'],
-    'STKO' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STKOZ', 'WRKAN', 'STLST'],
-    'STAS' : ['MANDT', 'STLTY', 'STLNR', 'STLAL', 'STLKN', 'STASZ'],
-    'STPO' : ['MANDT', 'STLTY', 'STLNR', 'STLKN', 'STPOZ', 'IDNRK', 'WRKAN', 'POSTP'],
-    'T460A' : ['MANDT', 'WRK02', 'WERKS', 'SOBSL'],
-    'T415S' : ['KZBDP', 'STLST', 'MANDT'],
-    'T418' : ['MANDT', 'POSTP', 'MATIN', 'KZBSF']
+   
+
 }
 
 def fetch_table(table_name: str):
