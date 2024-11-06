@@ -713,17 +713,39 @@ om_material_bom = {
     },
     "MAT403": {
         "materials": {
-            "MAT000": 5,
-            "MAT010": 6,
-            "MAT044": 4,
-            "MAT100": 1
+            "MAT000": 8,  # Steel Frame Rails
+            "MAT010": 6,  # Steel Crossmembers
+            "MAT022": 4,  # Shock Absorbers
+            "MAT031": 1,  # Steering Gear
+            "MAT100": 1,  # Engine Block
+            "MAT101": 1,  # Cylinder Heads
+            "MAT102": 1,  # Pistons
+            "MAT110": 1,  # Transmission Housing
+            "MAT121": 1,  # Differential
+            "MAT122": 2,  # Axles
+            "MAT130": 1,  # Exhaust Manifold
+            "MAT140": 6,  # Fuel Injectors
+            "MAT210": 5,  # Seats
+            "MAT340": 1   # Battery
         }
     },
     "MAT404": {
         "materials": {
-            "MAT000": 5,
-            "MAT010": 4,
-            "MAT231": 4
+            "MAT001": 6,  # Aluminum Frame Rails
+            "MAT011": 5,  # Aluminum Crossmembers
+            "MAT022": 4,  # Shock Absorbers
+            "MAT030": 1,  # Steering Column Assembly
+            "MAT100": 1,  # Engine Block
+            "MAT101": 1,  # Cylinder Heads
+            "MAT102": 1,  # Pistons
+            "MAT110": 1,  # Transmission Housing
+            "MAT111": 1,  # Transmission Gears
+            "MAT121": 1,  # Differential
+            "MAT124": 2,  # CV Joints
+            "MAT130": 1,  # Exhaust Manifold
+            "MAT140": 6,  # Fuel Injectors
+            "MAT210": 2,  # Seats
+            "MAT330": 4   # Brake Calipers
         }
     }
 }
