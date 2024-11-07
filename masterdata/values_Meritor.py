@@ -140,14 +140,14 @@ om_delivery_blocks = {
 }
 om_dimensions = {
     'DIM-1': {
-        'DIMID': 'DIM',
-        'MSSIE': 'ST'
+        'DIMID': 'AAAADL',
+        'MSSIE': 'EA'
     }
 }
 om_units = {
     'UNIT-1': {
-        'MSEHI': 'UNT',
-        'DIMID': 'DIM', # -- must matech om_dimensions' DIMID
+        'MSEHI': 'EA',
+        'DIMID': 'AAAADL', # -- must matech om_dimensions' DIMID
     }
 }
 om_material_types = {

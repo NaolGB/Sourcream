@@ -49,7 +49,8 @@ class Inventory:
             'VBKD_json': {},
             'VBUK_json': {},
             'VBEP_json': {},
-            'MBEWH_json': {}
+            'MBEWH_json': {},
+            'MBEW_json': {}
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, utime, tcode='DEFAULT'):
@@ -252,20 +253,21 @@ class Inventory:
             'WRBTR': round(self.params['prices'][item_position]*delivered_quanity, 4),
         }
 
-        self.tables['MBEWH_json'][str(uuid.uuid4())] = {
-            "BWKEY": self.params['plant'],
-            "BWTAR": None,
-            "LBKUM": (random.randint(500, 10000)),
-            "LFGJA": self.fy,
-            "LFMON": cpudt.strftime('%m'),
-            "MANDT": values.mandt,
-            "MATNR": self.params['matnrs'][item_position],
-            "PEINH": 1,
-            "SALK3": 99, #TO DO add custom value
-            "STPRS": self.params['prices'][item_position],
-            "VERPR": self.params['prices'][item_position],
-            "VPRSV": 'V', # TODO add custom value
-        }
+#moving to material 
+        # self.tables['MBEWH_json'][str(uuid.uuid4())] = {
+        #     "BWKEY": self.params['plant'],
+        #     "BWTAR": None,
+        #     "LBKUM": (random.randint(500, 10000)),
+        #     "LFGJA": self.fy,
+        #     "LFMON": cpudt.strftime('%m'),
+        #     "MANDT": values.mandt,
+        #     "MATNR": self.params['matnrs'][item_position],
+        #     "PEINH": 1,
+        #     "SALK3": 99, #TO DO add custom value
+        #     "STPRS": self.params['prices'][item_position],
+        #     "VERPR": self.params['prices'][item_position],
+        #     "VPRSV": 'V', # TODO add custom value
+        # }
 
     def create_purchase_order_schedule_line(self, eindt, creation_date, creation_time, ernam, ebelp, scheduled_quanity, delivered_quanity, item_position):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
@@ -403,10 +405,14 @@ class Inventory:
                 "BWTAR": None,
                 "CPUDT_MKPF": cpudt,
                 "CPUTM_MKPF": atime,
+				"EBELN": None,
+				"EBELP": None,
                 "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "KDAUF": self.vbeln,
                 "KDPOS": i,
                 "LBKUM": round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
+				"LFBJA": None,
+				"LFBNR": None,
                 "LGORT": 'D', # TODO add custom value
                 "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
@@ -436,21 +442,21 @@ class Inventory:
                 "WAERS": 'EUR',
                 "WRBTR": round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
             }
-
-            self.tables['MBEWH_json'][str(uuid.uuid4())] = {
-                "BWKEY": 'VA01',
-                "BWTAR": None,
-                "LBKUM": (random.randint(500, 10000)),
-                "LFGJA": self.fy,
-                "LFMON": cpudt.strftime('%m'),
-                "MANDT": values.mandt,
-                "MATNR": self.params['om_matnrs'][i],
-                "PEINH": 1,
-                "SALK3": 99, #TO DO add custom value
-                "STPRS": self.params['om_prices'][i],
-                "VERPR": self.params['om_prices'][i],
-                "VPRSV": 'V', # TODO add custom value
-            }
+#Moving to own function 
+            # self.tables['MBEWH_json'][str(uuid.uuid4())] = {
+            #     "BWKEY": self.params['plant'],
+            #     "BWTAR": None,
+            #     "LBKUM": (random.randint(500, 10000)),
+            #     "LFGJA": self.fy,
+            #     "LFMON": cpudt.strftime('%m'),
+            #     "MANDT": values.mandt,
+            #     "MATNR": self.params['om_matnrs'][i],
+            #     "PEINH": 1,
+            #     "SALK3": 99, #TO DO add custom value
+            #     "STPRS": self.params['om_prices'][i],
+            #     "VERPR": self.params['om_prices'][i],
+            #     "VPRSV": 'V', # TODO add custom value
+            # }
      
         self.record_flow( 
             erdat=cpudt, 
@@ -496,31 +502,126 @@ class Inventory:
                 "XLOEK": None,
                 "ELIKZ": None,
             }
-
-            self.tables['MBEWH_json'][str(uuid.uuid4())] = {
-                "BWKEY": 'VA01',
+        
+        # consumed procurement materials:
+            self.tables['MSEG_json'][str(uuid.uuid4())] = {
+                "BWART": '601',
                 "BWTAR": None,
-                "LBKUM": (random.randint(500, 10000)),
-                "LFGJA": self.fy,
-                "LFMON": cpudt.strftime('%m'),
+                "CPUDT_MKPF": cpudt,
+                "CPUTM_MKPF": atime,
+				"EBELN": None,
+				"EBELP": None,
+                "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "KDAUF": self.vbeln,
+                "KDPOS": i,
+                "LBKUM": round(self.params['bom_prices'][i]*self.params['bom_quantities'][i], 4),
+				"LFBJA": None,
+				"LFBNR": None,
+                "LGORT": 'D', # TODO add custom value
+                "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
                 "MATNR": self.params['bom_matnrs'][i],
-                "PEINH": 1,
-                "SALK3": 99, #TO DO add custom value
-                "STPRS": self.params['bom_prices'][i],
-                "VERPR": self.params['bom_prices'][i],
-                "VPRSV": 'V', # TODO add custom value
+                "MBLNR": self.mblnr,
+                "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
+                "MENGE": self.params['bom_quantities'][i],
+                "MJAHR": self.mjahr,
+                "SHKZG": 'H', # Credit
+                "SJAHR": self.mjahr,
+                "SMBLN": self.mblnr,
+                "SMBLP": i,
+                "USNAM_MKPF": ernam,
+                "VBELN_IM": self.likp_vbeln,
+                "VBELP_IM": i,
+                'WAERS': 'EUR',
+                "WERKS": self.params['plant'],
+                "ZEILE": i,
             }
+            self.tables['EKBE_json'][str(uuid.uuid4())] = { # HACK every SO has 1:1 mapping form PO
+                "BELNR": self.mblnr,
+                "BUZEI": i,
+                "GJAHR": self.mjahr,
+                "MANDT": values.mandt,
+                "MENGE": self.params['bom_quantities'][i],
+                "VGABE": 1, # Good Receipt
+                "WAERS": 'EUR',
+                "WRBTR": round(self.params['bom_prices'][i]*self.params['bom_quantities'][i], 4),
+            }
+        # produced SO materials:
+        for i in range(len(self.params['om_matnrs'])): 
+            self.tables['MSEG_json'][str(uuid.uuid4())] = {
+                'BWART': '101',
+                "BWTAR": None,
+                'CPUDT_MKPF': cpudt,
+                'CPUTM_MKPF': atime,
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'ERFME': self.unit,
+                'KDAUF': self.purchase_order_number,
+                'KDPOS': i,
+                'LBKUM': round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
+                'LFBJA': self.fy,
+                'LFBNR': None,
+                'LGORT': 'D', # TODO add custom value,
+                'LIFNR': self.params['lifnr'],
+                'MANDT': values.mandt,
+                'MATNR': self.params['om_matnrs'][i],
+                'MBLNR': self.mat_doc_number,
+                'MEINS': self.unit,
+                'MENGE': self.params['om_quantities'][i],
+                'MJAHR': self.fy,
+                'SHKZG': 'S',
+                'SJAHR': self.fy,
+                'SMBLN': self.mat_doc_number,
+                'SMBLP': None, # NOTE is not a reversal
+                'USNAM_MKPF': ernam,
+                'VBELN_IM': None,
+                'VBELP_IM': None,
+                'WAERS': 'EUR',
+                'WERKS': self.params['plant'],
+                'ZEILE': i,
+            }
+            self.tables['EKBE_json'][str(uuid.uuid4())] = { # TODO check how this affects OutgoingMaterialDocument (in OM/sales_doc_data)
+                'BELNR': self.mat_doc_number,
+                'BUZEI': i,
+                'GJAHR': self.fy,
+                'MANDT': values.mandt,
+                'MENGE': self.params['om_quantities'][i],
+                'VGABE': '1',
+                'WAERS': 'EUR',
+                'WRBTR': round(self.params['om_prices'][i]*self.params['om_quantities'][i], 4),
+            }
+        
+
+
+#Moving to own function
+            # self.tables['MBEWH_json'][str(uuid.uuid4())] = {
+            #     "BWKEY": self.params['plant'],
+            #     "BWTAR": None,
+            #     "LBKUM": (random.randint(500, 10000)),
+            #     "LFGJA": self.fy,
+            #     "LFMON": cpudt.strftime('%m'),
+            #     "MANDT": values.mandt,
+            #     "MATNR": self.params['bom_matnrs'][i],
+            #     "PEINH": 1,
+            #     "SALK3": 99, #TO DO add custom value
+            #     "STPRS": self.params['bom_prices'][i],
+            #     "VERPR": self.params['bom_prices'][i],
+            #     "VPRSV": 'V', # TODO add custom value
+            # }
 
             self.tables['MSEG_json'][str(uuid.uuid4())] = {
                 "BWART": '101',
                 "BWTAR": None,
                 "CPUDT_MKPF": cpudt,
                 "CPUTM_MKPF": atime,
+				"EBELN": None,
+				"EBELP": None,
                 "ERFME": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
                 "KDAUF": self.vbeln,
                 "KDPOS": i,
                 "LBKUM": round(self.params['bom_prices'][i]*self.params['bom_quantities'][i], 4),
+				"LFBJA": None,
+				"LFBNR": None,
                 "LGORT": 'D', # TODO add custom value
                 "LIFNR": None, # HACK only cosidering OM not Procurement
                 "MANDT": values.mandt,
@@ -536,7 +637,7 @@ class Inventory:
                 "USNAM_MKPF": ernam,
                 "VBELN_IM": self.likp_vbeln,
                 "VBELP_IM": i,
-                'WAERS': 'EUR',
+				"WAERS": 'EUR',
                 "WERKS": self.params['plant'],
                 "ZEILE": i,
             }
@@ -624,3 +725,38 @@ class Inventory:
     #             "VERPR": self.params['prices'][i],
     #             "VPRSV": 'V', # TODO add custom value
     #         }
+
+    def material_stock_history(self, plant, total_quantity, matnr, price, year, month):
+        self.tables['MBEWH_json'][str(uuid.uuid4())] = {
+            "BWKEY": plant,
+            "BWTAR": None,
+            "LBKUM": total_quantity,
+            "LFGJA": year,
+            "LFMON": month,
+            "MANDT": values.mandt,
+            "MATNR": matnr,
+            "PEINH": 1,
+            "SALK3": total_quantity*price, #TO DO add custom value
+            "STPRS": price,
+            "VERPR": price,
+            "VPRSV": 'V', # TODO add custom value
+        }
+
+    def latest_material_stock(self, plant, total_quantity, matnr, price, year, month):
+        self.tables['MBEW_json'][str(uuid.uuid4())] = {
+            "BWKEY": plant,
+            "BWTAR": None,
+            "LBKUM": total_quantity,
+            "LFGJA": year,
+            "LFMON": month,
+            "MANDT": values.mandt,
+            "MATNR": matnr,
+            "PEINH": 1,
+            "SALK3": total_quantity*price, #TO DO add custom value
+            "STPRS": price,
+            "VERPR": price,
+            "VPRSV": 'V', # TODO add custom value
+        }
+
+
+    

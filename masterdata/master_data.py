@@ -47,7 +47,8 @@ def plants(all_plants=values.om_plants):
             "MANDT": values.mandt,
             "NAME1": v['name'],
             "WERKS": k,
-            "BWKEY": random.choice(values.om_valuation_areas),
+            # "BWKEY": random.choice(values.om_valuation_areas),
+            "BWKEY": k,
 
         }
         unique_countries[v['country_key']] = v['country_name']
@@ -72,10 +73,10 @@ def company_codes(all_company_codes=values.om_company_codes):
             "MANDT": values.mandt,
             "WAERS": 'EUR'
         }
-    for va in values.om_valuation_areas: # HACK only one valuation area
+    # for va in values.om_valuation_areas: # HACK only one valuation area
         T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
             "BUKRS": k,
-            "BWKEY": va, 
+            "BWKEY": v['plants'], 
             "MANDT": values.mandt
         }
 
@@ -148,6 +149,7 @@ def materials(
     MARM_json = {}
     MARC_json = {}
     MBEW_json = {}
+    MBEWH_json = {}
     MAST_json = {}
     STKO_json = {}
     STAS_json = {}
@@ -162,7 +164,7 @@ def materials(
                 matnr = f'MAT{index_0}{index_1}{index_2}'
                 material = name
                 price = attributes['price']
-                quantity = random.randint(500, 10_000)
+                quantity = random.randint(12, 62)
                 creation_time = helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1))
 
                 MAKT_json[str(uuid.uuid4())] = {
@@ -221,19 +223,36 @@ def materials(
                         "STLAL":'01'
                     }
                 
-                #for plant in list(all_plants.keys()):
-                    MBEW_json[str(uuid.uuid4())] = {
-                        "BWKEY": plant,
-                        "BWTAR": None,
-                        "LBKUM": quantity,
-                        "MANDT": values.mandt,
-                        "MATNR": matnr,
-                        "PEINH": 99, # TODO add custom value
-                        "SALK3": round(quantity*price, 4),
-                        "STPRS": price,
-                        "VERPR": price,
-                        "VPRSV": 'V', # TODO add custom value
-                    }
+                # for plant in list(all_plants.keys()):
+                    # MBEW_json[str(uuid.uuid4())] = {
+                    #     "BWKEY": plant,
+                    #     "BWTAR": None,
+                    #     "LBKUM": quantity,
+                    #     "MANDT": values.mandt,
+                    #     "LFGJA": '2023',
+                    #     "LFMON": '01',
+                    #     "MATNR": matnr,
+                    #     "PEINH": 1, # TODO add custom value
+                    #     "SALK3": round(quantity*price, 4),
+                    #     "STPRS": price,
+                    #     "VERPR": price,
+                    #     "VPRSV": 'V', # TODO add custom value
+                    # }
+
+                    # MBEWH_json[str(uuid.uuid4())] = {
+                    #     "BWKEY": plant,
+                    #     "BWTAR": None,
+                    #     "LBKUM": quantity,
+                    #     "MANDT": values.mandt,
+                    #     "LFGJA": '2023',
+                    #     "LFMON": '01',
+                    #     "MATNR": matnr,
+                    #     "PEINH": 1, # TODO add custom value
+                    #     "SALK3": round(quantity*price, 4),
+                    #     "STPRS": price,
+                    #     "VERPR": price,
+                    #     "VPRSV": 'V', # TODO add custom value
+                    # }
 
                     #Adding BOM tables 
 
@@ -294,7 +313,8 @@ def materials(
         'MARA_json': MARA_json,
         'MARM_json': MARM_json,
         'MARC_json': MARC_json,
-        'MBEW_json': MBEW_json,
+        # 'MBEW_json': MBEW_json,
+        # 'MBEWH_json': MBEWH_json,
         'MAST_json' : MAST_json,
         # 'STKO_json' : STKO_json,
         # 'STAS_json' : STAS_json,
