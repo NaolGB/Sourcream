@@ -76,7 +76,7 @@ def company_codes(all_company_codes=values.om_company_codes):
     # for va in values.om_valuation_areas: # HACK only one valuation area
         T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
             "BUKRS": k,
-            "BWKEY": v['plants'], 
+            "BWKEY": v['plants'][0], 
             "MANDT": values.mandt
         }
 
@@ -196,19 +196,19 @@ def materials(
                     MARC_json[str(uuid.uuid4())] = {
                         "AUSDT": helpers.generate_random_date(start_date=datetime(2027, 12, 1), end_date=datetime(2030, 1, 1)), # HACK after all SO and procurement have passed
                         "BESKZ": 'X',
-                        "BSTMI": 99,
-                        "DISGR": 'D', # TODO add custom value
+                        "BSTMI": 99,  # TODO add custom value
+                        "DISGR": '0001', # TODO add custom value 
                         "DISMM": 'PD', # TODO add custom value
-                        "DISPO": 'D', # TODO add custom value
-                        "DZEIT": 99, # TODO add custom value
-                        "EISBE": 99, # TODO add custom value
-                        "LGRAD": 99, # TODO add custom value
+                        "DISPO": 'ZP1', # TODO add custom value
+                        "DZEIT": random.randint(1,3), # TODO add custom value
+                        "EISBE": random.randint(23,125), # TODO add custom value
+                        "LGRAD": random.randint(23,99), # TODO add custom value
                         "MANDT": values.mandt,
                         "MATNR": matnr,
                         "MMSTD": creation_time,
                         "NFMAT": matnr,
                         "PLIFZ": random.randint(2, 7),
-                        "STRGR": 'D', # TODO add custom value
+                        "STRGR": '10', 
                         "WEBAZ": random.randint(2, 6),
                         "WERKS": plant,
                         "SOBSL": '80'

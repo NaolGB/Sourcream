@@ -141,12 +141,12 @@ om_delivery_blocks = {
 om_dimensions = {
     'DIM-1': {
         'DIMID': 'AAAADL',
-        'MSSIE': 'EA'
+        'MSSIE': 'ST'
     }
 }
 om_units = {
     'UNIT-1': {
-        'MSEHI': 'EA',
+        'MSEHI': 'ST',
         'DIMID': 'AAAADL', # -- must matech om_dimensions' DIMID
     }
 }
@@ -165,7 +165,7 @@ om_industries = {
 om_routes = {
     'R-1': {
         'ROUTE': 'SEA',
-        'TRAZTD': 14
+        'TRAZTD': 480000
     }
 }
 om_sales_doc_item_categories = {
