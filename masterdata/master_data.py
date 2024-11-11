@@ -69,13 +69,12 @@ def company_codes(all_company_codes=values.om_company_codes):
     for k, v in all_company_codes.items():
         T001_json[str(uuid.uuid4())] = {
             "BUKRS": k,
-            "BUTXT": v['BUTXT'],
+            "BUTXT": v['BUTXT'], # CompanyCodeText
             "MANDT": values.mandt,
-            "WAERS": 'EUR'
+            "WAERS": 'EUR' # BaseCurrency
         }
-    # for va in values.om_valuation_areas: # HACK only one valuation area
-        T001K_json[str(uuid.uuid4())] = { # connect comapny code with plants
-            "BUKRS": k,
+        T001K_json[str(uuid.uuid4())] = { 
+            "BUKRS": k, # CompanyCode
             "BWKEY": v['plants'][0], 
             "MANDT": values.mandt
         }
@@ -177,12 +176,12 @@ def materials(
                     "ERNAM": random.choice(list(all_users.keys())),
                     "ERSDA": creation_time,
                     "MANDT": values.mandt,
-                    "MATKL": grp_code,
+                    "MATKL": grp_code, # Group
                     "MATNR": matnr,
                     "MBRSH": all_industries[random.choice(list(all_industries.keys()))]['MBRSH'],
-                    "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],
-                    "MTART": all_mat_types[random.choice(list(all_mat_types.keys()))]['MTART'],
-                    "PRDHA": 'DEFAULT', # TODO add product heirarchy here
+                    "MEINS": all_units[random.choice(list(all_units.keys()))]['MSEHI'],  # BaseQuantityUnit / FromUnit / 
+                    "MTART": all_mat_types[random.choice(list(all_mat_types.keys()))]['MTART'], # Type
+                    "PRDHA": 'DEFAULT', # ProductHierarchy
                 }
                 MARM_json[str(uuid.uuid4())] = {
                     "MANDT": values.mandt,
@@ -194,22 +193,22 @@ def materials(
                 #for plnt in random.sample(list(all_plants.keys()), 5):
                 for plant in list(all_plants.keys()):
                     MARC_json[str(uuid.uuid4())] = {
-                        "AUSDT": helpers.generate_random_date(start_date=datetime(2027, 12, 1), end_date=datetime(2030, 1, 1)), # HACK after all SO and procurement have passed
-                        "BESKZ": 'X',
-                        "BSTMI": 99,  # TODO add custom value
-                        "DISGR": '0001', # TODO add custom value 
-                        "DISMM": 'PD', # TODO add custom value
-                        "DISPO": 'ZP1', # TODO add custom value
-                        "DZEIT": random.randint(1,3), # TODO add custom value
-                        "EISBE": random.randint(23,125), # TODO add custom value
-                        "LGRAD": random.randint(23,99), # TODO add custom value
-                        "MANDT": values.mandt,
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2027, 12, 1), end_date=datetime(2030, 1, 1)), # ValidityPeriodEndDate
+                        "BESKZ": 'X', # ProcurementType
+                        "BSTMI": random.randint(5,25), # MinimumLotSize
+                        "DISGR": '0001', # MRPGroup
+                        "DISMM": 'PD', # MRPType
+                        "DISPO": 'ZP1', # MRPController
+                        "DZEIT": random.randint(1,3), # PlannedProductionLeadTime
+                        "EISBE": random.randint(23,125), # SafetyStockLevel
+                        "LGRAD": random.randint(23,99), # ServiceLevel
+                        "MANDT": values.mandt, # SourceSystemInstance
                         "MATNR": matnr,
-                        "MMSTD": creation_time,
+                        "MMSTD": creation_time, # ValidityPeriodStartDate
                         "NFMAT": matnr,
-                        "PLIFZ": random.randint(2, 7),
-                        "STRGR": '10', 
-                        "WEBAZ": random.randint(2, 6),
+                        "PLIFZ": random.randint(2, 7), # PlannedDeliveryTimeDays
+                        "STRGR": '10', # PlanningStrategyGroup
+                        "WEBAZ": random.randint(2, 6), # GoodsReceiptProcessingDays
                         "WERKS": plant,
                         "SOBSL": '80'
                     }
