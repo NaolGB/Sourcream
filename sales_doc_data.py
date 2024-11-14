@@ -485,7 +485,8 @@ class SalesAndDistribution:
             "KUNAG": self.params['kunnr'],
             "MANDT": values.mandt,
             "VBELN": self.vbrk_vbeln,
-            "VBTYP": 'M' # M: Invoice
+            "VBTYP": 'M', # M: Invoice, 
+            "WAERK": 'EUR'
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -500,7 +501,10 @@ class SalesAndDistribution:
                 "POSNR": i,
                 "VBELN": self.vbrk_vbeln,
                 "WERKS": self.params['plant'],
-                'VGTYP': 'J'
+                'VGTYP': 'J', 
+                'FKIMG': 'd', # add proper value... 
+                'NETWR': 'd', # add proper value... 
+                'VRKME': 'd' # add proper value... 
             }
         
         self.tables['BKPF_json'][str(uuid.uuid4())] = {

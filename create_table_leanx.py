@@ -89,8 +89,8 @@ required_table_columns = {
     'VBEP' : ['MANDT', 'ETENR', 'POSNR', 'VBELN', 'BMENG', 'MEINS', 'MBDAT', 'WADAT', 'EDATU'], #, 'LMENG' excluded
     'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN', 'ERZET', 'ERDAT', 'MATNR'], #last three here not in required field sheet
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
-    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP'],
-    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS'],
+    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP','WAERK'],
+    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS', 'FKIMG','NETWR','VRKME'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
 }
 
