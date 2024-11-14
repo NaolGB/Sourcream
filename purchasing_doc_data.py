@@ -21,9 +21,12 @@ class Purchasing:
         self.params = params
 
         self.tables = {
+            'BKPF_json': {},
+            'BSEG_json': {},
             'EBAN_json': {}, 
             'CDHDR_json': {},
             'CDPOS_json': {},
+            'EKES_json':{},
             'EKKO_json': {},
             'EKPO_json': {},
             'NAST_json': {},
@@ -211,7 +214,7 @@ class Purchasing:
             'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
             'KONNR': self.params['konnr'] if self.params['has_contract'] else None, # TODO check what the effect of using has_contract is vs having multiple POs for contracts
             'LIFNR': self.params['lifnr'],
-            'LOEKZ': 'D',
+            'LOEKZ': 'D', # DeletionIndicator
             'MANDT': values.mandt,
             'RESWK': None, # HACK
             'STATU': 'B',
@@ -253,7 +256,7 @@ class Purchasing:
                 'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None,
                 'KTMNG': self.params['quantities'][i],
                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
-                'LOEKZ': 'D', # HACK
+                'LOEKZ': 'D', # DeletionIndicator
                 'MANDT': values.mandt,
                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
@@ -261,10 +264,10 @@ class Purchasing:
                 'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else priceifnocontract,
                 'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(priceifnocontract * self.params['quantities'][i], 2) ,
                 'PEINH': 1,
-                'REPOS': None, # Invoice not recieved
+                'REPOS': None, # InvoiceReceiptIndicator
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'UEBTO': 0,
-                'WEBRE': None,
+                'WEBRE': None, # InvoiceAfterGoodsReceiptIndicator
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
                 'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
@@ -282,6 +285,39 @@ class Purchasing:
                 valold=None,
                 valnew=None,
             )
+
+            self.set_confirmed_poitem_deliverydate(aedat=aedat, ernam=ernam, utime=utime, item_pos=i)
+
+
+    def set_confirmed_poitem_deliverydate(self, aedat, ernam, utime, item_pos):
+        self.tables['EKES_json'][str(uuid.uuid4())] = {
+            'EBELN': self.purchase_order_number, # = "EKKO"."EBELN" and "EKPO"."EBELN"
+            'EBELP': item_pos, # = "EKPO"."EBELP"
+            'EBTYP': 'LO', # "EKES"."EBTYP" LIKE 'L%' # ConfirmationCategory
+            'EINDT': aedat, # ConfirmationDeliveryDate
+            'ERDAT': aedat, # CreationDate 
+            'ETENS': item_pos, # DatabasePurchaseOrderVendorConfirmationNumber
+            'EZEIT': '1', # CreationTime
+            'MANDT': values.mandt, 
+            'MENGE': '1', 
+        }
+
+        self.changes(
+        objid=str(uuid.uuid4()), 
+        objclas='EINKBELEG', 
+        udate=aedat, 
+        utime=utime,
+        uname=ernam, 
+        chngid='U', 
+        fname='EINDT', # or EBTYP for  Confirmation Category
+        tabkey=f'{values.mandt}{self.purchase_order_number}{item_pos}{item_pos}', 
+        tabname='EKES', 
+        valold=None,
+        valnew=aedat,
+    )
+
+
+
 
     def send_purchase_order(self, usnam, erdat):
         self.tables['NAST_json'][str(uuid.uuid4())] = {
@@ -357,6 +393,7 @@ class Purchasing:
         self.tables['EKBE_json'][str(uuid.uuid4())] = { # TODO check how this affects OutgoingMaterialDocument (in OM/sales_doc_data)
             'BELNR': self.mat_doc_number,
             'BUZEI': item_position,
+            'CPUDT': cpudt,
             'GJAHR': self.fy,
             'MANDT': values.mandt,
             'MENGE': delivered_quanity,
@@ -367,6 +404,7 @@ class Purchasing:
 
     def create_purchase_order_schedule_line(self, eindt, creation_date, creation_time, ernam, ebelp, scheduled_quanity, delivered_quanity, item_position):
         self.tables['EKET_json'][str(uuid.uuid4())] = {
+            'BEDAT': creation_date,
             'EBELN': self.purchase_order_number,
             'EBELP': ebelp,
             'EINDT': eindt,
@@ -389,12 +427,12 @@ class Purchasing:
             valnew = None
         )
 
-    def create_vendor_invoice(self, ernam, cupdt):
+    def create_vendor_invoice(self, ernam, cpudt):
         self.tables['RBKP_json'][str(uuid.uuid4())] = {
             'BELNR': self.beleg_number,
-            'BLDAT': cupdt, # document date in document
+            'BLDAT': cpudt, # document date in document
             'BUKRS': self.params['company_code'],
-            'CPUDT': cupdt, # Day on which accounting doc was entered
+            'CPUDT': cpudt, # Day on which accounting doc was entered
             'CPUTM': helpers.generate_random_time(),
             'GJAHR': self.fy,
             'LIFNR': self.params['lifnr'],
@@ -519,55 +557,53 @@ class Purchasing:
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
 
 
-#     def PostVendorAccountDebitItem(self, ernam, cupdt):
-#         self.tables['BSEG_json'][str(uuid.uuid4())] = {
-#             'AUGBL' : '1' ,
-#             'AUGDT' : '1' ,
-#             'AUGGJ' : '1' ,
-#             'BUKRS' : '1' ,
-#             'MANDT' : '1' ,
-#             'BELNR' : '1' ,
-#             'BUZEI' : '1' ,
-#             'GJAHR' : '1' ,
-#             'BSCHL' : '1' ,
-#             'LIFNR' : '1' ,
-#             'MATNR' : '1' ,
-#             'SGTXT' : '1' ,
-#             'SKFBT' : '1' ,
-#             'WRBTR' : '1' ,
-#             'WSKTO' : '1' ,
-#             'ZBD1P' : '1' ,
-#             'ZBD1T' : '1' ,
-#             'ZBD2P' : '1' ,
-#             'ZBD2T' : '1' ,
-#             'ZBD3T' : '1' ,
-#             'ZFBDT' : '1' ,
-#             'ZLSCH' : '1' ,
-#             'ZTERM' : '1' ,
-#             'ZLSPR' : '1' ,
-#             'KUNNR' : '1' ,
-#             'MANSP' : '1' ,
-#             'MANST' : '1' ,
-#             'KOART' : '1' ,
-#             'SHKZG' : '1' ,
-#         }
+    def PostVendorAccountCreditItem(self, usnam, cpudt):
+        self.tables['BKPF_json'][str(uuid.uuid4())] = {
+            'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
+            'AWTYP' :  'RMRP', # PurchaseOrderRelated
+            'BELNR' : self.beleg_number , # "BSEG"."BELNR"
+            'BLART' : 'ZV' , # DocumentType "BKPF"."BLART"
+            'BLDAT' :  cpudt, # DocumentDate
+            'BUKRS' : self.params['company_code'] , #  = "BSEG"."BUKRS"
+            'CPUDT' : cpudt , # CreationTime
+            'CPUTM' : helpers.generate_random_time() , # CreationTime
+            'GJAHR' : self.fy ,
+            'MANDT' :  values.mandt,
+            'USNAM' :  usnam,
+            'WAERS' :  'EUR', # Currency
+            'XBLNR' :  '1', # ReferenceDocumentNumber
+            'XREVERSAL' : None , # 1 or 2 if reversal document 
+        }
 
-#         self.tables['BKPF_json'][str(uuid.uuid4())] = {
-#             'AWKEY' :  ,
-#             'XREVERSAL' :  ,
-#             'XBLNR' :  ,
-#             'WAERS' :  ,
-#             'BLDAT' :  ,
-#             'BLART' :  ,
-#             'AWTYP' :  ,
-#             'USNAM' :  ,
-#             'MANDT' :  ,
-#             'GJAHR' :  ,
-#             'CPUTM' :  ,
-#             'CPUDT' :  ,
-#             'BUKRS' :  ,
-#             'BELNR' :  ,
-#         }
-
-# T052
-# T003T
+        for i in range(len(self.params['matnrs'])):
+            self.tables['BSEG_json'][str(uuid.uuid4())] = {
+                'AUGBL' : None , #part of clearing ID
+                'AUGDT' : cpudt , # ClearingDate
+                'AUGGJ' : None , # part of clearing ID
+                'BELNR' : self.beleg_number , # number to join with BKPF and RBKP
+                'BSCHL' : '31' , # invoice
+                'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
+                'BUZEI' : i , # SystemAccountingDocumentItemNumber
+                'GJAHR' : self.fy ,
+                'KOART' : 'K' ,
+                'KUNNR' : None ,
+                'LIFNR' : self.params['lifnr'] ,
+                'MANDT' : values.mandt ,
+                'MANSP' : None ,
+                'MANST' : None ,
+                'MATNR' : self.params['matnrs'][i] ,
+                'SGTXT' : 'D' , #  ItemText TO DO adjust  
+                'SHKZG' : 'H' ,
+                'SKFBT' : '1' , # CashDiscountEligibleAmount
+                'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
+                'WSKTO' : '1' , # CashDiscountTakenAmount
+                'ZBD1P' : 0.0 ,
+                'ZBD2P' : 0.0 ,
+                'ZBD1T' : '1' ,
+                'ZBD2T' : '1' ,
+                'ZBD3T' : '1' ,
+                'ZFBDT' : '1' , # CashDiscountDueDate
+                'ZLSCH' : '1' , # PaymentMethod
+                'ZLSPR' : None , # PaymentBlock
+                'ZTERM' : 'Z030',
+        }

@@ -20,7 +20,7 @@ def users(all_users=values.om_users):
         person_number = f'PRS{index}'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
-            "DATE_FROM": '20010101',
+            "DATE_FROM": '20240101',
             "NAME_FIRST": k, # TODO split bname
             "NAME_LAST": k, # TODO split bname
             "NATION": v['nation'],

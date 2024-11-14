@@ -2,11 +2,11 @@ import uuid
 
 #Castlelight
 # import values_Castlelight as values
-#sourcream
-# import values
+#Hotel Chocolat
+import values
 
 # Meritor
-import values_Meritor as values
+# import values_Meritor as values
 
 def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
     DD07T_json = {}  
@@ -198,3 +198,32 @@ def purchasing_organizations(proc_orgs=values.proc_purchasing_orgs):
         }
     
     return {'T024E_json': T024E_json}
+
+def terms_of_payment():
+    T052_json = {}
+        
+    T052_json[str(uuid.uuid4())] = {
+        "ZPRZ1": 0.0, # VendorCashDiscountPercentage1
+        "ZPRZ2": 0.0, # VendorCashDiscountPercentage2
+        "ZTAG1": '000', # VendorPaymentDays1
+        "ZTAG2": '000', # VendorPaymentDays2
+        "ZTAG3": '000', # VendorPaymentDays3
+        "ZTAGG": '00', # smaller than BKPF.BLDAT or = 0 
+        "ZTERM": 'Z030', # = "LFB1"."ZTERM"
+        "MANDT": values.mandt,
+        }
+    
+    return {'T052_json': T052_json}
+
+def document_type_texts(doc_types = values.document_type_texts):
+    T003T_json = {}
+    
+    for k, v in  doc_types.items():
+        T003T_json[str(uuid.uuid4())] = {
+            "MANDT": values.mandt,
+            "BLART": k, # = "BKPF"."BLART"
+            "SPRAS": 'E',
+            "LTEXT": v, # DocumentTypeText
+        }
+    
+    return {'T003T_json': T003T_json}
