@@ -478,7 +478,8 @@ class Purchasing:
                 'MATNR': self.params['matnrs'][i],
                 'MENGE': self.params['quantities'][i],
                 'WERKS': self.params['plant'],
-                'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                #'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) ,
             }
         
             for k, v in self.tables['EKPO_json'].items():
