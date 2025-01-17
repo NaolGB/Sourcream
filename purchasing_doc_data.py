@@ -11,6 +11,7 @@ class Purchasing:
     def __init__(self, params, start_date, index) -> None:
         self.index = index
         self.purchase_req_number = f'{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
+        #self.has_pr = True if random.random() > 0.11 else False
         self.purchase_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.mat_doc_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
@@ -50,6 +51,12 @@ class Purchasing:
             "UDATE": udate,
             "USERNAME": uname,
             "UTIME": utime,
+            # "VALUE_NEW": valnew, #TEMP TEST
+            # "VALUE_OLD": valold, #TEMP TEST
+            # "CHNGIND": chngid, #TEMP TEST
+            # "FNAME": fname, #TEMP TEST
+            # "TABKEY": tabkey, #TEMP TEST
+            # "TABNAME": tabname, #TEMP TEST
         }
 
         self.tables['CDPOS_json'][str(uuid.uuid4())] = {
@@ -156,6 +163,7 @@ class Purchasing:
             )
 
     def create_purchase_requisition_item(self, badat, ernam):
+        #if self.has_pr == True:
         for i in range(len(self.params['matnrs'])):
             self.tables['EBAN_json'][str(uuid.uuid4())] = {
                 "AFNAM": self.params['requested_by'],
@@ -166,7 +174,7 @@ class Purchasing:
                 "ERNAM": ernam,
                 "ESTKZ": 'B' if ernam == 'BATCH_JOB' else 'D', # Direct procurement if not from material planning
                 "FRGKZ": '2', # 'RFQ/purchase order' in values.release_indicators
-                "KONNR": self.params['konnr'] if self.params['item_has_contract'][i] else None,
+                "KONNR": self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None, #TEMP TO CHECK
                 "KTPNR": i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
                 "LIFNR": self.params['lifnr'],
                 "LOEKZ": 'D', # TODO add custom value
@@ -175,7 +183,8 @@ class Purchasing:
                 "MEINS": self.unit,
                 "MENGE": self.params['quantities'][i],
                 "PEINH": 1, # NOTE assumnig price is per item (pcs)
-                "PREIS": self.params['prices'][i],
+                #"PREIS": self.params['prices'][i],
+                "PREIS": self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],
                 "STATU": 'N', # NOTE not edited (RFQ not yet created)
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
                 "WAERS": 'EUR',
@@ -241,12 +250,12 @@ class Purchasing:
             )
         for i in range(len(self.params['matnrs'])):
             randnom = random.random()
-            priceifnocontract = self.params['prices'][i] * (random.uniform(1.1, 2.7))
+            #priceifnocontract = self.params['prices'][i] * (random.uniform(1.1, 1.5))
             self.tables['EKPO_json'][str(uuid.uuid4())] = {
                 'AEDAT': aedat,
                 'AFNAM': self.params['requested_by'],
-                "BANFN": self.purchase_req_number,
-                "BNFPO": i,
+                "BANFN": self.purchase_req_number if self.params['has_pr'] == True else None,
+                "BNFPO": i if self.params['has_pr'] == True else None,
                 'BPRME': 1,
                 'BSTYP': 'F',
                 'BUKRS': self.params['company_code'],
@@ -261,8 +270,8 @@ class Purchasing:
                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else priceifnocontract,
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(priceifnocontract * self.params['quantities'][i], 2) ,
+                'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) ,
                 'PEINH': 1,
                 'REPOS': None, # InvoiceReceiptIndicator
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
