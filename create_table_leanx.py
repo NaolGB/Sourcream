@@ -50,12 +50,12 @@ required_table_columns = {
     'MAKT' : ['MANDT', 'MATNR', 'SPRAS', 'MAKTX'],
     'MARA' : ['MANDT', 'MATNR', 'ERNAM', 'ERSDA', 'MATKL', 'MBRSH', 'MEINS', 'MTART', 'PRDHA'],
     'MARC' : ['AUSDT', 'BESKZ', 'BSTMI', 'DISGR', 'DISMM', 'DISPO', 'DZEIT', 'EISBE', 'LGRAD', 'MANDT', 'MATNR', 'MMSTD', 'NFMAT', 'PLIFZ', 'STRGR', 'WEBAZ', 'WERKS'],
-    'MARM' : ['MANDT', 'MATNR', 'MEINH'], #, 'UMREN', 'UMREZ' excluded
+    'MARM' : ['MANDT', 'MATNR', 'MEINH', 'UMREN', 'UMREZ'],
     'MBEW' : ['BWKEY', 'BWTAR', 'LBKUM', 'LFGJA', 'LFMON', 'MANDT', 'MATNR', 'PEINH', 'SALK3', 'STPRS', 'VERPR', 'VPRSV'],
     'MSEG' : ['ERFME', 'MEINS', 'LGORT', 'LBKUM', 'MANDT', 'MBLNR', 'ZEILE', 'USNAM_MKPF', 'MENGE', 'EBELP', 'LFBJA', 'SMBLP', 'LIFNR', 'MATNR', 'WERKS', 'MJAHR', 'CPUDT_MKPF', 'CPUTM_MKPF', 'EBELN', 'LFBNR', 'SJAHR', 'BWART', 'SHKZG', 'SMBLN', 'VBELP_IM', 'KDPOS', 'VBELN_IM', 'KDAUF'],
     'NAST' : ['TCODE', 'ERUHR', 'MANDT', 'USNAM', 'ERDAT', 'DATVR', 'UHRVR', 'KSCHL', 'PARVW', 'KAPPL', 'PARNR', 'AENDE', 'OBJKY', 'SPRAS'],
-    'RBKP' : ['GJAHR', 'BELNR', 'MANDT', 'BUKRS', 'ZTERM', 'ZLSPR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'USNAM', 'BLDAT', 'ZFBDT', 'LIFNR', 'CPUDT', 'CPUTM', 'VGART', 'WAERS', 'STJAH', 'STBLG' ],
-    'RSEG' : ['MENGE', 'BSTME', 'WRBTR', 'MANDT', 'BELNR', 'BUZEI', 'GJAHR', 'EBELP', 'LFPOS', 'MATNR', 'WERKS', 'BUKRS', 'LIFNR', 'EBELN', 'LFGJA', 'LFBNR'],
+    'RBKP' : ['GJAHR', 'BELNR', 'MANDT', 'BUKRS', 'ZTERM', 'ZLSPR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'USNAM', 'BLDAT', 'ZFBDT', 'LIFNR', 'CPUDT', 'CPUTM', 'VGART', 'WAERS', 'STJAH', 'STBLG','XRECH' ],
+    'RSEG' : ['MENGE', 'BSTME', 'WRBTR', 'MANDT', 'BELNR', 'BUZEI', 'GJAHR', 'EBELP', 'LFPOS', 'MATNR', 'WERKS', 'BUKRS', 'LIFNR', 'EBELN', 'LFGJA', 'LFBNR', 'SHKZG'],
     'T001' : ['BUKRS', 'BUTXT', 'MANDT', 'WAERS'],
     'T001K' : ['BUKRS', 'BWKEY', 'MANDT'],
     'T001W' : ['BWKEY', 'LAND1', 'MANDT', 'NAME1', 'WERKS'],
@@ -94,7 +94,7 @@ required_table_columns = {
     'VBEP' : ['MANDT', 'ETENR', 'POSNR', 'VBELN', 'BMENG', 'MEINS', 'MBDAT', 'WADAT', 'EDATU'], #, 'LMENG' excluded
     'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN', 'ERZET', 'ERDAT', 'MATNR'], #last three here not in required field sheet
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
-    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP'],
+    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP', 'NETWR', 'ZTERM'],
     'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
 }

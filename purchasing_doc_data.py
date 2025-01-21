@@ -97,8 +97,8 @@ class Purchasing:
             'RESWK': None, # HACK
             'STATU': 'B',
             'WAERS': 'EUR',
-            'ZBD1P': 0,
-            'ZBD1T': 0,
+            'ZBD1P': self.params['cashdiscount'],
+            'ZBD1T': self.params['paymentdays'],
             'ZBD2P': 0,
             'ZBD2T': 0,
             'ZBD3T': 0,
@@ -228,11 +228,11 @@ class Purchasing:
             'RESWK': None, # HACK
             'STATU': 'B',
             'WAERS': 'EUR',
-            'ZBD1P': 0,
-            'ZBD1T': 0,
-            'ZBD2P': 0,
-            'ZBD2T': 0,
-            'ZBD3T': 0,
+            'ZBD1P': self.params['cashdiscount'],#random.uniform(0.1, 0.3), #if random.random() > 0.5 else None, # test
+            'ZBD1T': self.params['paymentdays'], # test
+            'ZBD2P': 0, #random.uniform(0.1, 0.4), #if random.random() > 0.5 else None, # test
+            'ZBD2T': 0, # test
+            'ZBD3T': 0, # test
             'ZTERM': self.params['payment_term'],
         }
         self.changes(
@@ -450,8 +450,9 @@ class Purchasing:
             'USNAM': ernam,
             'VGART': 'RD', #Logistics Invoice (requirement)
             'WAERS': 'EUR',
-            'ZBD1P': 0,
-            'ZBD1T': 0,
+            'XRECH' : 'X', # new field version 2.0 Post invoice, possible values are NULL . for no or X for yes
+            'ZBD1P': self.params['cashdiscount'],
+            'ZBD1T': self.params['paymentdays'],
             'ZBD2P': 0,
             'ZBD2T': 0,
             'ZBD3T': 0,
@@ -478,6 +479,7 @@ class Purchasing:
                 'MATNR': self.params['matnrs'][i],
                 'MENGE': self.params['quantities'][i],
                 'WERKS': self.params['plant'],
+                'SHKZG': 'S', # S for debit , H for credit new field version 2.0 
                 #'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
                 'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) ,
             }
@@ -607,12 +609,12 @@ class Purchasing:
                 'SKFBT' : '1' , # CashDiscountEligibleAmount
                 'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
                 'WSKTO' : '1' , # CashDiscountTakenAmount
-                'ZBD1P' : 0.0 ,
-                'ZBD2P' : 0.0 ,
-                'ZBD1T' : '1' ,
-                'ZBD2T' : '1' ,
-                'ZBD3T' : '1' ,
-                'ZFBDT' : '1' , # CashDiscountDueDate
+                'ZBD1P' : self.params['cashdiscount'] ,
+                'ZBD2P' : 0,
+                'ZBD1T' : self.params['paymentdays'] ,
+                'ZBD2T' : 0,
+                'ZBD3T' : 0,
+                'ZFBDT' : self.pr_req_date, # CashDiscountDueDate
                 'ZLSCH' : '1' , # PaymentMethod
                 'ZLSPR' : None , # PaymentBlock
                 'ZTERM' : 'Z030',
