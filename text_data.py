@@ -83,6 +83,52 @@ def organization(sales_orgs=values.om_sales_orgs):
     
     return {'TVKBT_json': TVKBT_json, 'TVKOT_json': TVKOT_json, 'TVKOV_json': TVKOV_json, 'TVTWT_json': TVTWT_json}
 
+# def purchasing_organizations(proc_orgs=values.proc_purchasing_orgs):
+#     T024E_json = {}
+
+#     for org, attributes in proc_orgs.items():
+#         T024E_json[str(uuid.uuid4())] = {
+#             "EKORG": org,
+#             "EKOTX": org,
+#             "MANDT": values.mandt
+#         }
+    
+#     return {'T024E_json': T024E_json}
+
+# def purchasing_doc_types(all_doc_types=values.proc_doc_types):
+#     T161T_json = {}
+#     for k, v in all_doc_types.items():
+#         T161T_json[str(uuid.uuid4())] = {
+#             "BATXT": v,
+#             "BSART": 'F', # HACK similar to EKKO.BSART
+#             "BSTYP": k,
+#             "MANDT": values.mandt,
+#             "SPRAS": 'E'
+#         }
+    
+#     return {'T161T_json': T161T_json}
+ 
+# def cust_mastercreditmgnt():
+#     T014_json = {}
+#     T014_json[str(uuid.uuid4())] = {
+#           "WAERS": 'EUR',
+        #   "MANDT":values.mandt,
+        #   "KKBER": None # used for join to knkk
+#     }
+# #     Open deliveries/billing documents (KM) - move to sales_doc_data? 
+#         S067_json = {}
+#         S067_json[str(uuid.uuid4())]  = {
+#             "CMWAE": 'EUR', # OpenBillingCurrency
+#             "KKBER": , #part of id Credit control area
+#             "KNKLI": , #for join to knkk Customer's account number with credit limit reference
+#             "MANDT": values.mandt,
+#             "OFAKW": , # unclear Open billing document credit value
+#             "OLIKW": , # unclear Open delivery credit value
+#             "SPTAG": , # used to order by Period to analyze - current date
+#         }
+# 
+# return {'T014_json': T014_json, 'S067_json': S067_json}
+
 def distribution(shipping_conditions=values.shipping_conditions, all_movt_types=values.goods_movement_types):
     TVSBT_json = {}
     T156_json = {}

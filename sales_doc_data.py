@@ -37,7 +37,13 @@ class SalesAndDistribution:
             'CDHDR_json': {},
             'CDPOS_json': {},
             'JCDS_json': {},
-            'VBFA_json': {}
+            'VBFA_json': {},
+           # 'NAST_json':{},
+            # 'EKKO_json':{},
+            # 'EKPO_json':{},
+            # 'VTTK_json':{},
+            # 'VTTP_json':{},
+            # 'KNKK_json': {}
         }
 
     def changes(self, objid, objclas, udate, utime, uname, chngid, fname, tabkey, tabname, valold, valnew, tcode='DEFAULT'):
@@ -486,7 +492,9 @@ class SalesAndDistribution:
             "MANDT": values.mandt,
             "VBELN": self.vbrk_vbeln,
             "VBTYP": 'M', # M: Invoice, 
-            "WAERK": 'EUR'
+            "WAERK": 'EUR',
+            "NETWR": round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4), # new field to adjust if price or quantity change, 
+            "ZTERM": self.params['payment_term'] # new field to edit, 
         }
 
         for i in range(len(self.params['matnrs'])):
@@ -503,7 +511,7 @@ class SalesAndDistribution:
                 "WERKS": self.params['plant'],
                 'VGTYP': 'J', 
                 'FKIMG': 'd', # add proper value... 
-                'NETWR': 'd', # add proper value... 
+                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 4), # to adjust if quantity or price change activity...?
                 'VRKME': 'd' # add proper value... 
             }
         
@@ -871,3 +879,156 @@ class SalesAndDistribution:
     #         valold='B',
     #         valnew='B'
     #     )
+
+
+    # def send_purchase_order(self, usnam, erdat):
+        # self.tables['NAST_json'][str(uuid.uuid4())] = {
+        #     'AENDE': None,
+        #     'DATVR': erdat,
+        #     'ERDAT': erdat,
+        #     'ERUHR': helpers.generate_random_time(),
+        #     'KAPPL': 'EF',
+        #     'KSCHL': 'NEU',
+        #     'MANDT': values.mandt,
+        #     'OBJKY': self.purchase_order_number,
+        #     'PARNR': 'D', # TODO add custom value
+        #     'PARVW': 'D', # TODO add custom value
+        #     'SPRAS': 'E',
+        #     'TCODE': 'D', # TODO add custom value
+        #     'UHRVR': helpers.generate_random_time(),
+        #     'USNAM': usnam,
+        # }
+
+    # def create_purchase_order(self, aedat, ernam, utime):
+    #         header_time = helpers.generate_random_time()
+    #         self.tables['EKKO_json'][str(uuid.uuid4())] = {
+    #             'AEDAT': aedat,
+    #             'BSART': 'F',
+    #             'BSTYP': 'F',
+    #             'BUKRS': self.params['company_code'],
+    #             'EBELN': self.purchase_order_number,
+    #             'EKORG': self.params['purchasing_org'],
+    #             'ERNAM': ernam,
+    #             'FRGGR': 'D', # TODO add custom value
+    #             'FRGKE': '2',
+    #             'FRGSX': 'D', # TODO add custom value
+    #             'FRGZU': None, # No Approval needed
+    #             'KDATB': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+    #             'KDATE': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+    #             'KONNR': self.params['konnr'] if self.params['has_contract'] else None, # TODO check what the effect of using has_contract is vs having multiple POs for contracts
+    #             'LIFNR': self.params['lifnr'],
+    #             'LOEKZ': 'D', # DeletionIndicator
+    #             'MANDT': values.mandt,
+    #             'RESWK': None, # HACK
+    #             'STATU': 'B',
+    #             'WAERS': 'EUR',
+    #             'ZBD1P': self.params['cashdiscount'],#random.uniform(0.1, 0.3), #if random.random() > 0.5 else None, # test
+    #             'ZBD1T': self.params['paymentdays'], # test
+    #             'ZBD2P': 0, #random.uniform(0.1, 0.4), #if random.random() > 0.5 else None, # test
+    #             'ZBD2T': 0, # test
+    #             'ZBD3T': 0, # test
+    #             'ZTERM': self.params['payment_term'],
+    #         }
+    #         self.changes(
+    #                 objid=str(uuid.uuid4()), 
+    #                 objclas='EINKBELEG', 
+    #                 udate=aedat, 
+    #                 utime=utime,
+    #                 uname=ernam, 
+    #                 chngid='I', 
+    #                 fname='KEY', 
+    #                 tabkey=f'{values.mandt}{self.purchase_order_number}', 
+    #                 tabname='EKKO', 
+    #                 valold=None,
+    #                 valnew=None,
+    #             )
+    #         for i in range(len(self.params['matnrs'])):
+    #             randnom = random.random()
+    #             #priceifnocontract = self.params['prices'][i] * (random.uniform(1.1, 1.5))
+    #             self.tables['EKPO_json'][str(uuid.uuid4())] = {
+    #                 'AEDAT': aedat,
+    #                 'AFNAM': self.params['requested_by'],
+    #                 "BANFN": self.purchase_req_number if self.params['has_pr'] == True else None,
+    #                 "BNFPO": i if self.params['has_pr'] == True else None,
+    #                 'BPRME': 1,
+    #                 'BSTYP': 'F',
+    #                 'BUKRS': self.params['company_code'],
+    #                 'DPDAT': datetime.fromtimestamp(0).date(), # HACK 01/01/1970
+    #                 'EBELN': self.purchase_order_number,
+    #                 'EBELP': i,
+    #                 'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None,
+    #                 'KTMNG': self.params['quantities'][i],
+    #                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
+    #                 'LOEKZ': 'D', # DeletionIndicator
+    #                 'MANDT': values.mandt,
+    #                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
+    #                 'MEINS': self.unit,
+    #                 'MENGE': self.params['quantities'][i],
+    #                 'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],
+    #                 'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) ,
+    #                 'PEINH': 1,
+    #                 'REPOS': None, # InvoiceReceiptIndicator
+    #                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
+    #                 'UEBTO': 0,
+    #                 'WEBRE': None, # InvoiceAfterGoodsReceiptIndicator
+    #                 'WEPOS': None, # Goods receipt indicator
+    #                 'WERKS': self.params['plant'],
+    #                 'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
+    #             }
+    #             self.changes(
+    #                 objid=str(uuid.uuid4()), 
+    #                 objclas='EINKBELEG', 
+    #                 udate=aedat, 
+    #                 utime=helpers.add_time(utime, helpers.UPTO_3_HOURS()),
+    #                 uname=ernam, 
+    #                 chngid='I', 
+    #                 fname='KEY', 
+    #                 tabkey=f'{values.mandt}{self.purchase_order_number}{i}', 
+    #                 tabname='EKPO', 
+    #                 valold=None,
+    #                 valnew=None,
+    #             )
+
+    #             self.set_confirmed_poitem_deliverydate(aedat=aedat, ernam=ernam, utime=utime, item_pos=i)
+
+    def create_shipment(self, aedat, shipping_condition, ernam, all_routes=values.om_routes):
+        shipping_number = f'{str(uuid.uuid4())[-17:]}'
+        self.tables['VTTK_json'][str(uuid.uuid4())] = {
+            'VSBED': shipping_condition,
+            'TKNUM': shipping_number, # to edit SystemShipmentNumber
+            'SHTYP': 'd', # to edit ShippingType
+            'ROUTE': all_routes[random.choice(list(all_routes.keys()))]['ROUTE'],
+            'MANDT': values.mandt,
+            'ERZET': helpers.generate_random_time(),
+            'ERNAM': ernam,
+            'ERDAT': aedat,
+        }
+        for i in range(len(self.params['matnrs'])):
+            self.tables['VTTP_json'][str(uuid.uuid4())] = {
+                'VBELN': self.likp_vbeln,
+                'TPNUM': i,
+                'TKNUM': shipping_number,
+                'MANDT': values.mandt,
+                'ERZET': helpers.generate_random_time(),
+                'ERNAM': ernam ,
+                'ERDAT': aedat,
+            }
+
+#to edit / move as necessary -> change activity needed
+#Customer master credit management: Control area data
+    def create_custmaster_creditmgnt (self, aedat,ernam, erdat):
+        self.tables['KNKK_json'][str(uuid.uuid4())] = {
+            'AEDAT':aedat, #LastChangeDate
+            'AENAM':ernam, #LastChangedBy
+            'CASHD': 'd', #LastPaymentDate
+            'CRBLB': 'd', # BlockIndicator
+            'CTLPC': 'd', # RiskCategory
+            'DTREV': 'd', #CreditLimitLastReviewDate
+            'ERDAT':erdat, # CreationTime
+            'KKBER': 'd', #same as S067 part of ID Credit control area
+            'KLIMK': 'd', # BaseLimitAmount Customer's credit limit
+            'KNKLI': 'd', #Customer's account number with credit limit reference
+            'KUNNR':self.params['kunnr'], 
+            'MANDT':values.mandt,
+            }
+        

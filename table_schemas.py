@@ -27,7 +27,7 @@ columns_to_parse = {
 "KNA1" : ['ERDAT'],
 "KNB1" : ['ERDAT'],
 "KNB5" : [],
-"KNKK" : [],
+"KNKK" : ['AEDAT','ERDAT'],
 "LFA1" : [],
 "LFB1" : ['ERDAT'],
 "LFM1" : [],
@@ -46,7 +46,7 @@ columns_to_parse = {
 "RBKP" : ['BLDAT', 'ZFBDT', 'CPUDT', 'CPUTM'],
 "RSEG" : [],
 "S066" : [],
-"S067" : [],
+"S067" : ['SPTAG'],
 "T001" : [],
 "T001K" : [],
 "T001L" : [],
@@ -111,8 +111,8 @@ columns_to_parse = {
 "VBRK" : ['ERDAT', 'ERZET'],
 "VBRP" : ['ERDAT', 'ERZET'],
 "VBUK" : [],
-"VTTK" : [],
-"VTTP" : []
+"VTTK" : ['ERZET', 'ERDAT'],
+"VTTP" : ['ERZET', 'ERDAT']
 }
 
 #schema for the DB push
