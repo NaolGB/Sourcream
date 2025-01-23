@@ -569,7 +569,7 @@ class Purchasing:
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
 
 
-    def PostVendorAccountCreditItem(self, usnam, cpudt):
+    def PostVendorAccountCreditItem(self, usnam, cpudt, tcode='DEFAULT'):
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
             'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
             'AWTYP' :  'RMRP', # PurchaseOrderRelated
@@ -581,6 +581,7 @@ class Purchasing:
             'CPUTM' : helpers.generate_random_time() , # CreationTime
             'GJAHR' : self.fy ,
             'MANDT' :  values.mandt,
+            'TCODE' : tcode,
             'USNAM' :  usnam,
             'WAERS' :  'EUR', # Currency
             'XBLNR' :  '1', # ReferenceDocumentNumber
