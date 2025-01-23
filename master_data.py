@@ -82,9 +82,13 @@ def company_codes(all_company_codes=values.om_company_codes):
 
     return {'T001_json': T001_json, 'T001K_json': T001K_json}
 
-def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes):
+def customers_and_vendors(all_customers=values.om_customers, all_users=values.om_users, all_company_codes=values.om_company_codes, all_vendors=values.proc_vendors):
     KNB1_json = {}
     KNA1_json = {}
+    LFA1_json = {}
+    LFB1_json = {}
+    KNKK_json = {}
+    S067_json = {}
 
     for index, (k, v) in enumerate (all_customers.items()):
         customer_number = f'CUST{index}'
@@ -102,6 +106,34 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             "LIFSD": None,
             "FAKSD": None
         }
+
+        KNKK_json[str(uuid.uuid4())] = {
+            'AEDAT': helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)), #LastChangeDate
+            'AENAM': random.choice(list(all_users.keys())), #LastChangedBy
+            'CASHD': helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)), #LastPaymentDate
+            'CRBLB': None, # BlockIndicator
+            'CTLPC': 'C02', # RiskCategory to adjust 
+            'DTREV': None, #CreditLimitLastReviewDate
+            'ERDAT': helpers.generate_random_date(start_date=datetime(2015, 1, 1), end_date=datetime(2017, 1, 1)), # CreationTime
+            'KKBER': values.credit_control_area, #same as S067 part of ID Credit control area
+            'KLIMK': random.randint(10000, 50000), # BaseLimitAmount Customer's credit limit FLOAT to adjust
+            'KNKLI': customer_number, #Customer's account number with credit limit reference
+            'KUNNR': customer_number, 
+            'MANDT': values.mandt,
+            }
+        
+    #     #Open deliveries/billing documents (KM) - move to sales_doc_data? 
+        
+        S067_json[str(uuid.uuid4())]  = {
+            'CMWAE': 'EUR', # OpenBillingCurrency
+            'KKBER': values.credit_control_area, #part of id Credit control area
+            'KNKLI': customer_number, #for join to knkk Customer's account number with credit limit reference
+            'MANDT': values.mandt,
+            'OFAKW': 0, # unclear Open billing document credit value
+            'OLIKW': 0, # unclear Open delivery credit value
+            'SPTAG': helpers.generate_random_date(start_date=datetime(2023, 1, 1), end_date=datetime(2024, 12, 31)), # used to order by Period to analyze - current date
+        }
+
         for bukrs in list(all_company_codes.keys()):
             KNB1_json[str(uuid.uuid4())] = {
                 "BUKRS": bukrs, # HACK all company codes for all customers
@@ -111,11 +143,32 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
                 "MANDT": values.mandt,
                 "ZTERM": v['payment_term']
             }
+
+    for index, (k, v) in enumerate(all_vendors.items()):
+        vendor_number = f'VND{index}'
+        LFA1_json[str(uuid.uuid4())] = {
+            "ERNAM": random.choice(list(all_users.keys())),
+            "LAND1": v['country'],
+            "LIFNR": vendor_number,
+            "MANDT": values.mandt,
+            "NAME1": k,
+            "ORT01": v['city'],
+            "VBUND": None,
+        }
+        for bukrs in list(all_company_codes.keys()):
+            LFB1_json[str(uuid.uuid4())] = {
+                "BUKRS": bukrs, # HACK all company codes for all vendors
+                "ERDAT": helpers.generate_random_date(start_date=datetime(2017, 1, 1), end_date=datetime(2018, 1, 1)),
+                "ERNAM": random.choice(list(all_users.keys())),
+                "LIFNR": vendor_number,
+                "MANDT": values.mandt,
+                "ZTERM": v['payment_term']
+            }
     
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json}
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'LFA1_json': LFA1_json, 'LFB1_json': LFB1_json, 'KNKK_json': KNKK_json, 'S067_json': S067_json}
 
 def materials(
-        all_material_groups=values.om_material_groups, 
+        all_material_groups={**values.om_material_groups,**values.proc_material_groups}, # merge  two dicts 
         all_users=values.om_users, 
         all_mat_types=values.om_material_types, 
         all_industries=values.om_industries, 
@@ -160,10 +213,11 @@ def materials(
                     "MATNR": matnr,
                     "MEINH": all_dimensions[random.choice(list(all_dimensions.keys()))]['MSSIE'],
                 }
-                for plnt in random.sample(list(all_plants.keys()), 5):
+                #for plnt in random.sample(list(all_plants.keys()), 5):
+                for plant in list(all_plants.keys()):
                     MARC_json[str(uuid.uuid4())] = {
-                        "AUSDT": helpers.generate_random_date(start_date=datetime(2024, 12, 1), end_date=datetime(2026, 1, 1)), # HACK after all SO and procurement have passed
-                        "BESKZ": 'E',
+                        "AUSDT": helpers.generate_random_date(start_date=datetime(2026, 12, 1), end_date=datetime(2029, 1, 1)), # HACK after all SO and procurement have passed
+                        "BESKZ": 'X',
                         "BSTMI": 99,
                         "DISGR": 'D', # TODO add custom value
                         "DISMM": 'D', # TODO add custom value
@@ -178,7 +232,7 @@ def materials(
                         "PLIFZ": random.randint(5, 10),
                         "STRGR": 'D', # TODO add custom value
                         "WEBAZ": random.randint(2, 10),
-                        "WERKS": plnt
+                        "WERKS": plant
                     }
                 MBEW_json[str(uuid.uuid4())] = {
                     "BWKEY": random.choice(values.om_valuation_areas),
@@ -198,7 +252,7 @@ def materials(
 def material_support(
         all_units=values.om_units, 
         all_dimensions=values.om_dimensions, 
-        all_material_groups=values.om_material_groups,
+        all_material_groups={**values.om_material_groups,**values.proc_material_groups},
         all_mat_types=values.om_material_types,
         all_industries=values.om_industries
     ):

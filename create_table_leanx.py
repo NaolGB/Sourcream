@@ -57,6 +57,7 @@ required_table_columns = {
     'NAST' : ['TCODE', 'ERUHR', 'MANDT', 'USNAM', 'ERDAT', 'DATVR', 'UHRVR', 'KSCHL', 'PARVW', 'KAPPL', 'PARNR', 'AENDE', 'OBJKY', 'SPRAS'],
     'RBKP' : ['GJAHR', 'BELNR', 'MANDT', 'BUKRS', 'ZTERM', 'ZLSPR', 'ZLSCH', 'ZBD1T', 'ZBD2T', 'ZBD3T', 'ZBD1P', 'ZBD2P', 'SGTXT', 'USNAM', 'BLDAT', 'ZFBDT', 'LIFNR', 'CPUDT', 'CPUTM', 'VGART', 'WAERS', 'STJAH', 'STBLG' ],
     'RSEG' : ['MENGE', 'BSTME', 'WRBTR', 'MANDT', 'BELNR', 'BUZEI', 'GJAHR', 'EBELP', 'LFPOS', 'MATNR', 'WERKS', 'BUKRS', 'LIFNR', 'EBELN', 'LFGJA', 'LFBNR'],
+    'S067' : ['CMWAE', 'KKBER', 'KNKLI', 'MANDT', 'OFAKW', 'OLIKW', 'SPTAG'],
     'T001' : ['BUKRS', 'BUTXT', 'MANDT', 'WAERS'],
     'T001K' : ['BUKRS', 'BWKEY', 'MANDT'],
     'T001W' : ['BWKEY', 'LAND1', 'MANDT', 'NAME1', 'WERKS'],
@@ -71,6 +72,9 @@ required_table_columns = {
     'T156' : ['BWART', 'MANDT', 'XSTBW', 'KZVBU', 'SHKZG'],
     'T161T' :  ['BATXT', 'BSART', 'BSTYP', 'MANDT', 'SPRAS'],
     'T161U' : ['FKZTX', 'FRGKZ', 'MANDT', 'SPRAS'],
+    'TCURF' : ['FCURR', 'FFACT', 'GDATU', 'KURST', 'MANDT', 'TCURR', 'TFACT'],
+    'TCURR' : ['FCURR', 'FFACT', 'GDATU', 'KURST', 'MANDT', 'TCURR', 'TFACT', 'UKURS'],
+    'TCURX' : ['CURRDEC', 'CURRKEY'],
     'TJ02T' : ['ISTAT', 'SPRAS'],
     'TVAGT' : ['ABGRU', 'BEZEI', 'MANDT', 'SPRAS'],
     'TVAK' : ['AUART', 'KLIMP', 'MANDT'],
@@ -92,8 +96,11 @@ required_table_columns = {
     'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN', 'ERZET', 'ERDAT', 'MATNR'], #last three here not in required field sheet
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
     'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP','WAERK', 'NETWR', 'ZTERM'],
-    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'ERDAT', 'ERZET', 'MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS', 'FKIMG','NETWR','VRKME'],
-    'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN']
+    'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS', 'FKIMG','NETWR','VRKME'],
+    'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN'],
+    'VTTK' : ['VSBED','TKNUM','SHTYP','ROUTE','MANDT','ERZET','ERNAM','ERDAT'],
+    'VTTP' : ['VBELN','TPNUM','TKNUM','MANDT','ERZET','ERNAM','ERDAT']
+
 }
 
 def fetch_table(table_name: str):

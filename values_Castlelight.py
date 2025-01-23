@@ -1,4 +1,5 @@
 mandt = 'CL'
+credit_control_area = 'CL100'
 om_sales_orgs = {
     'EMEA': {
         'distribution_channels': {
@@ -64,6 +65,50 @@ om_sales_orgs = {
     },
 }
 
+proc_purchasing_orgs = {
+    'EMEA': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'UK01': 'London, Holborn',
+            'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
+            'GR01': 'Munich, Theresienstr',
+        }
+    },
+    'NAM': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'US01': 'New York, One World Trade Center',
+            'US02': 'Raleigh, 223 S. West',
+            'US03': 'San Francisco, 28 2nd',
+        }
+    },
+    'JAPC': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'JP01': 'Tokyo, Marunouchi Kitaguchi',
+            'IN01': 'Bengaluru, The Pavilion 62/63',
+        }
+    },
+}
+
 
 om_plants = {
     'PL01': {'country_key': 'ID', 'country_name': 'Indonesia', 'name': 'Jakarta Plant', 'sales_orgs': ['JAPC'], 'high_value': False},	
@@ -119,6 +164,18 @@ om_sales_doc_types = {
     'ZEXP': 'Export Sales',
     #'ZSCR': 'Scrap Sales',
 }
+
+proc_doc_types = {
+    'A': 'Request for quotation',
+    'B': 'Purchase requisition',
+    'F': 'Purchase order',
+    'I': 'Info record',
+    'K': 'Contract',
+    'L': 'Scheduling agreement',
+    'Q': 'Service entry sheet',
+    'W': 'Source list',
+}
+
 dd07t_combinations = {
     'VBAK': [
         {'DOMVALUE_L': 'C', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order'},
@@ -186,7 +243,7 @@ om_material_types = {
 om_industries = {
     'IND-1': {
         'MBRSH': 'I',
-        'MBBEZ': 'Food and Beverages'
+        'MBBEZ': 'Networking'
     }
 }
 om_routes = {
@@ -488,6 +545,204 @@ om_material_groups = {
     },
 }
 
+proc_material_groups = {
+        "Proc Raw Materials": {
+            "MATKL101": {
+                "name": "Metals & Alloys",
+                "availability": 0.75,
+                "materials": {
+                    "Aluminum Sheets (1mm thick)": {
+                        "price": 10.0
+                    },
+                    "Steel Plates (2mm thick)": {
+                        "price": 15.0
+                    },
+                    "Copper Wires (1kg)": {
+                        "price": 20.0
+                    },
+                    "Brass Fittings (per unit)": {
+                        "price": 5.0
+                    },
+                    "Titanium Rods (1m)": {
+                        "price": 50.0
+                    }
+                }
+            },
+            "MATKL102": {
+                "name": "Electronic Components",
+                "availability": 0.85,
+                "materials": {
+                    "Capacitors (pack of 100)": {
+                        "price": 10.0
+                    },
+                    "Resistors (pack of 100)": {
+                        "price": 5.0
+                    },
+                    "Microprocessors (per unit)": {
+                        "price": 200.0
+                    },
+                    "Power Transistors (per unit)": {
+                        "price": 15.0
+                    },
+                    "Printed Circuit Boards (per unit)": {
+                        "price": 30.0
+                    }
+                }
+            },
+            "MATKL103": {
+                "name": "Cabling Materials",
+                "availability": 0.8,
+                "materials": {
+                    "Fiber Optic Cable (per meter)": {
+                        "price": 10.0
+                    },
+                    "Ethernet Cable (Cat6, per meter)": {
+                        "price": 2.0
+                    },
+                    "Power Cables (per meter)": {
+                        "price": 3.0
+                    },
+                    "Coaxial Cable (per meter)": {
+                        "price": 4.0
+                    },
+                    "Heat Shrink Tubing (per pack)": {
+                        "price": 12.0
+                    }
+                }
+            }
+        },
+        "Packaging Materials": {
+            "MATKL110": {
+                "name": "Protective Packaging",
+                "availability": 0.9,
+                "materials": {
+                    "Foam Sheets (per roll)": {
+                        "price": 20.0
+                    },
+                    "Bubble Wrap (per roll)": {
+                        "price": 15.0
+                    },
+                    "Corrugated Boxes (per unit)": {
+                        "price": 2.0
+                    },
+                    "Plastic Wrap (per roll)": {
+                        "price": 5.0
+                    },
+                    "Shock Absorbing Pads (per unit)": {
+                        "price": 3.0
+                    }
+                }
+            },
+            "MATKL111": {
+                "name": "Pallets and Crates",
+                "availability": 0.85,
+                "materials": {
+                    "Wooden Pallets (standard size)": {
+                        "price": 30.0
+                    },
+                    "Plastic Pallets (standard size)": {
+                        "price": 40.0
+                    },
+                    "Metal Crates (per unit)": {
+                        "price": 60.0
+                    },
+                    "Custom Shipping Crates": {
+                        "price": 80.0
+                    },
+                    "Pallet Wrap Film (per roll)": {
+                        "price": 10.0
+                    }
+                }
+            },
+            "MATKL112": {
+                "name": "Labeling Materials",
+                "availability": 0.8,
+                "materials": {
+                    "Adhesive Labels (pack of 1000)": {
+                        "price": 20.0
+                    },
+                    "Barcode Stickers (pack of 500)": {
+                        "price": 15.0
+                    },
+                    "Shipping Tags (pack of 100)": {
+                        "price": 10.0
+                    },
+                    "Label Printers (per unit)": {
+                        "price": 150.0
+                    },
+                    "Thermal Transfer Ribbons (per roll)": {
+                        "price": 25.0
+                    }
+                }
+            }
+        },
+        "Maintenance Supplies": {
+            "MATKL120": {
+                "name": "Cleaning Supplies",
+                "availability": 0.6,
+                "materials": {
+                    "Server Cleaning Kits": {
+                        "price": 50.0
+                    },
+                    "Antistatic Brushes (pack of 10)": {
+                        "price": 15.0
+                    },
+                    "Compressed Air Cans (pack of 5)": {
+                        "price": 20.0
+                    },
+                    "Microfiber Cloths (pack of 20)": {
+                        "price": 10.0
+                    },
+                    "Screen Cleaning Solutions (per bottle)": {
+                        "price": 8.0
+                    }
+                }
+            },
+            "MATKL121": {
+                "name": "Tools and Equipment",
+                "availability": 0.75,
+                "materials": {
+                    "Screwdriver Sets": {
+                        "price": 30.0
+                    },
+                    "Multimeters": {
+                        "price": 50.0
+                    },
+                    "Crimping Tools": {
+                        "price": 40.0
+                    },
+                    "Cable Testers": {
+                        "price": 80.0
+                    },
+                    "Toolkits (comprehensive)": {
+                        "price": 150.0
+                    }
+                }
+            },
+            "MATKL122": {
+                "name": "Repair Parts",
+                "availability": 0.7,
+                "materials": {
+                    "Replacement Fans": {
+                        "price": 20.0
+                    },
+                    "Heat Sinks": {
+                        "price": 25.0
+                    },
+                    "Power Supplies": {
+                        "price": 100.0
+                    },
+                    "Replacement Motherboards": {
+                        "price": 200.0
+                    },
+                    "Backup Batteries": {
+                        "price": 150.0
+                    }
+                }
+            }
+        }
+    }
+
 prompt = {"""
 I am writing a dummy data for a sales order. 
 The company is a big food and beverages processing and packaging comapny. 
@@ -568,6 +823,41 @@ om_customers = {
     "EonNexSoft": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "GridNova Inc.": {"credit_risk": 0.14, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1}
 }
+
+proc_vendors = { 
+    "NetworkCore Components": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'ID', 'region': 'JAPC', 'city': 'Jakarta', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "FiberLink Technologies": {"credit_risk": 0.28, 'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "DataGrid Systems": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "CoreConnect Solutions": {"credit_risk": 0.68, 'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "HostLink Infrastructure": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "MegaData Solutions": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Melbourne', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NetShield Technologies": {"credit_risk": 0.29, 'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Brussels', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "DigitalNexus Systems": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "ConnectSphere Inc.": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "GridLine Hosting": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'London', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SilverGrid Data Systems": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'Ireland', 'region': 'EMEA', 'city': 'Dublin', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "KualaNexus Technologies": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'Malaysia', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "CloudHive Networks": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'New Zealand', 'region': 'JAPC', 'city': 'Auckland', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SynCore Hosting": {"credit_risk": 0.91, 'payment_term': 'Z030', 'country': 'Philippines', 'region': 'JAPC', 'city': 'Manila', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "DataHorizon Systems": {"credit_risk": 0.78, 'payment_term': 'Z030', 'country': 'Singapore', 'region': 'JAPC', 'city': 'Singapore', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NextGen Connectors": {"credit_risk": 0.37, 'payment_term': 'Z030', 'country': 'United States', 'region': 'EMEA', 'city': 'New York', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "TitanNet Solutions": {"credit_risk": 0.51, 'payment_term': 'Z030', 'country': 'South Africa', 'region': 'EMEA', 'city': 'Cape Town', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "QuantumData Services": {"credit_risk": 0.32, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SkyTech Hosting": {"credit_risk": 0.13, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "GuardianStream Systems": {"credit_risk": 0.21, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NetFusion Technologies": {"credit_risk": 0.43, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "DataCluster Solutions": {"credit_risk": 0.44, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NexSecure Technologies": {"credit_risk": 0.47, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NexusGrid Systems": {"credit_risk": 0.23, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "FortressNet Technologies": {"credit_risk": 0.1, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SecureGrid Technologies": {"credit_risk": 0.52, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "NovaNet Solutions": {"credit_risk": 0.09, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "CloudTitan Systems": {"credit_risk": 0.12, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "SphereCore Assemblies": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "EonGrid Systems": {"credit_risk": 0.35, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
+    "GridCore Inc.": {"credit_risk": 0.14, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1}
+}
+
 
 
 

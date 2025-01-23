@@ -1,4 +1,5 @@
 mandt = 'SC'
+credit_control_area = 'SC100'
 om_sales_orgs = {
     'EMEA': {
         'distribution_channels': {
@@ -64,6 +65,50 @@ om_sales_orgs = {
     },
 }
 
+proc_purchasing_orgs = {
+    'EMEA': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'UK01': 'London, Holborn',
+            'SP01': 'Madrid, Pl. de Manuel Gómez-Moreno',
+            'GR01': 'Munich, Theresienstr',
+        }
+    },
+    'NAM': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'US01': 'New York, One World Trade Center',
+            'US02': 'Raleigh, 223 S. West',
+            'US03': 'San Francisco, 28 2nd',
+        }
+    },
+    'JAPC': {
+        'distribution_channels': {
+            '10': 'Direct Sales',
+            '20': 'Dealers Sales',
+            '30': 'Distributor Sales',
+            '40': 'Stock Transfer',
+            '50': 'Exports Sales'
+        },
+        'sales_offices': {
+            'JP01': 'Tokyo, Marunouchi Kitaguchi',
+            'IN01': 'Bengaluru, The Pavilion 62/63',
+        }
+    },
+}
+
 
 om_plants = {
     'PL01': {'country_key': 'ID', 'country_name': 'Indonesia', 'name': 'Jakarta Plant', 'sales_orgs': ['JAPC'], 'high_value': False},	
@@ -119,6 +164,18 @@ om_sales_doc_types = {
     'ZEXP': 'Export Sales',
     #'ZSCR': 'Scrap Sales',
 }
+
+proc_doc_types = {
+    'A': 'Request for quotation',
+    'B': 'Purchase requisition',
+    'F': 'Purchase order',
+    'I': 'Info record',
+    'K': 'Contract',
+    'L': 'Scheduling agreement',
+    'Q': 'Service entry sheet',
+    'W': 'Source list',
+}
+
 dd07t_combinations = {
     'VBAK': [
         {'DOMVALUE_L': 'C', 'DOMNAME': 'VBTYP', 'DDTEXT': 'Order'},
@@ -488,6 +545,206 @@ om_material_groups = {
     },
 }
 
+
+proc_material_groups = {
+        "Proc Raw Ingredients": {
+            "MATKL101": {
+                "name": "Sugar & Sweeteners",
+                "availability": 0.8,
+                "materials": {
+                    "White Sugar 1kg": {
+                        "price": 1.2
+                    },
+                    "Brown Sugar 1kg": {
+                        "price": 1.5
+                    },
+                    "Liquid Glucose 5L": {
+                        "price": 8.0
+                    },
+                    "Honey Syrup 750ml": {
+                        "price": 6.0
+                    },
+                    "Corn Syrup 2L": {
+                        "price": 5.5
+                    }
+                }
+            },
+            "MATKL102": {
+                "name": "Dairy Products",
+                "availability": 0.6,
+                "materials": {
+                    "Milk Powder 1kg": {
+                        "price": 10.0
+                    },
+                    "Cream 1L": {
+                        "price": 4.0
+                    },
+                    "Butter 500g": {
+                        "price": 3.5
+                    },
+                    "Yogurt 1L": {
+                        "price": 2.5
+                    },
+                    "Cheese 1kg": {
+                        "price": 8.0
+                    }
+                }
+            },
+            "MATKL103": {
+                "name": "Flavors & Additives",
+                "availability": 0.7,
+                "materials": {
+                    "Vanilla Essence 100ml": {
+                        "price": 2.0
+                    },
+                    "Chocolate Syrup 500ml": {
+                        "price": 4.0
+                    },
+                    "Fruit Flavoring 250ml": {
+                        "price": 3.0
+                    },
+                    "Caramel Color 1L": {
+                        "price": 5.0
+                    },
+                    "Citric Acid 500g": {
+                        "price": 3.5
+                    }
+                }
+            }
+        },
+        "Packaging Materials": {
+            "MATKL110": {
+                "name": "Glass Bottles",
+                "availability": 0.9,
+                "materials": {
+                    "Clear Glass Bottle 500ml": {
+                        "price": 0.15
+                    },
+                    "Amber Glass Bottle 330ml": {
+                        "price": 0.12
+                    },
+                    "Green Glass Bottle 750ml": {
+                        "price": 0.2
+                    },
+                    "Blue Glass Bottle 1L": {
+                        "price": 0.25
+                    },
+                    "Flint Glass Bottle 250ml": {
+                        "price": 0.1
+                    }
+                }
+            },
+            "MATKL111": {
+                "name": "Plastic Bottles",
+                "availability": 0.85,
+                "materials": {
+                    "PET Bottle 500ml": {
+                        "price": 0.08
+                    },
+                    "HDPE Bottle 1L": {
+                        "price": 0.1
+                    },
+                    "LDPE Bottle 750ml": {
+                        "price": 0.09
+                    },
+                    "PVC Bottle 330ml": {
+                        "price": 0.07
+                    },
+                    "PP Bottle 250ml": {
+                        "price": 0.06
+                    }
+                }
+            },
+            "MATKL112": {
+                "name": "Caps & Closures",
+                "availability": 0.75,
+                "materials": {
+                    "Plastic Caps 500pcs": {
+                        "price": 5.0
+                    },
+                    "Metal Caps 500pcs": {
+                        "price": 6.0
+                    },
+                    "Tamper Evident Seals 100pcs": {
+                        "price": 2.5
+                    },
+                    "Screw Caps 100pcs": {
+                        "price": 3.0
+                    },
+                    "Flip Tops 100pcs": {
+                        "price": 4.0
+                    }
+                }
+            }
+        },
+        "Utilities": {
+            "MATKL120": {
+                "name": "Cleaning Supplies",
+                "availability": 0.6,
+                "materials": {
+                    "Bottle Brushes": {
+                        "price": 1.5
+                    },
+                    "Sanitizer 5L": {
+                        "price": 12.0
+                    },
+                    "Detergent Powder 1kg": {
+                        "price": 3.0
+                    },
+                    "Glass Cleaner 1L": {
+                        "price": 2.5
+                    },
+                    "Disinfectant 5L": {
+                        "price": 10.0
+                    }
+                }
+            },
+            "MATKL121": {
+                "name": "Machinery Maintenance",
+                "availability": 0.7,
+                "materials": {
+                    "Lubricant Oil 1L": {
+                        "price": 8.0
+                    },
+                    "Conveyor Belts": {
+                        "price": 50.0
+                    },
+                    "Sealing Machine Parts": {
+                        "price": 30.0
+                    },
+                    "Pump Filters": {
+                        "price": 15.0
+                    },
+                    "Cooling Fans": {
+                        "price": 20.0
+                    }
+                }
+            },
+            "MATKL122": {
+                "name": "Safety Equipment",
+                "availability": 0.9,
+                "materials": {
+                    "Safety Gloves 10pairs": {
+                        "price": 5.0
+                    },
+                    "Face Masks 50pcs": {
+                        "price": 10.0
+                    },
+                    "Protective Goggles": {
+                        "price": 3.5
+                    },
+                    "Aprons 5pcs": {
+                        "price": 12.0
+                    },
+                    "Safety Boots": {
+                        "price": 25.0
+                    }
+                }
+            }
+        }
+    }
+
+
 prompt = {"""
 I am writing a dummy data for a sales order. 
 The company is a big food and beverages processing and packaging comapny. 
@@ -567,6 +824,41 @@ om_customers = {
     "Gastronomic Gather": {"credit_risk": 0.38, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "FreshNosh": {"credit_risk": 0.54, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'LDN', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1},
     "Greyjoy Foods Inc.": {"credit_risk": 0.61, 'payment_term': 'Z030', 'country': 'UK', 'region': 'EMEA', 'city': 'Pyke', 'late_delivery_rate': 0.1, 'early_delivery_rate': 0.1}
+}
+
+proc_vendors = {
+    "Pure Ingredients Co.": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'payment_term_stsability': 0.9},
+    "Beverage Base Suppliers": {'payment_term': 'Z030', 'country': 'ID', 'region': 'EMEA', 'city': 'Jakarta', 'payment_term_stsability': 0.9},
+    "Liquid Essentials": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'payment_term_stsability': 0.9},
+    "Hydration Hub": {'payment_term': 'Z030', 'country': 'QA', 'region': 'EMEA', 'city': 'Doha', 'payment_term_stsability': 0.9},
+    "Arabian Flavors Ltd.": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'payment_term_stsability': 0.9},
+    "TasteCraft Ingredients": {'payment_term': 'Z030', 'country': 'AE', 'region': 'EMEA', 'city': 'Dubai', 'payment_term_stsability': 0.9},
+    "Bangalore Beverage Solutions": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'payment_term_stsability': 0.9},
+    "FizzFlow Supplies": {'payment_term': 'Z030', 'country': 'IN', 'region': 'JAPC', 'city': 'Bangalore', 'payment_term_stsability': 0.9},
+    "Sweeteners Unlimited": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.9},
+    "Flavor Fields GmbH": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.9},
+    "Aussie Essence Supplies": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'payment_term_stsability': 0.9},
+    "Oceanic Syrups Co.": {'payment_term': 'Z030', 'country': 'AU', 'region': 'JAPC', 'city': 'Sydney', 'payment_term_stsability': 0.9},
+    "Belgian Beverage Basics": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'payment_term_stsability': 0.9},
+    "Raw Refreshments": {'payment_term': 'Z030', 'country': 'BE', 'region': 'EMEA', 'city': 'Belgium', 'payment_term_stsability': 0.9},
+    "Maple Syrup Masters": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'payment_term_stsability': 0.9},
+    "Toronto Beverage Ingredients": {'payment_term': 'Z030', 'country': 'CA', 'region': 'NAM', 'city': 'Toronto', 'payment_term_stsability': 0.9},
+    "American Beverage Makers": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'payment_term_stsability': 0.9},
+    "SipStream Supplies": {'payment_term': 'Z030', 'country': 'US', 'region': 'NAM', 'city': 'Philadelphia', 'payment_term_stsability': 0.9},
+    "UK Beverage Essentials": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'payment_term_stsability': 0.9},
+    "London Liquid Logistics": {'payment_term': 'Z030', 'country': 'GB', 'region': 'EMEA', 'city': 'London', 'payment_term_stsability': 0.9},
+    "Hong Kong Beverage Supplies": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'payment_term_stsability': 0.9},
+    "Asia Beverage Essentials": {'payment_term': 'Z030', 'country': 'HK', 'region': 'JAPC', 'city': 'Hong Kong', 'payment_term_stsability': 0.9},
+    "Emerald Isle Ingredients": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
+    "Dublin Drink Distributors": {'payment_term': 'Z030', 'country': 'IE', 'region': 'EMEA', 'city': 'Dublin', 'payment_term_stsability': 0.9},
+    "Tropical Beverages Co.": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
+    "Kuala Lumpur Flavor Works": {'payment_term': 'Z030', 'country': 'MY', 'region': 'JAPC', 'city': 'Kuala Lumpur', 'payment_term_stsability': 0.9},
+    "New Zealand Beverage Co.": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
+    "Kiwi Beverage Essentials": {'payment_term': 'Z030', 'country': 'NZ', 'region': 'JAPC', 'city': 'New Zealand', 'payment_term_stsability': 0.9},
+    "Manila Mixer Supplies": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
+    "Philippine Beverage Co.": {'payment_term': 'Z030', 'country': 'PH', 'region': 'JAPC', 'city': 'Manila', 'payment_term_stsability': 0.1},
+    "Frankfurt Beverage Traders": {'payment_term': 'Z030', 'country': 'DE', 'region': 'EMEA', 'city': 'Frankfurt', 'payment_term_stsability': 0.1},
+    "Iron Island Refreshments": {'payment_term': 'Z030', 'country': 'Westeros', 'region': 'Iron Islands', 'city': 'Pyke', 'payment_term_stsability': 0.9},
 }
 
 
