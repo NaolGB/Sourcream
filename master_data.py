@@ -2,7 +2,6 @@ import uuid
 from datetime import datetime
 import random
 import helpers
-
 #castleLight
 import values_Castlelight as values
 #sourcream
@@ -16,11 +15,13 @@ def users(all_users=values.om_users):
 
     for index, (k, v) in enumerate(all_users.items()):
         person_number = f'PRS{index}'
+        first_name = k.split()[0]
+        last_name = k.split()[1] if k != 'BATCH_JOB' else 'BATCH_JOB'
         ADRP_json[str(uuid.uuid4())] = {
             "CLIENT": values.mandt,
-            "DATE_FROM": '00010101',
-            "NAME_FIRST": k, # TODO split bname
-            "NAME_LAST": k, # TODO split bname
+            "DATE_FROM": '20230101',
+            "NAME_FIRST": first_name, # TODO split bname
+            "NAME_LAST": last_name, # TODO split bname
             "NATION": v['nation'],
             "PERSNUMBER": person_number 
         }

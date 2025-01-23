@@ -17,7 +17,7 @@ columns_to_parse = {
 "EBAN" : ['BADAT'],
 "EINA" : [],
 "EINE" : [],
-"EKBE" : [],
+"EKBE" : ['CPUDT'],
 "EKES" : ['EINDT', 'ERDAT', 'EZEIT'],
 "EKET" : ['EINDT'],
 "EKKO" : ['AEDAT', 'KDATE', 'KDATB'],

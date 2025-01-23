@@ -459,6 +459,7 @@ class SalesAndDistribution:
                 "VGABE": 1, # Good Receipt
                 "WAERS": 'EUR',
                 "WRBTR": round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                "CPUDT": cpudt,
             }
 
             # Change the confirmed delivery date of the item to influence late, early
