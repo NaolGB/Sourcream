@@ -43,7 +43,8 @@ required_table_columns = {
     'JCDS' : ['CDTCODE', 'CHGNR', 'INACT', 'MANDT', 'OBJNR', 'STAT', 'UDATE', 'USNAM', 'UTIME'],
     'KNA1' : ['KUNNR', 'MANDT', 'ERNAM', 'LAND1', 'NAME1', 'ORT01', 'PSTLZ', 'REGIO', 'STRAS', 'VBUND', 'ERDAT', 'FAKSD', 'LIFSD'],
     'KNB1' : ['MANDT', 'ZTERM', 'BUKRS', 'ERDAT', 'KUNNR', 'ERNAM'],
-    'KNKK' : ['AEDAT', 'AENAM', 'CASHD', 'CRBLB', 'CTLPC', 'DTREV', 'ERDAT', 'KKBER', 'KLIMK', 'KUNNR', 'MANDT',],
+    'KNKK' : ['AEDAT', 'AENAM', 'CASHD', 'CRBLB', 'CTLPC', 'DTREV', 'ERDAT', 'KKBER', 'KLIMK', 'KUNNR', 'MANDT'],
+    'KNVV' : ['MANDT', 'KUNNR', 'SPART', 'VKORG', 'KUNRG' , 'VTWEG' , 'ZTERM'],
     'LFA1' : ['ERNAM', 'LAND1', 'LIFNR', 'MANDT', 'NAME1', 'ORT01', 'VBUND'],
     'LFB1' : ['BUKRS', 'ERDAT', 'ERNAM', 'LIFNR', 'MANDT', 'ZTERM'],
     'LIKP' : ['MANDT', 'VBELN', 'VBTYP', 'BTGEW', 'ERDAT', 'ERNAM', 'ERZET', 'GEWEI', 'KODAT', 'KOUHR', 'KUNNR', 'LFART', 'LFDAT', 'NTGEW', 'PODAT', 'POTIM', 'VOLEH', 'VOLUM', 'WADAT' ],
@@ -67,6 +68,7 @@ required_table_columns = {
     'T014' : ['MANDT', 'KKBER', 'WAERS'],
     'T023T' : ['MANDT', 'MATKL', 'SPRAS', 'WGBEZ'],
     'T024E' : ['EKORG', 'EKOTX', 'MANDT'],
+    'T052' : ['ZPRZ1', 'ZPRZ2', 'ZTAG1', 'ZTAG2', 'ZTAG3', 'ZTAGG', 'ZTERM', 'MANDT', 'ZDART', 'ZFAEL', 'ZMONA', 'ZSMN1', 'ZSMN2', 'ZSMN3', 'ZSTG1', 'ZSTG2'],
     'T134T' : ['MANDT', 'MTART', 'SPRAS'],
     'T137T' : ['MANDT', 'MBRSH', 'SPRAS'],
     'T156' : ['BWART', 'MANDT', 'XSTBW', 'KZVBU', 'SHKZG'],
@@ -95,7 +97,7 @@ required_table_columns = {
     'VBEP' : ['MANDT', 'ETENR', 'POSNR', 'VBELN', 'BMENG', 'MEINS', 'MBDAT', 'WADAT', 'EDATU'], #, 'LMENG' excluded
     'VBFA' : ['POSNV', 'VBELV', 'POSNN', 'VBTYP_V', 'VBTYP_N', 'MANDT', 'VBELN', 'ERZET', 'ERDAT', 'MATNR'], #last three here not in required field sheet
     'VBKD' : ['INCO1', 'INCO2', 'MANDT', 'POSNR', 'VBELN', 'ZTERM'],
-    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'MANDT', 'VBELN', 'VBTYP','WAERK', 'NETWR', 'ZTERM'],
+    'VBRK' : ['ERDAT', 'ERNAM', 'ERZET', 'KUNAG', 'KUNRG', 'MANDT', 'SPART', 'VBELN', 'VBTYP', 'VKORG', 'VTWEG', 'WAERK', 'NETWR', 'ZTERM'],
     'VBRP' : ['MANDT', 'VBELN', 'POSNR', 'ERNAM', 'MATNR', 'WERKS', 'AUPOS', 'ERDAT', 'ERZET', 'AUBEL', 'VGTYP','VGBEL','VGPOS', 'FKIMG','NETWR','VRKME'],
     'VBUK' : ['BESTK', 'CMGST', 'GBSTK', 'MANDT', 'VBELN'],
     'VTTK' : ['VSBED','TKNUM','SHTYP','ROUTE','MANDT','ERZET','ERNAM','ERDAT'],

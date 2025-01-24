@@ -517,9 +517,13 @@ class SalesAndDistribution:
             "ERNAM": ernam,
             "ERZET": atime,
             "KUNAG": self.params['kunnr'],
+            "KUNRG": self.params['kunnr'], # for AR starter
             "MANDT": values.mandt,
+            "SPART": '10', # for AR starter , division of goods / services join on knvv
             "VBELN": self.vbrk_vbeln,
             "VBTYP": 'M', # M: Invoice, 
+            "VKORG": self.params['sales_org'], #for AR starter
+            "VTWEG": self.params['distribution_channel'], # for AR starter
             "WAERK": 'EUR',
             "NETWR": round(sum([self.params['prices'][i]*self.params['quantities'][i] for i in range(len(self.params['matnrs']))]), 4), # new field to adjust if price or quantity change, 
             "ZTERM": self.params['payment_term'] # new field to edit, 

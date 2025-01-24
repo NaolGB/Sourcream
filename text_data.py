@@ -193,3 +193,28 @@ def blocking_reasons(all_billing_blocks=values.om_billing_blocks, all_delivery_b
         }
 
     return {'TVFST_json': TVFST_json, 'TVLST_json': TVLST_json}
+
+def terms_of_payment():
+    T052_json = {}
+        
+    T052_json[str(uuid.uuid4())] = {
+        "ZPRZ1": 0.0, # VendorCashDiscountPercentage1
+        "ZPRZ2": 0.0, # VendorCashDiscountPercentage2
+        "ZTAG1": '000', # VendorPaymentDays1
+        "ZTAG2": '000', # VendorPaymentDays2
+        "ZTAG3": '000', # VendorPaymentDays3
+        "ZTAGG": '00', # smaller than BKPF.BLDAT or = 0 
+        "ZTERM": 'Z030', # = "LFB1"."ZTERM"
+        "MANDT": values.mandt,
+        "ZDART": '03', # annual interest 
+        "ZFAEL": '05', # day of month for payment conditions
+        "ZMONA": '01', # month for payment conditions 
+        "ZSMN1": '07', # additional fixed day condition 
+        "ZSMN2": '10', # same as above
+        "ZSMN3": '15', # see above
+        "ZSTG1": '01', # when condition applies (invoice date, delivery date, posting date 01 02 03) 
+        "ZSTG2": '04', # when second condition applies (month-end, contract date, custom data 04 05 06) 
+
+        }
+    
+    return {'T052_json': T052_json}

@@ -90,6 +90,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
     LFB1_json = {}
     KNKK_json = {}
     S067_json = {}
+    KNVV_json = {}
 
     for index, (k, v) in enumerate (all_customers.items()):
         customer_number = f'CUST{index}'
@@ -106,6 +107,16 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
             "VBUND": None,
             "LIFSD": None,
             "FAKSD": None
+        }
+
+        KNVV_json[str(uuid.uuid4())] = {
+            "KUNNR": customer_number,
+            "KUNRG": customer_number, 
+            "MANDT": values.mandt, 
+            "SPART": '10', # for AR starter , division of goods / services join on knvv
+            "VKORG": 'EMEA', # to adjust for AR 
+            "VTWEG": '10', # to  adjust for AR 
+            "ZTERM": 'Z030' # payment term
         }
 
         KNKK_json[str(uuid.uuid4())] = {
@@ -166,7 +177,7 @@ def customers_and_vendors(all_customers=values.om_customers, all_users=values.om
                 "ZTERM": v['payment_term']
             }
     
-    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'LFA1_json': LFA1_json, 'LFB1_json': LFB1_json, 'KNKK_json': KNKK_json, 'S067_json': S067_json}
+    return {'KNB1_json': KNB1_json, 'KNA1_json': KNA1_json, 'LFA1_json': LFA1_json, 'LFB1_json': LFB1_json, 'KNKK_json': KNKK_json, 'S067_json': S067_json, 'KNVV_json': KNVV_json}
 
 def materials(
         all_material_groups={**values.om_material_groups,**values.proc_material_groups}, # merge  two dicts 
