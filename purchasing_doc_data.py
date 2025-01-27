@@ -16,8 +16,10 @@ class Purchasing:
         self.mat_doc_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.unit = values.om_units[random.choice(list(values.om_units.keys()))]['MSEHI']
         self.pr_req_date = start_date
+        self.inv_due_date = self.pr_req_date + helpers.ONE_TO_TWOMONTHS() + helpers.ONE_TO_TWOMONTHS() + helpers.UPTO_MONTH()
         self.fy = int(start_date.year)
         self.beleg_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.clearing_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
 
@@ -456,7 +458,7 @@ class Purchasing:
             'ZBD2P': 0,
             'ZBD2T': 0,
             'ZBD3T': 0,
-            'ZFBDT': self.pr_req_date, # Baseline Date for Due Date Calculation
+            'ZFBDT': self.inv_due_date, # Baseline Date for Due Date Calculation
             'ZLSCH': 'D', # TODO add custom value
             'ZLSPR': 'D', # TODO add custom value
             'ZTERM': self.params['payment_term']  # TODO see if this needs to match when self.change_payment_term is called
@@ -569,7 +571,7 @@ class Purchasing:
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
 
 
-    def PostVendorAccountCreditItem(self, usnam, cpudt, tcode='DEFAULT'):
+    def PostVendorAccountCreditItem(self, usnam, cpudt, tcode='DEFAULT'): # includes clearing 
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
             'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
             'AWTYP' :  'RMRP', # PurchaseOrderRelated
@@ -587,12 +589,12 @@ class Purchasing:
             'XBLNR' :  '1', # ReferenceDocumentNumber
             'XREVERSAL' : None , # 1 or 2 if reversal document 
         }
-
+        cleardate = self.inv_due_date + timedelta(days=random.randint(-3, 5))
         for i in range(len(self.params['matnrs'])):
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
-                'AUGBL' : None , #part of clearing ID
-                'AUGDT' : cpudt , # ClearingDate
-                'AUGGJ' : None , # part of clearing ID
+                'AUGBL' : self.beleg_number , #part of clearing ID
+                'AUGDT' : cleardate, # ClearingDate
+                'AUGGJ' : self.fy, # part of clearing ID
                 'BELNR' : self.beleg_number , # number to join with BKPF and RBKP
                 'BSCHL' : '31' , # invoice
                 'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
@@ -607,16 +609,87 @@ class Purchasing:
                 'MATNR' : self.params['matnrs'][i] ,
                 'SGTXT' : 'D' , #  ItemText TO DO adjust  
                 'SHKZG' : 'H' ,
-                'SKFBT' : '1' , # CashDiscountEligibleAmount
+                'SKFBT' : round(self.params['prices'][i]*self.params['quantities'][i], 4)  , # CashDiscountEligibleAmount
                 'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
-                'WSKTO' : '1' , # CashDiscountTakenAmount
-                'ZBD1P' : self.params['cashdiscount'] ,
+                'WSKTO' : (self.params['cashdiscount'] * 0.01) * (round(self.params['prices'][i]*self.params['quantities'][i], 4)) , # CashDiscountTakenAmount
+                'ZBD1P' : self.params['cashdiscount'] , # CashDiscountPercentage1
                 'ZBD2P' : 0,
                 'ZBD1T' : self.params['paymentdays'] ,
                 'ZBD2T' : 0,
                 'ZBD3T' : 0,
-                'ZFBDT' : self.pr_req_date, # CashDiscountDueDate
+                'ZFBDT' : self.inv_due_date, #Baseline date
                 'ZLSCH' : '1' , # PaymentMethod
-                'ZLSPR' : None , # PaymentBlock
+                'ZLSPR' : 'R' if random.random() > 0.8 else None , # PaymentBlock
                 'ZTERM' : 'Z030',
         }
+            
+    # def ClearVendorAccountItem(self, usnam, cpudt, tcode='DEFAULT'):
+    #     self.tables['BKPF_json'][str(uuid.uuid4())] = {
+    #         'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
+    #         'AWTYP' :  'RMRP', # PurchaseOrderRelated
+    #         'BELNR' : self.beleg_number , # "BSEG"."BELNR"
+    #         'BLART' : 'ZV' , # DocumentType "BKPF"."BLART"
+    #         'BLDAT' :  cpudt, # DocumentDate
+    #         'BUKRS' : self.params['company_code'] , #  = "BSEG"."BUKRS"
+    #         'CPUDT' : cpudt , # CreationTime
+    #         'CPUTM' : helpers.generate_random_time() , # CreationTime
+    #         'GJAHR' : self.fy ,
+    #         'MANDT' :  values.mandt,
+    #         'TCODE' : tcode,
+    #         'USNAM' :  usnam,
+    #         'WAERS' :  'EUR', # Currency
+    #         'XBLNR' :  '1', # ReferenceDocumentNumber
+    #         'XREVERSAL' : None , # 1 or 2 if reversal document 
+    #     }
+
+    #     for i in range(len(self.params['matnrs'])):
+    #         self.tables['BSEG_json'][str(uuid.uuid4())] = {
+    #             'AUGBL' : self.beleg_number , #part of clearing ID
+    #             'AUGDT' : cpudt , # ClearingDate
+    #             'AUGGJ' : self.fy , # part of clearing ID
+    #             'BELNR' : self.beleg_number , # number to join with BKPF and RBKP
+    #             'BSCHL' : '38' , # paymentClearing
+    #             'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
+    #             'BUZEI' : i , # SystemAccountingDocumentItemNumber
+    #             'GJAHR' : self.fy ,
+    #             'KOART' : 'K' ,
+    #             'KUNNR' : None ,
+    #             'LIFNR' : self.params['lifnr'] ,
+    #             'MANDT' : values.mandt ,
+    #             'MANSP' : None ,
+    #             'MANST' : None ,
+    #             'MATNR' : self.params['matnrs'][i] ,
+    #             'SGTXT' : 'D' , #  ItemText TO DO adjust  
+    #             'SHKZG' : 'H' ,
+    #             'SKFBT' : '1' , # CashDiscountEligibleAmount
+    #             'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
+    #             'WSKTO' : '1' , # CashDiscountTakenAmount
+    #             'ZBD1P' : self.params['cashdiscount'] ,
+    #             'ZBD2P' : 0,
+    #             'ZBD1T' : self.params['paymentdays'] ,
+    #             'ZBD2T' : 0,
+    #             'ZBD3T' : 0,
+    #             'ZFBDT' : self.pr_req_date, # CashDiscountDueDate
+    #             'ZLSCH' : '1' , # PaymentMethod
+    #             'ZLSPR' : None , # PaymentBlock
+    #             'ZTERM' : 'Z030',
+    #     }
+
+# A - Payment Block for Accounting Reasons
+
+# Indicates that there is an issue requiring action by the accounting team, such as incorrect account assignment.
+# B - Payment Block for Invoice Verification
+
+# Used when the invoice has not been verified against a goods receipt or purchase order.
+# C - Payment Block for Payment Authorization
+
+# Payment is held pending approval or authorization.
+# D - Payment Block for Dispute
+
+# Applied when there is a vendor dispute or discrepancy in the invoice.
+# R - Manual Payment Block
+
+# Set manually by a user to prevent payment until further notice.
+# X - Blocked by the System
+
+# Automatically set by the system for various reasons, such as price discrepancies or missing data.

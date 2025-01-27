@@ -53,6 +53,7 @@ def add_time(original_time, time_delta):
 
 UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
 UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
+ONE_TO_TWOMONTHS = lambda: timedelta(days=random.randint(30,60))
 UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
 UPTO_4DAYS = lambda: timedelta(days=random.randint(1, 4))
 UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
