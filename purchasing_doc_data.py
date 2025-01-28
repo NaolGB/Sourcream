@@ -18,7 +18,10 @@ class Purchasing:
         self.pr_req_date = start_date
         self.inv_due_date = self.pr_req_date + helpers.ONE_TO_TWOMONTHS() + helpers.ONE_TO_TWOMONTHS() + helpers.UPTO_MONTH()
         self.fy = int(start_date.year)
-        self.beleg_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number_vendorcredit = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number_vendordebit = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number_invoice = f'{str(uuid.uuid4())[-5:]}{self.index}'
+        self.beleg_number_creditmemo = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.clearing_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.incoming_material_document_item_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
         self.params = params
@@ -440,7 +443,7 @@ class Purchasing:
 
     def create_vendor_invoice(self, ernam, cpudt):
         self.tables['RBKP_json'][str(uuid.uuid4())] = {
-            'BELNR': self.beleg_number,
+            'BELNR': self.beleg_number_invoice,
             'BLDAT': cpudt, # document date in document
             'BUKRS': self.params['company_code'],
             'CPUDT': cpudt, # Day on which accounting doc was entered
@@ -448,7 +451,9 @@ class Purchasing:
             'GJAHR': self.fy,
             'LIFNR': self.params['lifnr'],
             'MANDT': values.mandt,
-            'SGTXT': 'D', # TODO add custom value
+            'SGTXT': f'Vendor invoice {self.beleg_number_invoice}', # TODO add custom value
+            'STBLG': None,
+            'STJAH' : None,
             'USNAM': ernam,
             'VGART': 'RD', #Logistics Invoice (requirement)
             'WAERS': 'EUR',
@@ -466,7 +471,7 @@ class Purchasing:
 
         for i in range(len(self.params['matnrs'])):
             self.tables['RSEG_json'][str(uuid.uuid4())] = {
-                'BELNR': self.beleg_number,
+                'BELNR': self.beleg_number_invoice,
                 'BSTME': self.unit, #Unit of Measurement
                 'BUKRS': self.params['company_code'],
                 'BUZEI': i, #Document Item in Invoice Document
@@ -490,6 +495,57 @@ class Purchasing:
                     if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == i):
                         self.tables['EKPO_json'][k]['REPOS'] = 'X'
 
+    def create_vendor_creditmemo(self, ernam, cpudt):
+        self.tables['RBKP_json'][str(uuid.uuid4())] = {
+            'BELNR': self.beleg_number_creditmemo,
+            'BLDAT': cpudt, # document date in document
+            'BUKRS': self.params['company_code'],
+            'CPUDT': cpudt, # Day on which accounting doc was entered
+            'CPUTM': helpers.generate_random_time(),
+            'GJAHR': self.fy,
+            'LIFNR': self.params['lifnr'],
+            'MANDT': values.mandt,
+            'STBLG': None,
+            'STJAH' : None,
+            'SGTXT': f'Invoice Reduction {self.beleg_number_creditmemo}', # TODO add custom value
+            'USNAM': ernam,
+            'VGART': 'RD', #Credit Memo  alternative RS but that activates invoice cancellation item too
+            'WAERS': 'EUR',
+            'XRECH' : None, # new field version 2.0 Post invoice, possible values are NULL . for no or X for yes
+            'ZBD1P': self.params['cashdiscount'],
+            'ZBD1T': self.params['paymentdays'],
+            'ZBD2P': 0,
+            'ZBD2T': 0,
+            'ZBD3T': 0,
+            'ZFBDT': self.inv_due_date, # Baseline Date for Due Date Calculation
+            'ZLSCH': 'T', # TODO add custom value
+            'ZLSPR': None, 
+            'ZTERM': self.params['payment_term']  # TODO see if this needs to match when self.change_payment_term is called
+        }
+
+        for i in range(len(self.params['matnrs'])):
+            #if random.random() > 0.7: # choosing random when to have credit memo for now. 
+            self.tables['RSEG_json'][str(uuid.uuid4())] = {
+                'BELNR': self.beleg_number_creditmemo,
+                'BSTME': self.unit, #Unit of Measurement
+                'BUKRS': self.params['company_code'],
+                'BUZEI': i, #Document Item in Invoice Document
+                'EBELN': self.purchase_order_number,
+                'EBELP': i,
+                'GJAHR': self.fy,
+                'LFBNR': self.mat_doc_number,
+                'LFGJA': self.fy,
+                'LFPOS': i, #item of reference document
+                'LIFNR': self.params['lifnr'],
+                'MANDT': values.mandt,
+                'MATNR': self.params['matnrs'][i],
+                'MENGE': self.params['quantities'][i],
+                'WERKS': self.params['plant'],
+                'SHKZG': 'H', # S for debit , H for credit new field version 2.0 
+                #'WRBTR': round(self.params['prices'][i]*self.params['quantities'][i], 4),
+                'WRBTR': (round(self.params['prices'][i]*self.params['quantities'][i], 2) * 0.05) if self.params['item_has_contract'][i] else (round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) * 0.05) ,
+            }
+    
     def approve_purchase_order(self, aedat, ernam):
         new_value = 'X'        
         self.changes(
@@ -573,9 +629,9 @@ class Purchasing:
 
     def PostVendorAccountCreditItem(self, usnam, cpudt, tcode='DEFAULT'): # includes clearing 
         self.tables['BKPF_json'][str(uuid.uuid4())] = {
-            'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
+            'AWKEY' : f'{self.beleg_number_invoice}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
             'AWTYP' :  'RMRP', # PurchaseOrderRelated
-            'BELNR' : self.beleg_number , # "BSEG"."BELNR"
+            'BELNR' : self.beleg_number_vendorcredit , # "BSEG"."BELNR"
             'BLART' : 'ZV' , # DocumentType "BKPF"."BLART"
             'BLDAT' :  cpudt, # DocumentDate
             'BUKRS' : self.params['company_code'] , #  = "BSEG"."BUKRS"
@@ -589,13 +645,14 @@ class Purchasing:
             'XBLNR' :  '1', # ReferenceDocumentNumber
             'XREVERSAL' : None , # 1 or 2 if reversal document 
         }
-        cleardate = self.inv_due_date + timedelta(days=random.randint(-3, 5))
+        cleardate = self.inv_due_date + timedelta(days=random.randint(-3, 11))
         for i in range(len(self.params['matnrs'])):
+            cashdiscounttaken = random.uniform(0.6, 1)
             self.tables['BSEG_json'][str(uuid.uuid4())] = {
-                'AUGBL' : self.beleg_number , #part of clearing ID
+                'AUGBL' : self.beleg_number_vendorcredit , #part of clearing ID
                 'AUGDT' : cleardate, # ClearingDate
                 'AUGGJ' : self.fy, # part of clearing ID
-                'BELNR' : self.beleg_number , # number to join with BKPF and RBKP
+                'BELNR' : self.beleg_number_vendorcredit , # number to join with BKPF and RBKP?
                 'BSCHL' : '31' , # invoice
                 'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
                 'BUZEI' : i , # SystemAccountingDocumentItemNumber
@@ -611,70 +668,71 @@ class Purchasing:
                 'SHKZG' : 'H' ,
                 'SKFBT' : round(self.params['prices'][i]*self.params['quantities'][i], 4)  , # CashDiscountEligibleAmount
                 'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
-                'WSKTO' : (self.params['cashdiscount'] * 0.01) * (round(self.params['prices'][i]*self.params['quantities'][i], 4)) , # CashDiscountTakenAmount
+                'WSKTO' : (self.params['cashdiscount'] * 0.01 * cashdiscounttaken) * (round(self.params['prices'][i]*self.params['quantities'][i], 4)) , # CashDiscountTakenAmount
                 'ZBD1P' : self.params['cashdiscount'] , # CashDiscountPercentage1
                 'ZBD2P' : 0,
                 'ZBD1T' : self.params['paymentdays'] ,
                 'ZBD2T' : 0,
                 'ZBD3T' : 0,
                 'ZFBDT' : self.inv_due_date, #Baseline date
-                'ZLSCH' : '1' , # PaymentMethod
+                'ZLSCH' : 'T' , # PaymentMethod T for Bank transfer, P for custom digital setup, 
                 'ZLSPR' : 'R' if random.random() > 0.8 else None , # PaymentBlock
                 'ZTERM' : 'Z030',
         }
             
-    # def ClearVendorAccountItem(self, usnam, cpudt, tcode='DEFAULT'):
-    #     self.tables['BKPF_json'][str(uuid.uuid4())] = {
-    #         'AWKEY' : f'{self.beleg_number}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
-    #         'AWTYP' :  'RMRP', # PurchaseOrderRelated
-    #         'BELNR' : self.beleg_number , # "BSEG"."BELNR"
-    #         'BLART' : 'ZV' , # DocumentType "BKPF"."BLART"
-    #         'BLDAT' :  cpudt, # DocumentDate
-    #         'BUKRS' : self.params['company_code'] , #  = "BSEG"."BUKRS"
-    #         'CPUDT' : cpudt , # CreationTime
-    #         'CPUTM' : helpers.generate_random_time() , # CreationTime
-    #         'GJAHR' : self.fy ,
-    #         'MANDT' :  values.mandt,
-    #         'TCODE' : tcode,
-    #         'USNAM' :  usnam,
-    #         'WAERS' :  'EUR', # Currency
-    #         'XBLNR' :  '1', # ReferenceDocumentNumber
-    #         'XREVERSAL' : None , # 1 or 2 if reversal document 
-    #     }
 
-    #     for i in range(len(self.params['matnrs'])):
-    #         self.tables['BSEG_json'][str(uuid.uuid4())] = {
-    #             'AUGBL' : self.beleg_number , #part of clearing ID
-    #             'AUGDT' : cpudt , # ClearingDate
-    #             'AUGGJ' : self.fy , # part of clearing ID
-    #             'BELNR' : self.beleg_number , # number to join with BKPF and RBKP
-    #             'BSCHL' : '38' , # paymentClearing
-    #             'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
-    #             'BUZEI' : i , # SystemAccountingDocumentItemNumber
-    #             'GJAHR' : self.fy ,
-    #             'KOART' : 'K' ,
-    #             'KUNNR' : None ,
-    #             'LIFNR' : self.params['lifnr'] ,
-    #             'MANDT' : values.mandt ,
-    #             'MANSP' : None ,
-    #             'MANST' : None ,
-    #             'MATNR' : self.params['matnrs'][i] ,
-    #             'SGTXT' : 'D' , #  ItemText TO DO adjust  
-    #             'SHKZG' : 'H' ,
-    #             'SKFBT' : '1' , # CashDiscountEligibleAmount
-    #             'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
-    #             'WSKTO' : '1' , # CashDiscountTakenAmount
-    #             'ZBD1P' : self.params['cashdiscount'] ,
-    #             'ZBD2P' : 0,
-    #             'ZBD1T' : self.params['paymentdays'] ,
-    #             'ZBD2T' : 0,
-    #             'ZBD3T' : 0,
-    #             'ZFBDT' : self.pr_req_date, # CashDiscountDueDate
-    #             'ZLSCH' : '1' , # PaymentMethod
-    #             'ZLSPR' : None , # PaymentBlock
-    #             'ZTERM' : 'Z030',
-    #     }
-
+    def PostVendorAccountDebitItem(self, usnam, cpudt, tcode='DEFAULT'): # includes clearing 
+        self.tables['BKPF_json'][str(uuid.uuid4())] = {
+            'AWKEY' : f'{self.beleg_number_creditmemo}{self.fy}' , # = "RBKP"."BELNR" || "RBKP"."GJAHR"
+            'AWTYP' :  'RMRP', # PurchaseOrderRelated
+            'BELNR' : self.beleg_number_vendordebit , # "BSEG"."BELNR"
+            'BLART' : 'ZV' , # DocumentType "BKPF"."BLART"
+            'BLDAT' :  cpudt, # DocumentDate
+            'BUKRS' : self.params['company_code'] , #  = "BSEG"."BUKRS"
+            'CPUDT' : cpudt , # CreationTime
+            'CPUTM' : helpers.generate_random_time() , # CreationTime
+            'GJAHR' : self.fy ,
+            'MANDT' :  values.mandt,
+            'TCODE' : tcode,
+            'USNAM' :  usnam,
+            'WAERS' :  'EUR', # Currency
+            'XBLNR' :  '1', # ReferenceDocumentNumber
+            'XREVERSAL' : None , # 1 or 2 if reversal document 
+        }
+        cleardate = self.inv_due_date + timedelta(days=random.randint(-3, 5))
+        for i in range(len(self.params['matnrs'])):
+            is_cleared = True if random.random() > 0.5 else False
+            self.tables['BSEG_json'][str(uuid.uuid4())] = {
+                'AUGBL' : self.beleg_number_vendordebit if is_cleared == True else None , #part of clearing ID
+                'AUGDT' : cleardate if is_cleared == True else None, # ClearingDate
+                'AUGGJ' : self.fy if is_cleared == True else None, # part of clearing ID
+                'BELNR' : self.beleg_number_vendordebit , # number to join with BKPF and RBKP
+                'BSCHL' : '21' , # creditmemoitem
+                'BUKRS' : self.params['company_code'] , # part of VendorMasterCompanyCode
+                'BUZEI' : i , # SystemAccountingDocumentItemNumber
+                'GJAHR' : self.fy ,
+                'KOART' : 'K' ,
+                'KUNNR' : None ,
+                'LIFNR' : self.params['lifnr'] ,
+                'MANDT' : values.mandt ,
+                'MANSP' : None ,
+                'MANST' : None ,
+                'MATNR' : self.params['matnrs'][i] ,
+                'SGTXT' : 'D' , #  ItemText TO DO adjust  
+                'SHKZG' : 'S' ,
+                'SKFBT' : round(self.params['prices'][i]*self.params['quantities'][i], 4)  , # CashDiscountEligibleAmount
+                'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
+                'WSKTO' : (round(self.params['prices'][i]*self.params['quantities'][i], 2) * 0.05) if self.params['item_has_contract'][i] else (round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) * 0.05), # CashDiscountTakenAmount
+                'ZBD1P' : self.params['cashdiscount'] , # CashDiscountPercentage1
+                'ZBD2P' : 0,
+                'ZBD1T' : self.params['paymentdays'] ,
+                'ZBD2T' : 0,
+                'ZBD3T' : 0,
+                'ZFBDT' : self.inv_due_date, #Baseline date
+                'ZLSCH' : 'T' , # PaymentMethod T for Bank transfer, P for custom digital setup, 
+                'ZLSPR' : 'R' if random.random() > 0.8 else None , # PaymentBlock
+                'ZTERM' : 'Z030',
+        }
 # A - Payment Block for Accounting Reasons
 
 # Indicates that there is an issue requiring action by the accounting team, such as incorrect account assignment.
