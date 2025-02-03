@@ -6,6 +6,15 @@ from extras import helpers
 
 class Inventory:
     def __init__(self, vbeln, params, start_date:datetime, index) -> None:
+        """
+        Create Inventory Object
+
+        Args
+            vbeln: Sales document number (external identifier for the object).
+            params: Dictionary containing various parameters (e.g., materials, prices, etc.).
+            start_date: The start date for the inventory.
+            index: for unique IDs.
+        """
         self.index = index
         self.purchase_req_number = f'{str(uuid.uuid4())[-5:]}{self.index}' # HACK to avoid overflow - short ids are used, to maintain uniqueness - index is used
         self.purchase_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
@@ -27,29 +36,29 @@ class Inventory:
         self.prod_order_number = f'{str(uuid.uuid4())[-5:]}{self.index}'
 
         self.tables = {
-            'EBAN_json': {}, 
-            'CDHDR_json': {},
-            'CDPOS_json': {},
-            'EKKO_json': {},
-            'EKPO_json': {},
-            'NAST_json': {},
-            'MSEG_json': {},
-            'EKBE_json': {},
-            'RBKP_json': {},
-            'RSEG_json': {},
-            'EKET_json': {},
-            'AFKO_json': {},
-            'AFPO_json': {},
-            'VBAK_json': {},
-            'VBAP_json': {},
-            'AUFK_json': {},
-            'VBFA_json': {},
-            'LIKP_json': {},
-            'LIPS_json': {},
-            'VBKD_json': {},
-            'VBUK_json': {},
-            'VBEP_json': {},
-            'MBEWH_json': {},
+            'EBAN_json': {},  # Purchase Requisition
+            'CDHDR_json': {}, # Change Document Header
+            'CDPOS_json': {}, # Change Document Items
+            'EKKO_json': {},  # Purchasing Document Header
+            'EKPO_json': {},  # Purchasing Document Item
+            'NAST_json': {},  # Message Status
+            'MSEG_json': {},  # Document Segment for Material Movements
+            'EKBE_json': {},  # History per Purchasing Document
+            'RBKP_json': {},  # Invoice Document Header
+            'RSEG_json': {},  # Invoice Document Item
+            'EKET_json': {},  # Scheduling Agreement Delivery Schedule Lines
+            'AFKO_json': {},  # Order Header for Production Order
+            'AFPO_json': {},  # Order Item for Production Order
+            'VBAK_json': {},  # Sales Document: Header Data
+            'VBAP_json': {},  # Sales Document: Item Data
+            'AUFK_json': {},  # Order Master Data 
+            'VBFA_json': {},  # Document Flow
+            'LIKP_json': {},  # Outbound Delivery Header
+            'LIPS_json': {},  # Outbound Delivery Item
+            'VBKD_json': {},  # Sales Document: Business Data
+            'VBUK_json': {},  # Sales Document: Status Data (Header)
+            'VBEP_json': {},  # Sales Document: Schedule Line Data
+            'MBEWH_json': {},   # Material Valuation History,
             'MBEW_json': {}
         }
 
@@ -57,6 +66,7 @@ class Inventory:
         changenr = f'{str(uuid.uuid4())[-5:]}{self.index}'
         # HACK one-to-one mapping between CDHDR adn CDPOS even for line items
 
+        ## Records changes in header (CDHDR) and position (CDPOS) tables.
         self.tables['CDHDR_json'][str(uuid.uuid4())] = {
             "CHANGENR": changenr,
             "MANDANT": values.mandt,
@@ -98,6 +108,13 @@ class Inventory:
     
     
     def create_purchase_order(self, aedat, ernam, utime):
+
+        """Create PO:
+        
+        aedat: Creation date.
+        ernam: Creator username.
+        utime: Creation time."""
+
         header_time = helpers.generate_random_time()
         self.tables['EKKO_json'][str(uuid.uuid4())] = {
             'AEDAT': aedat,
@@ -195,7 +212,6 @@ class Inventory:
 
             delivered_quanity = self.params['quantities'][i] # scheduled quantity
             scheduled_quanity = self.params['quantities'][i] # scheduled quantity
-
            
 
             if self.params['delivery_status'][i] < 0:
