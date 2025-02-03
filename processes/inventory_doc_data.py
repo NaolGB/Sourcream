@@ -58,8 +58,7 @@ class Inventory:
             'VBKD_json': {},  # Sales Document: Business Data
             'VBUK_json': {},  # Sales Document: Status Data (Header)
             'VBEP_json': {},  # Sales Document: Schedule Line Data
-            'MBEWH_json': {},   # Material Valuation History,
-            'MBEW_json': {}
+            'MBEWH_json': {}   # Material Valuation History
         }
 
     def changes(self, objid, objclas, udate, uname, chngid, fname, tabkey, tabname, valold, valnew, utime, tcode='DEFAULT'):
