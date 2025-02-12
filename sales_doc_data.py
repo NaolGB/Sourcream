@@ -623,10 +623,14 @@ class SalesAndDistribution:
                 self.tables['VBAK_json'][k]['FAKSK'] = new_value
 
         # SalesOrderItem Block
-        for matnr in blocked_matnrs:
-            for key, value in self.tables['VBAP_json'].items():
-                if value.get('VBELN') == self.vbeln and value.get('MATNR') == matnr:
-                    posnr = value['POSNR']
+        # for matnr in blocked_matnrs:
+        #     for key, value in self.tables['VBAP_json'].items():
+        #         if value.get('VBELN') == self.vbeln and value.get('MATNR') == matnr:
+        #             posnr = value['POSNR']
+        for pos in blocked_matnrs:
+            # for key, value in self.tables['VBAP_json'].items():
+            #     if value.get('VBELN') == self.vbeln and value.get('MATNR') == self.params['matnrs'][index]:
+            #         posnr = value['POSNR']
 
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -636,14 +640,14 @@ class SalesAndDistribution:
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
-                tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
+                tabkey=f'{values.mandt}{self.vbeln}{pos}', 
                 tabname='VBAP', 
                 valold=None,
                 valnew=new_value
             )
 
             for k, v in self.tables['VBAP_json'].items():
-                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == self.params['matnrs'][pos]):
                     self.tables['VBAP_json'][k]['FAKSP'] = new_value
             
     def release_sales_order_billing_block(self, udate, usnam, blocked_matnrs):
@@ -666,10 +670,15 @@ class SalesAndDistribution:
             if v['VBELN'] == self.vbeln:
                 self.tables['VBAK_json'][k]['FAKSK'] = None
 
-        for matnr in blocked_matnrs:
-            for k, v in self.tables['VBAP_json'].items():
-                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
-                    posnr = self.tables['VBAP_json'][k]['POSNR']
+        # for matnr in blocked_matnrs:
+        #     for k, v in self.tables['VBAP_json'].items():
+        #         if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+        #             posnr = self.tables['VBAP_json'][k]['POSNR']
+        for pos in blocked_matnrs:
+            # for key, value in self.tables['VBAP_json'].items():
+            #     if value.get('VBELN') == self.vbeln and value.get('MATNR') == self.params['matnrs'][index]:
+            #         posnr = value['POSNR']
+
 
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -679,14 +688,14 @@ class SalesAndDistribution:
                 uname=usnam, 
                 chngid='U', 
                 fname='FAKSP', 
-                tabkey=f'{values.mandt}{self.vbeln}{posnr}', 
+                tabkey=f'{values.mandt}{self.vbeln}{pos}', 
                 tabname='VBAP', 
                 valold='Removed Block',
                 valnew=None
             )
 
             for k, v in self.tables['VBAP_json'].items():
-                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == matnr):
+                if (v['VBELN'] == self.vbeln) and (v['MATNR'] == self.params['matnrs'][pos]):
                     self.tables['VBAP_json'][k]['FAKSP'] = None
 
     def set_customer_billing_block(self, udate, usnam):
