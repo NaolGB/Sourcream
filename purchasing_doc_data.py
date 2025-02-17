@@ -141,9 +141,9 @@ class Purchasing:
                 'MANDT': values.mandt,
                 'MATNR': self.params['matnrs'][i],
                 'MEINS': self.unit,
-                'MENGE': self.params['quantities'][i],
+                'MENGE': 0, #self.params['quantities'][i],
                 'NETPR': self.params['prices'][i],
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2),
+                'NETWR': 0.00, #round(self.params['prices'][i]*self.params['quantities'][i], 2),
                 'PEINH': 1,
                 'REPOS': None, # Invoice not recieved
                 "TXZ01": self.params['matnrs'][i],
@@ -151,7 +151,7 @@ class Purchasing:
                 'WEBRE': None,
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
+                'ZWERT': round((self.params['prices'][i]*self.params['quantities'][i]) * (self.params['cashdiscount']/100), 2),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -189,7 +189,7 @@ class Purchasing:
                 "MENGE": self.params['quantities'][i],
                 "PEINH": 1, # NOTE assumnig price is per item (pcs)
                 #"PREIS": self.params['prices'][i],
-                "PREIS": self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],
+                "PREIS": round(self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],3),
                 "STATU": 'N', # NOTE not edited (RFQ not yet created)
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] else self.params['matnrs'][i],
                 "WAERS": 'EUR',
@@ -268,23 +268,23 @@ class Purchasing:
                 'EBELN': self.purchase_order_number,
                 'EBELP': i,
                 'KONNR': self.params['konnr'] if self.params['item_has_contract'][i] and self.params['has_contract'] else None,
-                'KTMNG': self.params['quantities'][i],
+                'KTMNG': None, # contract amount
                 'KTPNR': i if self.params['item_has_contract'][i] else None, # HACK -1 not None so as to make pd not consider this a float and add .0 to all
                 'LOEKZ': 'D', # DeletionIndicator
                 'MANDT': values.mandt,
                 "MATNR": None if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'MEINS': self.unit,
                 'MENGE': self.params['quantities'][i],
-                'NETPR': self.params['prices'][i] if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i],
-                'NETWR': round(self.params['prices'][i]*self.params['quantities'][i], 2) if self.params['item_has_contract'][i] else round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) ,
-                'PEINH': 1,
+                'NETPR': round(self.params['prices'][i] * ((100 - self.params['cashdiscount'])/100) if self.params['item_has_contract'][i] else self.params['priceifnocontract'][i] * ((100 - self.params['cashdiscount'])/100),3),
+                'NETWR': round((self.params['prices'][i]*self.params['quantities'][i]) * ((100 - self.params['cashdiscount'])/100), 3) if self.params['item_has_contract'][i] else round((self.params['priceifnocontract'][i] * self.params['quantities'][i]) * ((100 - self.params['cashdiscount'])/100), 3) , #netamount
+                'PEINH': 1, # unit of measure
                 'REPOS': None, # InvoiceReceiptIndicator
                 "TXZ01": self.params['free_text_materials'][i] if self.params['is_free_text'] and randnom > 0.3 else self.params['matnrs'][i],
                 'UEBTO': 0,
                 'WEBRE': None, # InvoiceAfterGoodsReceiptIndicator
                 'WEPOS': None, # Goods receipt indicator
                 'WERKS': self.params['plant'],
-                'ZWERT': round(self.params['prices'][i]*self.params['quantities'][i], 2),
+                'ZWERT': round((self.params['prices'][i]*self.params['quantities'][i]) * (self.params['cashdiscount']/100), 2),
             }
             self.changes(
                 objid=str(uuid.uuid4()), 
@@ -625,6 +625,7 @@ class Purchasing:
             for k, v in self.tables['EKPO_json'].items():
                 if (v['EBELN'] == self.purchase_order_number) and (v['EBELP'] == item_position):
                     self.tables['EKPO_json'][k]['MENGE'] = line_quantities[i]
+                    self.tables['EKPO_json'][k]['NETWR']  = round((self.params['prices'][i]*self.params['quantities'][i]) * ((100 - self.params['cashdiscount'])/100), 3) if self.params['item_has_contract'][i] else round((self.params['priceifnocontract'][i] * self.params['quantities'][i]) * ((100 - self.params['cashdiscount'])/100), 3) , # quick check if this is issue. 
 
 
     def PostVendorAccountCreditItem(self, usnam, cpudt, tcode='DEFAULT'): # includes clearing 
@@ -722,7 +723,8 @@ class Purchasing:
                 'SHKZG' : 'S' ,
                 'SKFBT' : round(self.params['prices'][i]*self.params['quantities'][i], 4)  , # CashDiscountEligibleAmount
                 'WRBTR' : round(self.params['prices'][i]*self.params['quantities'][i], 4) , # Amount
-                'WSKTO' : (round(self.params['prices'][i]*self.params['quantities'][i], 2) * 0.05) if self.params['item_has_contract'][i] else (round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) * 0.05), # CashDiscountTakenAmount
+                #'WSKTO' : (round(self.params['prices'][i]*self.params['quantities'][i], 2) * 0.05) if self.params['item_has_contract'][i] else (round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) * 0.05), # CashDiscountTakenAmount
+                'WSKTO' : (round(self.params['prices'][i]*self.params['quantities'][i], 2) * (self.params['cashdiscount'] * 0.01)) if self.params['item_has_contract'][i] else (round(self.params['priceifnocontract'][i] * self.params['quantities'][i], 2) * (self.params['cashdiscount'] * 0.01)), # CashDiscountTakenAmount
                 'ZBD1P' : self.params['cashdiscount'] , # CashDiscountPercentage1
                 'ZBD2P' : 0,
                 'ZBD1T' : self.params['paymentdays'] ,
