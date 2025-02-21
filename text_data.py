@@ -1,5 +1,5 @@
 import uuid
-
+import random
 #Castlelight
 import values_Castlelight as values
 #sourcream
@@ -17,7 +17,7 @@ def domain_fixed_values(dd07t_combinations=values.dd07t_combinations):
                 "DDTEXT": v_item['DDTEXT'],
                 "AS4LOCAL": 'A',
                 "VALPOS": 99, # TODO add custom value
-                "AS4VERS": 99, # TODO add custom value
+                "AS4VERS": random.randint(1,999), # TODO add custom value
             }
 
     return {'DD07T_json': DD07T_json}

@@ -377,7 +377,8 @@ class SalesAndDistribution:
 
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
-                self.tables['VBAK_json'][k]['LIFSK'] = new_value
+                self.tables['VBAK_json'][k]['LIFSK'] = new_value 
+                self.tables['VBAK_json'][k]['VSBED'] = None # delivery block root cause INCOMPLETE ORDER adjust shipping conditions
 
     def release_delivery_block(self, udate, usnam, all_delivery_blocs=values.om_delivery_blocks):
         # old_value=all_delivery_blocs[random.choice(list(all_delivery_blocs.keys()))]['LIFSP']
@@ -399,6 +400,7 @@ class SalesAndDistribution:
         for k, v in self.tables['VBAK_json'].items():
             if v['VBELN'] == self.vbeln:
                 self.tables['VBAK_json'][k]['LIFSK'] = None
+                self.tables['VBAK_json'][k]['VSBED'] = None # delivery block root cause INCOMPLETE ORDER adjust shipping conditions
 
     def pick_items(self, usnam, udate, atime):
         self.changes(
@@ -649,6 +651,7 @@ class SalesAndDistribution:
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['MATNR'] == self.params['matnrs'][pos]):
                     self.tables['VBAP_json'][k]['FAKSP'] = new_value
+                    self.tables['VBAP_json'][k]['NETWR'] = 0.00  # for zero price root cause
             
     def release_sales_order_billing_block(self, udate, usnam, blocked_matnrs):
         old_value='01' # HACK match with values.om_billing_blocks
@@ -697,6 +700,7 @@ class SalesAndDistribution:
             for k, v in self.tables['VBAP_json'].items():
                 if (v['VBELN'] == self.vbeln) and (v['MATNR'] == self.params['matnrs'][pos]):
                     self.tables['VBAP_json'][k]['FAKSP'] = None
+                    self.tables['VBAP_json'][k]['NETWR'] = 0.00  # for zero price root cause
 
     def set_customer_billing_block(self, udate, usnam):
         new_value='02' # HACK match with values.om_billing_blocks
