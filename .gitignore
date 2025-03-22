@@ -187,3 +187,7 @@ notes.md
 try.py
 try.ipynb
 /trash
+
+# git
+fix_git_authentication.sh
+git_setup_fix.sh

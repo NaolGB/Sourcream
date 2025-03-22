@@ -49,7 +49,7 @@ class Purchasing:
             "MANDANT": values.mandt,
             "OBJECTCLAS": objclas,
             "OBJECTID": objid,
-            "TCODE": tc`ode,
+            "TCODE": tcode,
             "UDATE": udate,
             "USERNAME": uname,
             "UTIME": utime,
