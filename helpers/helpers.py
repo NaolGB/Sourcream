@@ -107,13 +107,5 @@ UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random
 UPTO_3_HOURS = lambda: timedelta(days=0, hours=random.randint(0, 3), minutes=random.randint(5, 59), seconds=random.randint(0, 59))
 UPFROM_4_TO_8_HOURS = lambda: timedelta(days=0, hours=random.randint(4, 8), minutes=random.randint(5, 59), seconds=random.randint(0, 59))
 UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))
-
-UPTO_YEAR = lambda: timedelta(days=random.randint(1, 365))
-UPTO_MONTH = lambda: timedelta(days=random.randint(1, 30))
 ONE_TO_TWOMONTHS = lambda: timedelta(days=random.randint(30,60))
-UPTO_WEEK = lambda: timedelta(days=random.randint(1, 7))
 UPTO_4DAYS = lambda: timedelta(days=random.randint(1, 4))
-UPTO_DAY = lambda: timedelta(days=0, hours=random.randint(0, 23), minutes=random.randint(0, 59), seconds=random.randint(0, 59))
-UPTO_3_HOURS = lambda: timedelta(days=0, hours=random.randint(0, 3), minutes=random.randint(5, 59), seconds=random.randint(0, 59))
-UPFROM_4_TO_8_HOURS = lambda: timedelta(days=0, hours=random.randint(4, 8), minutes=random.randint(5, 59), seconds=random.randint(0, 59))
-UPTO_HOUR = lambda: timedelta(days=0, hours=0, minutes=random.randint(0, 59), seconds=random.randint(0, 59))
