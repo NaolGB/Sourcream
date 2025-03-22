@@ -1,7 +1,7 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-from helpers import helpers
+from helpers `import helpers
 from values import values_default as values
 
 class Purchasing:
@@ -49,7 +49,7 @@ class Purchasing:
             "MANDANT": values.mandt,
             "OBJECTCLAS": objclas,
             "OBJECTID": objid,
-            "TCODE": tcode,
+            "TCODE": tc`ode,
             "UDATE": udate,
             "USERNAME": uname,
             "UTIME": utime,
