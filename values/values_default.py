@@ -530,7 +530,6 @@ om_billing_blocks = {
         'VTEXT': 'Customer'
     }
 }
-
 om_sales_doc_types = {
     'ZOR': 'Standard order',
     'BV': 'Cash Sale',
