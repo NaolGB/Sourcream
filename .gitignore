@@ -166,6 +166,18 @@ push_data.ipynb
 # files
 /data
 *.sql
+*.csv
+*.json
+*.xlsx
+*.xls
+*.pkl
+*.pickle
+*.sav
+*.h5
+*.feather
+*.parquet
+*.dta
+*.db
 
 # notes
 notes.txt

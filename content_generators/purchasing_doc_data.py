@@ -1,7 +1,8 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-import values, helpers
+from values import values_default as values
+from helpers import helpers
 
 class Purchasing:
     def __init__(self, params, start_date, index) -> None:
