@@ -1,7 +1,7 @@
 import uuid
 import random
 from datetime import datetime, timedelta
-from helpers `import helpers
+from helpers import helpers
 from values import values_default as values
 
 class Purchasing:
